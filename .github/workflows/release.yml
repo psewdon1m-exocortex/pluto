@@ -1,0 +1,79 @@
+name: Pluto release
+on:
+  push:
+    tags: ['pluto-v*']
+permissions:
+  contents: read
+jobs:
+  test:
+    uses: ./.github/workflows/verify.yml
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
+        with:
+          go-version: '1.26.8'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - name: Build and sign
+        env:
+          SIGNING_KEY: ${{ secrets.PLUTO_RELEASE_PRIVATE_KEY }}
+          PLUTO_REPOSITORY: https://github.com/${{ github.repository }}
+        run: |
+          umask 077
+          trap 'rm -f "$RUNNER_TEMP/pluto-release-key.pem"' EXIT HUP INT TERM
+          printf '%s' "$SIGNING_KEY" > "$RUNNER_TEMP/pluto-release-key.pem"
+          export PLUTO_RELEASE_KEY_FILE="$RUNNER_TEMP/pluto-release-key.pem"
+          export PLUTO_VERSION="${GITHUB_REF_NAME#pluto-v}"
+          node scripts/build-release.mjs
+          rm "$PLUTO_RELEASE_KEY_FILE"
+      - name: Verify final binaries and local signed release
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@v1.1.4
+          govulncheck -mode=binary dist/pluto-linux-amd64
+          govulncheck -mode=binary dist/pluto-linux-arm64
+          node scripts/verify-release.mjs dist dist/release-public.pem "${GITHUB_REF_NAME#pluto-v}" "$GITHUB_SHA" "https://github.com/$GITHUB_REPOSITORY"
+          python3 scripts/known-problems-gate.py --record unit --command go test -race -count=1 ./...
+          python3 scripts/known-problems-gate.py --record release-assets --command node scripts/verify-release.mjs dist dist/release-public.pem "${GITHUB_REF_NAME#pluto-v}" "$GITHUB_SHA" "https://github.com/$GITHUB_REPOSITORY"
+          # Native lifecycle, integration and Kernel receipts are required from
+          # qualification in this run. Missing evidence blocks publication.
+          python3 scripts/known-problems-gate.py --phase pre-signing
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: signed-pluto-release
+          path: dist/
+          retention-days: 1
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pluto-release-evidence
+          path: .release-evidence/
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: signed-pluto-release
+          path: dist/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: pluto-release-evidence
+          path: .release-evidence/
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/pluto-linux-* dist/pluto-release.json dist/pluto-release.json.sig.json dist/release-public.pem dist/bootstrap.sh --title "Pluto ${GITHUB_REF_NAME#pluto-v}" --generate-notes
+      - name: Verify anonymously downloaded final release bytes
+        run: |
+          unset GH_TOKEN GITHUB_TOKEN
+          python3 scripts/known-problems-gate.py --record published-assets --command node scripts/verify-release.mjs dist dist/release-public.pem "${GITHUB_REF_NAME#pluto-v}" "$GITHUB_SHA" "https://github.com/$GITHUB_REPOSITORY" published
+          python3 scripts/known-problems-gate.py --phase final

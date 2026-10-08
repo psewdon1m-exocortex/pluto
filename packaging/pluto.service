@@ -1,0 +1,30 @@
+[Unit]
+Description=Pluto outdoor file backup agent
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=pluto
+Group=pluto
+ExecStart=/usr/local/bin/pluto daemon
+Restart=on-failure
+RestartSec=5
+RuntimeDirectory=pluto
+RuntimeDirectoryMode=0700
+StateDirectory=pluto
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/etc/pluto /var/lib/pluto /run/pluto
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "service": "pluto",
+  "remote_path": "PART_12_KNOWN_DEPLOYMENT_AND_OPERATIONS_PROBLEMS.md",
+  "case_defaults": {
+    "REL": [
+      "unit",
+      "release-assets"
+    ],
+    "BST": [
+      "native-lifecycle"
+    ],
+    "TRUST": [
+      "unit",
+      "release-assets"
+    ],
+    "PERM": [
+      "native-lifecycle"
+    ],
+    "CTR": [
+      "native-lifecycle"
+    ],
+    "NET": [
+      "unit",
+      "native-lifecycle"
+    ],
+    "HLT": [
+      "unit",
+      "native-lifecycle"
+    ],
+    "INT": [
+      "unit",
+      "integration"
+    ],
+    "DATA": [
+      "unit",
+      "integration"
+    ],
+    "OPS": [
+      "native-lifecycle"
+    ]
+  },
+  "case_overrides": {
+    "INT-16": [
+      "kernel-register-contract"
+    ]
+  },
+  "final_checks": [
+    "REL-03",
+    "REL-06",
+    "REL-09",
+    "TRUST-06"
+  ],
+  "not_applicable": {},
+  "catalog_revision": "3415ca3eac2191b623928733d3f7ee996f505c84",
+  "catalog_sha256": "413cd04e0a7c082a9d1cd3b33236230f4047338321e5f5f44230e8f356c45d65",
+  "active_ids": 117,
+  "revision_cache": true,
+  "supplemental_catalog": ".release/known-problems-supplement.json",
+  "supplemental_sha256": "8e749f7b58c8a052de934850f1fb2f2e427dbe996b40d44539e2a265b64fb796"
+}

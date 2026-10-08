@@ -1,0 +1,5 @@
+/dist/
+/state/
+*.pem
+*.key
+*.test

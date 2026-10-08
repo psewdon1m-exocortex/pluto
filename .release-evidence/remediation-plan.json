@@ -1,0 +1,1073 @@
+{
+  "schema_version": 1,
+  "service": "pluto",
+  "revision": "unversioned",
+  "catalog_sha256": "413cd04e0a7c082a9d1cd3b33236230f4047338321e5f5f44230e8f356c45d65",
+  "run_id": "local:1",
+  "supplemental_sha256": "8e749f7b58c8a052de934850f1fb2f2e427dbe996b40d44539e2a265b64fb796",
+  "release_tag": null,
+  "phase": "structure",
+  "catalog_repository": "https://github.com/psewdon1m-exocortex/general",
+  "catalog_revision": "3415ca3eac2191b623928733d3f7ee996f505c84",
+  "catalog_path": "PART_12_KNOWN_DEPLOYMENT_AND_OPERATIONS_PROBLEMS.md",
+  "checks": [
+    {
+      "id": "REL-01",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Разделить CI и release workflow по триггерам и полномочиям. Обычный push только проверяет код; публикация разрешена только service-qualified тегу после успешных обязательных проверок."
+    },
+    {
+      "id": "REL-02",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Использовать единый формат `<service>-v<semver>` и валидировать его в workflow и bootstrap."
+    },
+    {
+      "id": "REL-03",
+      "status": "UNKNOWN",
+      "phase": "final",
+      "deferred": true,
+      "evidence": [],
+      "reason": null,
+      "scope": "Перед публикацией проверять, что tag commit равен ожидаемому commit основной ветки; после публикации повторять проверку через удалённый API или `git ls-remote`."
+    },
+    {
+      "id": "REL-04",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Назначить один источник версии для runtime и release metadata. До подписи и публикации запускать именно собранный immutable образ и сверять его service identity и version endpoint с выбранным тегом и манифестом; не считать проверку `package.json` достаточной."
+    },
+    {
+      "id": "REL-05",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Продвигать один и тот же immutable artifact или воспроизводимо сверять exact digest между CI и релизом."
+    },
+    {
+      "id": "REL-06",
+      "status": "UNKNOWN",
+      "phase": "final",
+      "deferred": true,
+      "evidence": [],
+      "reason": null,
+      "scope": "Формировать комплект атомарно и проверять соответствие архива, manifest, checksum и подписи перед публикацией и после скачивания."
+    },
+    {
+      "id": "REL-07",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Публиковать bootstrap как asset конкретного immutable тега и использовать версионированный URL."
+    },
+    {
+      "id": "REL-08",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Явно указывать минимальные совместимые версии в манифесте и закреплённом bundle, проверять матрицу зависимостей Part 13 и порядок согласованного выпуска Kernel/Updater/служб/потребителей. Установщик ждёт локального health обязательных служб."
+    },
+    {
+      "id": "REL-09",
+      "status": "UNKNOWN",
+      "phase": "final",
+      "deferred": true,
+      "evidence": [],
+      "reason": null,
+      "scope": "После публикации выполнять проверку полного перечня assets, HTTP-доступности и криптографической верификации из чистого окружения."
+    },
+    {
+      "id": "REL-10",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "В публикуемой документации использовать самостоятельные стабильные URL либо включать целевой документ в тот же артефакт; запускать link/check gates в изолированном checkout."
+    },
+    {
+      "id": "REL-11",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Для идемпотентных загрузок применять ограниченные повторы с exponential backoff, jitter и учётом `Retry-After`; ограничивать суммарное время и размер. Не переключать активную версию до полного скачивания и проверки digest/signature, а в ошибке сохранять точный HTTP-статус и источник без раскрытия credentials."
+    },
+    {
+      "id": "REL-12",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Перед публикацией прогонять точный подписанный архив через проверку и обновление каждой поддерживаемой исходной версии, включая непосредственно предыдущую. Версионировать контракт состава архива и выпускать совместимый подписанный переходный релиз либо отдельную процедуру восстановления, проверяющую установленный trust anchor, подпись, digest, состав архива, версию и health с откатом бинарника и unit. Несовместимый релиз не предлагать через UI; опубликованный immutable тег не перепаковывать."
+    },
+    {
+      "id": "BST-01",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "У каждого приложения и службы собственные bootstrap, trust, каталог, конфигурация, installer и rollback. Разрешено обеспечивать только формальные host-зависимости из матрицы Part 13 через отдельно проверенные закреплённые bundles: служба обеспечивает Updater, приложение — Updater и потребляемые службы. Это не даёт права незаметно ставить другое независимое приложение."
+    },
+    {
+      "id": "BST-02",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Получать межсервисные credentials через защищённый handoff ссылки на credential и формальный scoped machine enrollment/bootstrap-протокол; чужие env-файлы не читать, секреты не передавать через argv/логи. Отсутствие полномочия оставляет конкретное подключение pending."
+    },
+    {
+      "id": "BST-03",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Встроить допустимый публичный trust anchor в версионированный bootstrap и сохранить его с проверенными правами до проверки manifest."
+    },
+    {
+      "id": "BST-04",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Разделить immutable release payload, persistent trust и operator state; обновлять их по явным правилам и атомарно."
+    },
+    {
+      "id": "BST-05",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Делать schema-aware merge: сохранять операторские значения, добавлять новые defaults/generated fields и удалять только явно устаревшие поля."
+    },
+    {
+      "id": "BST-06",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Маркировать происхождение полей и никогда не заменять operator-owned значения без явного подтверждения или миграционного правила."
+    },
+    {
+      "id": "BST-07",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Разделить профили окружений. Production validation должна требовать только параметры активных production-функций."
+    },
+    {
+      "id": "BST-08",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Явно разделить operator-chosen и machine-generated secrets; пользовательский access key принимать в `.env`, остальные секреты создавать автоматически."
+    },
+    {
+      "id": "BST-09",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Разделить `bootstrap`, `install`, `refresh` и `repair`; повторный запуск должен сохранять корректное состояние и явно сообщать о конфликте."
+    },
+    {
+      "id": "BST-10",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Проверять итоговую compose-конфигурацию и запускать validator в том же mount/user-контексте, что и приложение."
+    },
+    {
+      "id": "BST-11",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Валидировать structural placeholders, пустые обязательные значения, URL, fingerprint и домены до любых изменений runtime. Вести единый реестр host ports, а preflight обязан сопоставить rendered Compose с фактическими listeners и их владельцами до создания контейнера. Поле Access Key в шаблоне оставлять пустым: явно заданное literal-значение не проверяется по placeholder/example denylist согласно `BST-13`."
+    },
+    {
+      "id": "BST-12",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Завершать bootstrap точным путём к `.env`, перечнем operator inputs и одной локальной командой install/validate/status."
+    },
+    {
+      "id": "BST-13",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Считать Access Key обязательным, но непрозрачным точным значением: проверять только факт явного задания и exact match, убрать специальные minimum/maximum, composition и denylist-политики, не применять trim/normalization/case folding и прогнать один и тот же ключ через bootstrap, login, rotation, restore и offline unlock."
+    },
+    {
+      "id": "TRUST-01",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Создавать независимые ключевые пары для release signing, storage access, service enrollment и других назначений."
+    },
+    {
+      "id": "TRUST-02",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Получить fingerprint по доверенному каналу, сохранить в конфигурации и требовать exact match при каждом соединении."
+    },
+    {
+      "id": "TRUST-03",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Доставлять корневой публичный ключ независимо: встроить в доверенный bootstrap или заранее установить через отдельный канал."
+    },
+    {
+      "id": "TRUST-04",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Передавать секрет через root-owned файл, stdin или secret mount; редактировать вывод и исключать секретные значения из командной строки."
+    },
+    {
+      "id": "TRUST-05",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Использовать одноразовый enrollment, атомарную запись токена, явную ротацию и подтверждение, что consumer перечитал новый secret."
+    },
+    {
+      "id": "TRUST-06",
+      "status": "UNKNOWN",
+      "phase": "final",
+      "deferred": true,
+      "evidence": [],
+      "reason": null,
+      "scope": "Installer обязан локально проверить цепочку доверия до распаковки и запуска; CI дополнительно проверяет опубликованный комплект извне."
+    },
+    {
+      "id": "TRUST-07",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Генерировать значение один раз, хранить plaintext только в secret store, помещать в registry только exact typed reference, а в поле внешнего provider передавать разрешённое исходное значение. UI и runbook должны явно различать `secret value` и `secret reference`; проверка подписи выполняется без логирования обоих."
+    },
+    {
+      "id": "PERM-01",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Выполнять `chmod` до `chown` либо менять оба атрибута из процесса с необходимыми полномочиями; закрепить порядок тестом."
+    },
+    {
+      "id": "PERM-02",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Запускать validate, migrate, smoke и storage bootstrap с теми же UID:GID и mount-ограничениями, что и runtime, кроме узких root-init операций."
+    },
+    {
+      "id": "PERM-03",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "После создания явно выставлять ожидаемые owner, group и mode; не полагаться на requested mode при неизвестном umask."
+    },
+    {
+      "id": "PERM-04",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Для shared operational directory использовать setgid-каталог, фиксированную группу и явную нормализацию прав каждого файла."
+    },
+    {
+      "id": "PERM-05",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Определить минимальную service group, использовать `0640`/`0750` или более строгие режимы и проверять отсутствие доступа у постороннего UID."
+    },
+    {
+      "id": "PERM-06",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Валидировать regular file, отсутствие symlink, точного владельца/группу, допустимый mode и безопасную цепочку родительских каталогов."
+    },
+    {
+      "id": "PERM-07",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Проверять execute/search permission всей цепочки пути и воспроизводить чтение от реального runtime UID."
+    },
+    {
+      "id": "PERM-08",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Устанавливать бинарник и unit из одного проверенного релиза как согласованную пару; после `daemon-reload` проверять effective unit, оба socket и health endpoint до признания обновления успешным, при сбое откатывать обе части. Автоматический regression test должен запускать unit с production sandbox, оставшимся Unix socket и новым runtime-каталогом и подтверждать, что daemon удаляет stale socket и остаётся здоровым после рестарта. При восстановлении сначала остановить цикл, сравнить unit с релизным и отличить host mount от sandbox; временный drop-in удалить после установки полного актуального unit."
+    },
+    {
+      "id": "PERM-09",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Сверять установленный effective unit с unit того же подписанного релиза Updater и до обновления helper проверять доступность всех каталогов, куда updater пишет кандидат, backup и managed unit. В release/install gate проверять не только версию бинарника и health, но и sandbox policy; regression test должен запускать обновление helper внутри production unit. Для восстановления разрешить запись только в нужный каталог через временный drop-in, перезапустить Updater, повторить обновление и проверить версию Neptune и endpoint; затем заменить устаревший unit согласованным релизным и убрать временный drop-in."
+    },
+    {
+      "id": "PERM-10",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Перед обновлением сверять effective unit с unit того же релиза Updater и проверять необходимые пути записи внутри его sandbox, включая временные файлы, env и recovery scratch. В installer/release gate запускать обновление и откат Saturn с production unit, а после исправления повторно проверять readiness, Compose config и версию. Временный drop-in заменять полным согласованным unit."
+    },
+    {
+      "id": "PERM-11",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "До начала обновления проверять эффективные `ReadWritePaths` production unit для каждого зарегистрированного head и выполнять запись временного deployment-файла в sandbox как отдельную preflight-проверку. Сохранять состояние фактической мутации, чтобы ошибка до записи не запускала ненужный откат. При восстановлении сначала сверять running image и env, затем исправлять unit и повторять установку только с новой проверенной копией."
+    },
+    {
+      "id": "PERM-12",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Выбрать один механизм владения runtime-каталогами: если Docker unit остаётся root-owned, не объявлять эти каталоги через `RuntimeDirectory`, а создавать и назначать их контейнерному UID в `prepare-runtime` перед стартом. `RuntimeDirectoryPreserve` не исправляет смену владельца. Проверять effective unit, owner/mode при `ExecStart`, создание обоих сокетов и health от фактического UID в тесте с systemd; временный drop-in заменять исправленным unit при выпуске."
+    },
+    {
+      "id": "PERM-13",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "В подписанном unit Updater разрешить запись во все строго необходимые пути активации **и отката**, включая каталоги journald namespace, без расширения доступа ко всему `/etc`. До остановки прежней версии проверять запись из production sandbox. При сбое сохранить transaction journal, установить причину по системным журналам, исправить unit и выполнить штатный `repair`; подтвердить process, socket, конфигурацию и running version до новой попытки обновления."
+    },
+    {
+      "id": "CTR-01",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Проверять rendered Compose config и host socket; публиковать только требуемый порт на `127.0.0.1`."
+    },
+    {
+      "id": "CTR-02",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "После атомарной замены целево пересоздавать только потребляющие сервисы и проверять новый credential из их runtime-контекста."
+    },
+    {
+      "id": "CTR-03",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Для одноразовых проверок применять `--no-deps`, явный `--user` и минимальные capabilities; отделять read-only probe от миграции."
+    },
+    {
+      "id": "CTR-04",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "В production pin-ить images по immutable digest и хранить digest в release manifest/environment lock."
+    },
+    {
+      "id": "CTR-05",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Описать readiness gates и выполнять targeted recreate с ожиданием healthy перед переключением трафика."
+    },
+    {
+      "id": "CTR-06",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Разделять process liveness, application readiness, host-loopback и public-edge проверки."
+    },
+    {
+      "id": "CTR-07",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Проверять `docker compose config` как фактический источник истины и тестировать обязательные variables/mounts/ports до `up`."
+    },
+    {
+      "id": "CTR-08",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Сохранять runtime-каталог между рестартами (`RuntimeDirectoryPreserve=restart`) либо монтировать стабильный parent с неизменяемой точкой. Reconciler должен сравнивать mount/inode, целево пересоздавать stale consumers и проверять сценарий «restart агента без рестарта head-контейнера»."
+    },
+    {
+      "id": "CTR-09",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Включать unit-файл в подписанный release contract, проверять его до активации и атомарно обновлять executable/application вместе с unit. После `daemon-reload` выполнить restart и socket/health probe; при сбое откатить обе части и повторить проверку."
+    },
+    {
+      "id": "CTR-10",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Перед мутацией выполнить schema-aware миграцию конфигурации с сохранением операторских значений (см. `BST-05`) и проверить rendered `docker compose config` для кандидата **и** плана отката с тем же env-file и рабочим каталогом, что на хосте. Проверять существование и права новых host paths, затем фиксировать snapshot и запускать замену; сообщать имена отсутствующих полей без вывода секретов."
+    },
+    {
+      "id": "NET-01",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Создать ровно один fail-closed `default_server` и отдельный vhost для каждого canonical host; отключить заменённый distribution default, считать `conflicting server name` ошибкой deployment и проверять активный набор через `nginx -T`, а не только файл-кандидат. Неизвестные Host/SNI отклонять."
+    },
+    {
+      "id": "NET-02",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Оставить один server-managed Nginx; installers публикуют только loopback endpoints и документируют требуемый vhost."
+    },
+    {
+      "id": "NET-03",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Единый Nginx допустим, но конфигурацию делить на независимые vhost-файлы с общей включаемой baseline-конфигурацией."
+    },
+    {
+      "id": "NET-04",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Передавать корректные `Host`, `X-Forwarded-Host`, `X-Forwarded-Proto`, при необходимости `X-Forwarded-Port`; настроить доверие только к своему proxy."
+    },
+    {
+      "id": "NET-05",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Нормализовать origin, хранить один canonical HTTPS URL и проверять реальный `Origin`/forwarded headers интеграционным тестом через proxy."
+    },
+    {
+      "id": "NET-06",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Публиковать host ports только на `127.0.0.1`; снаружи разрешать лишь 80/443 и необходимые административные каналы."
+    },
+    {
+      "id": "NET-07",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Отдельно проверить и документировать egress для DNS, release registry, межсервисного HTTPS и storage transport."
+    },
+    {
+      "id": "NET-08",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Привязать каждый `server_name` к точным `fullchain.pem`/`privkey.pem`; после `nginx -t` подтвердить присутствие блока и upstream в effective output `nginx -T`, затем выполнить отдельную внешнюю SNI/HTTP-проверку каждого домена."
+    },
+    {
+      "id": "NET-09",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Назначать лимиты по маршрутам: большой только для upload, малый и ограниченный для API/auth; проверять ожидаемый `413`."
+    },
+    {
+      "id": "NET-10",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Для streaming upload настроить buffering, timeouts и temp quota осознанно; отделить upload path и контролировать ресурсы."
+    },
+    {
+      "id": "NET-11",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Установить route-specific connect/read/send timeouts и проектировать длительные операции как асинхронные или возобновляемые."
+    },
+    {
+      "id": "NET-12",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Использовать стабильные root-relative asset paths, включить assets в образ и отдельно проверить HTML logo, favicon, manifest и deep-link routes."
+    },
+    {
+      "id": "NET-13",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "В operator-managed Nginx явно включать **оба** маршрута install и rollback в ограниченное правило больших загрузок; обычные API оставлять под малым лимитом. Проверять effective `nginx -T`, затем `nginx -t` и reload; тестировать реальный ZIP ожидаемого размера через публичный маршрут и появление job. При `413` без job искать отказ на proxy/ingress до повторного создания архива."
+    },
+    {
+      "id": "HLT-01",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Утвердить общий status contract: какие проверки обязательны, как агрегируются состояния и когда данные считаются stale."
+    },
+    {
+      "id": "HLT-02",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Показывать отдельно process/live, dependency/readiness и edge/TLS; не заменять одно измерение другим."
+    },
+    {
+      "id": "HLT-03",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Версионировать health contract и хранить endpoint/schema в registry; добавить consumer-driven contract test."
+    },
+    {
+      "id": "HLT-04",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Представлять unknown/stale отдельно от числового нуля и показывать время последнего успешного измерения."
+    },
+    {
+      "id": "HLT-05",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Считать service uptime монотонно от запуска текущего operator-facing process/container instance и сбрасывать при его перезапуске. Иные uptime показывать только как отдельно подписанные дополнительные метрики."
+    },
+    {
+      "id": "HLT-06",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Включать в telemetry schema источник, единицы и scope; UI обязан показывать их явно."
+    },
+    {
+      "id": "HLT-07",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Probe должен использовать тот же production credential и root, выполнять безопасную реальную операцию и различать read/write/delete capabilities."
+    },
+    {
+      "id": "HLT-08",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Нормализовать категории ошибок, логировать безопасные технические детали и показывать оператору actionable причину без секрета."
+    },
+    {
+      "id": "HLT-09",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Включить критические зависимости в readiness и открывать трафик только после подтверждения итогового runtime-состояния."
+    },
+    {
+      "id": "HLT-10",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Вызывать `statvfs` для filesystem с authoritative service data, считать `available_bytes = f_bavail * f_frsize` и заполненность из `total - available`; reserved blocks, недоступные service UID, считаются недоступными."
+    },
+    {
+      "id": "HLT-11",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "После restart в течение ограниченного времени повторять health-запрос и сверять точную версию работающего процесса. На тайм-ауте сохранять status и journal для диагностики; откатывать бинарник и unit только после подтверждённого сбоя. В acceptance test задерживать открытие сокета и проверять, что краткий `connection refused` не запускает откат."
+    },
+    {
+      "id": "HLT-12",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Назначать ограниченный health budget по измеренному cold start и контракту конкретного сервиса, повторять readiness до истечения бюджета и отдельно проверять running version. После тайм-аута сохранять обе причины и сначала установить фактическое состояние контейнеров, данных и публичного сервиса (см. `OPS-08`); повторять обновление лишь после исправления окна или реальной причины неготовности. В тесте задерживать readiness кандидата и прежней версии."
+    },
+    {
+      "id": "INT-01",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Разделять installed, process-active, socket-reachable, registered, enrolled, authenticated, last-seen и schedule-applied; не преобразовывать transport failure в `not installed` и завершать workflow проверкой каждого состояния."
+    },
+    {
+      "id": "INT-02",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Описать issuer, audience, holder и направление каждого токена; использовать разные имена для разных ролей."
+    },
+    {
+      "id": "INT-03",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Типизировать codes по pipeline и identity, показывать срок жизни и single-use, после потребления выдавать новый код только через явный action."
+    },
+    {
+      "id": "INT-04",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Включать тип pipeline в identity или заранее поддерживать несколько capabilities под одной идентичностью без конфликтующих unique constraints."
+    },
+    {
+      "id": "INT-05",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Определить полный lifecycle: active → revoked/archived; фильтровать UI, отключать credentials и разрешать безопасную реактивацию либо новую identity."
+    },
+    {
+      "id": "INT-06",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Писать secret атомарно, выставлять права, пересоздавать конкретного consumer и проверять authenticated request изнутри runtime."
+    },
+    {
+      "id": "INT-07",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Выполнить явную миграцию каждого значения на typed secret reference, проверить позиции/идентификаторы и только затем включать публикацию."
+    },
+    {
+      "id": "INT-08",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Определить authoritative registry, версии и правила распространения; UI не должен угадывать endpoint из DNS или соседнего `.env`."
+    },
+    {
+      "id": "INT-09",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Утвердить версионированный глобальный command catalog с уникальными именами, aliases и owner service. Из него генерировать router, `/help`, provider command menu и reply keyboard; многошаговые команды хранить как state machine. Contract tests должны запускать каждую команду из текста, подсказки и кнопки и проверять backward-compatible диалог."
+    },
+    {
+      "id": "INT-10",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Активировать provider integration только после internal readiness и внешней проверки endpoint. Затем вручную повторить подписанный handshake/ping, проверить новую delivery и зафиксировать её время; UI должен отличать last attempt от current configuration readiness."
+    },
+    {
+      "id": "INT-11",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "После handshake отправлять реальное минимальное событие из точно зарегистрированного source/ref и проверять последовательно delivery response, постановку в очередь, завершение worker и ожидаемый бизнес-результат. Отображать эти стадии раздельно и иметь synthetic end-to-end acceptance fixture."
+    },
+    {
+      "id": "INT-12",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Версионировать и проверять контракт поддерживаемых ключей на стороне потребителя; при добавлении компонента обновлять resolver/allowlist вместе с installer. Contract test должен публиковать ключ в Register, разрешать его установленной версией потребителя и выполнять обнаружение релиза из чистого состояния."
+    },
+    {
+      "id": "INT-13",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "До машинного enrollment проверять минимальную запущенную версию и capability нужных API у всех зависимостей, включая хранилище, а не только доступность Register. При отказе различать upstream HTTP status и безопасный код: отсутствующий маршрут требует совместимого релиза, 401/403 — проверки scoped machine identity, 5xx — диагностики хранилища. После исправления повторять идемпотентный enrollment; acceptance test проходит «машинная авторизация → публикация → разрешение конфигурации → runtime ready» на версиях deployment profile."
+    },
+    {
+      "id": "INT-14",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Показывать пример полного HTTPS origin без пути и проверять URL/instance по полям до задания. Убрать поле Access Key из Wyvern Connect: Updater использует собственный защищённый scoped machine credential. Отсутствие credential или права показывать как точную причину ожидающего подключения; операторская cookie и legacy unscoped token не заменяют это право. Секрет не сохранять в job или журнале."
+    },
+    {
+      "id": "INT-15",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "В TUI показывать состояние host Kernel connection и отдельного fallback release repository каждой службы до запуска обновления. Настраивать scoped machine connection один раз на хосте; источник Kernel использовать первым, сохранённый оператором fallback — только при недоступности Kernel. В ошибке различать «связь не настроена», отказ авторизации и недоступность источника, не раскрывая token; проверять сценарии первичной установки без Kernel и последующего перехода на его данные."
+    },
+    {
+      "id": "DATA-01",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Использовать потоковую передачу с bounded buffers и backpressure; тестировать параллельно большую загрузку и обычные dashboard-запросы."
+    },
+    {
+      "id": "DATA-02",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Стримить в целевое хранилище либо выделять ограниченный staging volume с quota, мониторингом и очисткой незавершённых файлов."
+    },
+    {
+      "id": "DATA-03",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Использовать upload session, TTL и garbage collection; коммитить объект атомарно только после проверки размера и digest."
+    },
+    {
+      "id": "DATA-04",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Возвращать успех только после подтверждённой финализации; хранить состояние и проверять размер/digest."
+    },
+    {
+      "id": "DATA-05",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Выполнять малую end-to-end canary operation в выделенном probe namespace и безопасно удалять тестовый объект."
+    },
+    {
+      "id": "DATA-06",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Проводить автоматическую structural verification и регулярный restore drill в изолированном окружении."
+    },
+    {
+      "id": "DATA-07",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Назначать отдельные immutable namespace по проекту, deployment и pipeline; запрещать выход за root."
+    },
+    {
+      "id": "DATA-08",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Выдавать отдельные scoped credentials для export, control и archive operations; поддерживать независимую ротацию и revoke."
+    },
+    {
+      "id": "DATA-09",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Разделять desired/applied revision, last seen, last successful backup, next due и overdue; alert строить по факту подтверждённого артефакта. При переносе управления из центральной панели сохранить прежнюю политику и оставить одного авторизованного автора, отклоняя устаревшие команды."
+    },
+    {
+      "id": "DATA-10",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Определять независимость технически: отдельные credentials, storage/account/failure domain и проверяемый replication/restore path."
+    },
+    {
+      "id": "OPS-01",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Перед изменениями фиксировать hostname, `pwd`, release version и target paths; команды в runbook должны явно указывать место запуска."
+    },
+    {
+      "id": "OPS-02",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Публиковать исполняемые команды в чистых fenced code blocks и перед запуском проверять визуально значимые символы."
+    },
+    {
+      "id": "OPS-03",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Каждому workaround назначать issue/ID, условие удаления и заменять runbook после выпуска исправленной версии."
+    },
+    {
+      "id": "OPS-04",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Использовать короткий post-change checklist: config render, migration, readiness, authenticated integration, public edge и rollback metadata."
+    },
+    {
+      "id": "OPS-05",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "В incident bundle включать UTC time, host, release, image digest, container state, relevant logs и точную команду/endpoint без секретов."
+    },
+    {
+      "id": "OPS-06",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Считать инцидент закрытым только после устранения root cause, добавления regression check и обновления bootstrap/runbook/этой базы."
+    },
+    {
+      "id": "OPS-07",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Для доступности использовать отдельный документированный `GET` health endpoint, а callback проверять настоящим методом, обязательными headers/signature и безопасным fixture либо функцией redelivery внешнего provider. В runbook явно указывать ожидаемые status codes для каждого метода."
+    },
+    {
+      "id": "OPS-08",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Сохранять в записи задания раздельные причину сбоя обновления и причину сбоя отката с безопасными деталями этапа. После такого статуса сверять сохранённую копию, миграции, env, образы контейнеров, Compose config, локальную и публичную readiness; не повторять обновление до установления фактического состояния. Автоматическим тестом проверять, что неудачный откат не затирает первоначальную ошибку и не выдаёт остановленный сервис за восстановленный."
+    },
+    {
+      "id": "OPS-09",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Сохранять durable phase и candidate manifest; блокировать новый install до явного `repair`. Сначала установить первопричину по service status, socket, правам и job message, затем выполнить штатный repair, который возобновляет первую установку или откатывает существующую. Проверить завершённый journal, точную версию, процесс и admin socket; состояние `unconfigured` до отдельного enrollment не считать провалом установки."
+    },
+    {
+      "id": "OPS-10",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Сохранять в job безопасные stage, HTTP status, контролируемый error code и correlation ID, не копируя произвольное тело ответа или секреты. В UI давать ссылку на конкретный job и диагностический источник; при расследовании сопоставлять время/ID с audit producer и dependency, проверять текущее состояние перед повтором. Contract tests должны различать 4xx, 5xx, timeout и частичный успех."
+    },
+    {
+      "id": "OPS-11",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "Отделять transport/session status от durable job state. Сохранять request ID и job ID, после восстановления связи или повторного входа читать состояние задания через Updater CLI/API и проверять running version; повторять мутацию только после установленного terminal state. UI должен восстанавливать наблюдение за существующим заданием и объяснять ожидаемый временный обрыв при замене собственного контейнера."
+    },
+    {
+      "id": "INT-16",
+      "status": "UNKNOWN",
+      "phase": "pre-signing",
+      "deferred": false,
+      "evidence": [],
+      "reason": null,
+      "scope": "При добавлении компонента обновлять стандартный набор прав машинного принципала вместе с Register и installer. Для уже выданных принципалов применять однократную идемпотентную миграцию только неизменённого стандартного набора; сохранять ручные ограничения, отключение, удаление и последующий отзыв ключа. Contract tests должны проверять новый и прежний bootstrap, разрешение нового ключа реальным машинным credential и сохранение запрета после отзыва. Доступный Kernel с HTTP 403 считать отказом авторизации и не переключаться на fallback."
+    }
+  ],
+  "release_qualification": false,
+  "deployment_activation": {
+    "status": "NOT_RUN",
+    "reason": "Production DNS/TLS, provider credentials, external reachability and installed helper versions require the operator activation checks in DEPLOYMENT_READINESS.md."
+  }
+}
