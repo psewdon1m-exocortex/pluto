@@ -12,7 +12,7 @@ let sourceRevision;
 try { sourceRevision = execFileSync('git', ['rev-parse', 'HEAD'], {cwd:root,encoding:'utf8',stdio:['ignore','pipe','pipe']}).trim(); }
 catch { if (process.env.PLUTO_ALLOW_UNVERSIONED_TEST_BUILD !== '1') throw new Error('A release requires a Git checkout; unversioned fixtures need PLUTO_ALLOW_UNVERSIONED_TEST_BUILD=1.'); }
 const toolchain=execFileSync(process.env.GO_BINARY ?? 'go',['env','GOVERSION'],{cwd:root,encoding:'utf8'}).trim();
-if(toolchain!=='go1.26.8') throw new Error('Use the qualified Go 1.26.8 toolchain.');
+if(toolchain!=='go1.26.9') throw new Error('Use the qualified Go 1.26.9 toolchain.');
 if (!/^\d+\.\d+\.\d+$/.test(version) || !/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/.test(repository ?? '') || !keyPath) {
   throw new Error('Set PLUTO_VERSION, PLUTO_REPOSITORY and PLUTO_RELEASE_KEY_FILE (RSA PEM).');
 }

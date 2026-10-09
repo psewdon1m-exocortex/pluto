@@ -15,7 +15,7 @@ test('bootstrap bounds downloads, proves health and removes a failed partial ins
   const binary=Buffer.from('#!/bin/sh\ncase "$1" in --version) echo 0.1.1;; status) [ "$FIXTURE_BAD_HEALTH" != 1 ] && echo \'{"version":"0.1.1"}\';; esac\n');
   const sha=b=>createHash('sha256').update(b).digest('hex');
   await fs.mkdir(path.join(directory,'commands'));await fs.mkdir(path.join(directory,'assets'));
-  const manifest=Buffer.from(JSON.stringify({schema:1,version,sourceRevision:'a'.repeat(40),toolchain:'go1.26.8',artifacts:Object.fromEntries(['amd64','arm64'].map(arch=>['linux-'+arch,{url:repository+'/releases/download/pluto-v'+version+'/pluto-linux-'+arch,size:binary.length,sha256:sha(binary)}]))}));
+  const manifest=Buffer.from(JSON.stringify({schema:1,version,sourceRevision:'a'.repeat(40),toolchain:'go1.26.9',artifacts:Object.fromEntries(['amd64','arm64'].map(arch=>['linux-'+arch,{url:repository+'/releases/download/pluto-v'+version+'/pluto-linux-'+arch,size:binary.length,sha256:sha(binary)}]))}));
   const envelope=Buffer.from(JSON.stringify({schema:'exocortex.release-signature.v1',algorithm:'RSA-PSS-SHA256',key_id:sha(keys.publicKey.export({type:'spki',format:'der'})),signature:sign('sha256',manifest,{key:keys.privateKey,padding:constants.RSA_PKCS1_PSS_PADDING,saltLength:32}).toString('base64')}));
   const assets=path.join(directory,'assets');await fs.writeFile(path.join(assets,'pluto-release.json'),manifest);await fs.writeFile(path.join(assets,'pluto-release.json.sig.json'),envelope);for(const arch of ['amd64','arm64'])await fs.writeFile(path.join(assets,'pluto-linux-'+arch),binary);
   await fs.writeFile(path.join(directory,'commands/curl'),'#!/bin/sh\nfor last do :; done\ncat "$FIXTURE_ASSETS/${last##*/}"\n',{mode:0o755});

@@ -9,7 +9,7 @@ export function verifyManifest(raw,envelopeBytes,pinnedKey,{version,revision,rep
   const key=createPublicKey(pinnedKey),envelope=JSON.parse(envelopeBytes),manifest=JSON.parse(raw);
   const keyId=createHash('sha256').update(key.export({type:'spki',format:'der'})).digest('hex');
   if(key.asymmetricKeyType!=='rsa'||key.asymmetricKeyDetails.modulusLength<3072||envelope.schema!=='exocortex.release-signature.v1'||envelope.algorithm!=='RSA-PSS-SHA256'||envelope.key_id!==keyId||!verify('sha256',raw,{key,padding:constants.RSA_PKCS1_PSS_PADDING,saltLength:32},Buffer.from(envelope.signature,'base64'))) throw Error('Release signature rejected');
-  if(manifest.schema!==1||manifest.version!==version||manifest.sourceRevision!==revision||!/^\d+\.\d+\.\d+$/.test(version)||!/^[a-f0-9]{40}$/.test(revision)||manifest.toolchain!=='go1.26.8') throw Error('Release identity rejected');
+  if(manifest.schema!==1||manifest.version!==version||manifest.sourceRevision!==revision||!/^\d+\.\d+\.\d+$/.test(version)||!/^[a-f0-9]{40}$/.test(revision)||manifest.toolchain!=='go1.26.9') throw Error('Release identity rejected');
   if(!/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/.test(repository)) throw Error('Release repository rejected');
   for(const arch of ['amd64','arm64']) {
     const item=manifest.artifacts['linux-'+arch];

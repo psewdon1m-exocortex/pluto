@@ -10,7 +10,7 @@ const publicKey=keys.publicKey.export({type:'spki',format:'pem'});
 const bytes=Buffer.from('qualified fixture');
 const identity={version:'0.1.1',revision:'a'.repeat(40),repository:'https://github.com/example/pluto'};
 function fixture(changes={}) {
- const manifest={schema:1,version:identity.version,sourceRevision:identity.revision,toolchain:'go1.26.8',artifacts:Object.fromEntries(['amd64','arm64'].map(arch=>['linux-'+arch,{url:identity.repository+'/releases/download/pluto-v'+identity.version+'/pluto-linux-'+arch,sha256:createHash('sha256').update(bytes).digest('hex'),size:bytes.length}])),...changes};
+ const manifest={schema:1,version:identity.version,sourceRevision:identity.revision,toolchain:'go1.26.9',artifacts:Object.fromEntries(['amd64','arm64'].map(arch=>['linux-'+arch,{url:identity.repository+'/releases/download/pluto-v'+identity.version+'/pluto-linux-'+arch,sha256:createHash('sha256').update(bytes).digest('hex'),size:bytes.length}])),...changes};
  const raw=Buffer.from(JSON.stringify(manifest));
  const envelope=Buffer.from(JSON.stringify({schema:'exocortex.release-signature.v1',algorithm:'RSA-PSS-SHA256',key_id:createHash('sha256').update(keys.publicKey.export({type:'spki',format:'der'})).digest('hex'),signature:sign('sha256',raw,{key:keys.privateKey,padding:constants.RSA_PKCS1_PSS_PADDING,saltLength:32}).toString('base64')}));
  return {manifest,raw,envelope};
