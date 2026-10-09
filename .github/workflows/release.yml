@@ -12,16 +12,61 @@ jobs:
     uses: ./.github/workflows/verify.yml
   build:
     needs: test
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    services:
+      postgres:
+        image: postgres:18.1-alpine
+        env:
+          POSTGRES_USER: vault
+          POSTGRES_PASSWORD: disposable-ci-fixture
+          POSTGRES_DB: saturn_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U vault -d saturn_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PLUTO_TEST_DATABASE_URL: postgresql://vault:disposable-ci-fixture@127.0.0.1:5432/saturn_test
+      DATABASE_URL: postgresql://vault:disposable-ci-fixture@127.0.0.1:5432/saturn_test
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Check out the published Kernel contract
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: psewdon1m-exocortex/kernel
+          ref: f0edf9b3d8363c9d00432f7c01614e62e62b9f3e
+          path: .qualification/kernel
+      - name: Check out the published Saturn contract
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: psewdon1m-exocortex/saturn
+          ref: 4474b7abd518d9b1f698fbb4672355367bf0a225
+          path: .qualification/saturn
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
         with:
           go-version: '1.26.9'
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '24'
+      - name: Verify pinned published dependency bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p .qualification/assets/kernel .qualification/assets/saturn
+          kernel_version="$(tr -d '[:space:]' < .release/kernel.version)"
+          gh release download "$(tr -d '[:space:]' < .release/kernel.tag)" \
+            --repo psewdon1m-exocortex/kernel --dir .qualification/assets/kernel \
+            --pattern "kernel-${kernel_version}-compose.tar.gz"
+          printf '%s  %s\n' "$(tr -d '[:space:]' < .release/kernel.sha256)" "kernel-${kernel_version}-compose.tar.gz" \
+            | (cd .qualification/assets/kernel && sha256sum -c -)
+          saturn_version="$(tr -d '[:space:]' < .release/saturn.version)"
+          gh release download "$(tr -d '[:space:]' < .release/saturn.tag)" \
+            --repo psewdon1m-exocortex/saturn --dir .qualification/assets/saturn \
+            --pattern "saturn-${saturn_version}.zip"
+          printf '%s  %s\n' "$(tr -d '[:space:]' < .release/saturn.sha256)" "saturn-${saturn_version}.zip" \
+            | (cd .qualification/assets/saturn && sha256sum -c -)
       - name: Build and sign
         env:
           SIGNING_KEY: ${{ secrets.PLUTO_RELEASE_PRIVATE_KEY }}
@@ -34,6 +79,21 @@ jobs:
           export PLUTO_VERSION="${GITHUB_REF_NAME#pluto-v}"
           node scripts/build-release.mjs
           rm "$PLUTO_RELEASE_KEY_FILE"
+      - name: Qualify the exact Kernel discovery contract
+        run: >-
+          python3 scripts/known-problems-gate.py --record kernel-register-contract
+          --command bash -lc
+          'node scripts/qualify-kernel.mjs .qualification/kernel &&
+          go test -race -count=1 ./internal/pluto -run TestEnrollmentRemainsDisabledAndTokensNeverEnterStatus'
+      - name: Qualify the exact Saturn PostgreSQL and HTTP contract
+        run: >-
+          python3 scripts/known-problems-gate.py --record integration
+          --command bash scripts/qualify-saturn.sh .qualification/saturn
+      - name: Qualify the native systemd lifecycle
+        run: >-
+          python3 scripts/known-problems-gate.py --record native-lifecycle
+          --command sudo bash scripts/qualify-native-lifecycle.sh
+          dist/pluto-linux-amd64 "${GITHUB_REF_NAME#pluto-v}" packaging/pluto.service
       - name: Verify final binaries and local signed release
         run: |
           go install golang.org/x/vuln/cmd/govulncheck@v1.1.4
