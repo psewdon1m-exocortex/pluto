@@ -4,12 +4,16 @@ on:
     tags: ['pluto-v*']
 permissions:
   contents: read
+concurrency:
+  group: pluto-release-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   test:
     uses: ./.github/workflows/verify.yml
   build:
     needs: test
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
@@ -43,16 +47,24 @@ jobs:
           python3 scripts/known-problems-gate.py --phase pre-signing
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: signed-pluto-release
+          name: signed-pluto-release-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: dist/
+          if-no-files-found: error
           retention-days: 1
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
         with:
-          name: pluto-release-evidence
-          path: .release-evidence/
+          name: pluto-release-evidence-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .release-evidence/
+            known-problems-report.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
   publish:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       contents: write
     steps:
@@ -62,18 +74,56 @@ jobs:
           node-version: '24'
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: signed-pluto-release
+          name: signed-pluto-release-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: dist/
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: pluto-release-evidence
-          path: .release-evidence/
-      - name: Publish release
+          name: pluto-release-evidence-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Stage immutable prerelease candidate
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/pluto-linux-* dist/pluto-release.json dist/pluto-release.json.sig.json dist/release-public.pem dist/bootstrap.sh --title "Pluto ${GITHUB_REF_NAME#pluto-v}" --generate-notes
+        run: |
+          set -euo pipefail
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            test "$(gh release view "$GITHUB_REF_NAME" --json isDraft,isPrerelease --jq '[.isDraft,.isPrerelease] | join(",")')" = "false,true"
+          else
+            gh release create "$GITHUB_REF_NAME" \
+              dist/pluto-linux-amd64 dist/pluto-linux-arm64 \
+              dist/pluto-release.json dist/pluto-release.json.sig.json \
+              dist/release-public.pem dist/bootstrap.sh \
+              --verify-tag --prerelease --latest=false \
+              --title "Pluto ${GITHUB_REF_NAME#pluto-v}" --generate-notes
+          fi
       - name: Verify anonymously downloaded final release bytes
         run: |
           unset GH_TOKEN GITHUB_TOKEN
           python3 scripts/known-problems-gate.py --record published-assets --command node scripts/verify-release.mjs dist dist/release-public.pem "${GITHUB_REF_NAME#pluto-v}" "$GITHUB_SHA" "https://github.com/$GITHUB_REPOSITORY" published
           python3 scripts/known-problems-gate.py --phase final
+      - name: Attach final qualification report
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          exists="$(gh release view "$GITHUB_REF_NAME" --json assets --jq 'any(.assets[]; .name == "known-problems-report.json")')"
+          if [ "$exists" = false ]; then
+            gh release upload "$GITHUB_REF_NAME" known-problems-report.json
+          else
+            test "$exists" = true
+          fi
+          unset GH_TOKEN GITHUB_TOKEN
+          node scripts/verify-release.mjs dist dist/release-public.pem "${GITHUB_REF_NAME#pluto-v}" "$GITHUB_SHA" "https://github.com/$GITHUB_REPOSITORY" report known-problems-report.json
+      - name: Promote verified candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release edit "$GITHUB_REF_NAME" --prerelease=false --latest=true
+      - name: Preserve final qualification evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pluto-final-qualification-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .release-evidence/
+            known-problems-report.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
