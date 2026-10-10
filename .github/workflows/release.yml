@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           repository: psewdon1m-exocortex/saturn
-          ref: 4474b7abd518d9b1f698fbb4672355367bf0a225
+          ref: 69812bea6ef3dfe22de727fc392dd27af61513d7
           path: .qualification/saturn
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
         with:
@@ -49,6 +49,9 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '24'
+      - name: Install pinned Kernel qualification dependencies
+        working-directory: .qualification/kernel
+        run: npm ci --ignore-scripts
       - name: Verify pinned published dependency bytes
         env:
           GH_TOKEN: ${{ github.token }}
