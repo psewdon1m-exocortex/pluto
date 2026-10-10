@@ -37,18 +37,26 @@ systemctl enable --now pluto.service
 check_status() {
   local output
   for _ in $(seq 1 30); do
-    if systemctl is-active --quiet pluto.service; then
-      output="$($installed status)"
-      PLUTO_STATUS="$output" PLUTO_EXPECTED_VERSION="$version" python3 - <<'PY'
+    if ! systemctl is-active --quiet pluto.service; then
+      sleep 1
+      continue
+    fi
+    if ! output="$($installed status 2>/dev/null)"; then
+      sleep 1
+      continue
+    fi
+    if ! PLUTO_STATUS="$output" PLUTO_EXPECTED_VERSION="$version" python3 - <<'PY'
 import json, os
 status = json.loads(os.environ['PLUTO_STATUS'])
 assert status['version'] == os.environ['PLUTO_EXPECTED_VERSION']
 assert status['running'] is False
 assert status['connected'] is False
 PY
-      return 0
+    then
+      sleep 1
+      continue
     fi
-    sleep 1
+    return 0
   done
   systemctl status --no-pager pluto.service
   return 1

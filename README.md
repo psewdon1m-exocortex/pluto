@@ -38,7 +38,7 @@ journalctl -u pluto.service
 The dedicated repository is `psewdon1m-exocortex/pluto`. Release signing requires the externally provisioned `PLUTO_RELEASE_PRIVATE_KEY` GitHub Actions repository secret; it is never generated or stored in this repository.
 
 ```sh
-export PLUTO_VERSION=0.1.1
+export PLUTO_VERSION=0.1.2
 export PLUTO_REPOSITORY=https://github.com/OWNER/pluto
 export PLUTO_RELEASE_KEY_FILE=/protected/pluto-release-key.pem
 node scripts/build-release.mjs
@@ -52,7 +52,7 @@ Use Go 1.26.9 (`go.mod` pins this toolchain). A release build requires a Git che
 
 Updates are operator initiated. Pluto verifies the signed manifest, artifact repository/version, checksum, size and executable version before stopping the service. Systemctl commands have a 30-second deadline and version probes a 5-second deadline. Replacement hard-links the old executable and atomically renames the candidate over the installed path; file/parent fsync and a protected `.update-pending` journal preserve recovery intent until health proof. A failed start/health check restores the previous binary. An interrupted update is reconciled on the next `sudo pluto update`; the flock is released automatically on process exit. A leftover `.previous` without a pending journal requires operator reconciliation and is never overwritten silently. Sources, credentials and the enabled state are preserved. Updates require the bootstrap installation at `/usr/local/bin/pluto` and root privileges.
 
-Bootstrap limits bytes while receiving (including responses without Content-Length), uses up to three bounded download attempts, verifies health/version after startup and removes a failed first-install binary/unit. Existing configuration/state and trust roots are retained. These tests do not replace native systemd/power-loss qualification of the final signed amd64 and arm64 releases.
+Bootstrap limits bytes while receiving (including responses without Content-Length), uses up to three bounded download attempts, verifies health/version after startup and removes a failed first-install binary/unit. Existing configuration/state and trust roots are retained. Native release qualification also waits up to 30 seconds for both systemd activation and the control socket before checking status, including after restart. These tests do not replace native systemd/power-loss qualification of the final signed amd64 and arm64 releases.
 
 ## Development
 
