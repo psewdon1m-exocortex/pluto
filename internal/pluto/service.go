@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"slices"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -83,6 +85,7 @@ func (s *Service) Apply(ctx context.Context, c Control) error {
 		return errors.New("update is in progress")
 	}
 	candidate := s.Config
+	sourcesChanged := false
 	switch c.Action {
 	case "connect":
 		origin, err := HTTPSOrigin(c.KernelURL)
@@ -120,6 +123,7 @@ func (s *Service) Apply(ctx context.Context, c Control) error {
 		if err != nil {
 			return err
 		}
+		sourcesChanged = !slices.Equal(candidate.Sources, values)
 		candidate.Sources = values
 		if len(values) == 0 {
 			candidate.Enabled = false
@@ -187,15 +191,54 @@ func (s *Service) Apply(ctx context.Context, c Control) error {
 		return err
 	}
 	s.Config = candidate
+	if sourcesChanged {
+		// The old source failure describes a different list. Keep unrelated
+		// operational failures and historical timestamps until a new run.
+		s.Observation.Error = withoutSourceFailure(s.Observation.Error)
+	}
 	s.auditLocked("configuration.changed", map[string]any{"action": c.Action, "enabled": candidate.Enabled, "sourceCount": len(candidate.Sources), "intervalSeconds": candidate.IntervalSeconds})
-	if c.Action == "interval" {
+	if c.Action == "interval" || sourcesChanged {
 		s.Observation.NextRunAt = ""
 		if candidate.Enabled {
-			s.Observation.NextRunAt = time.Now().Add(time.Duration(candidate.IntervalSeconds) * time.Second).UTC().Format(time.RFC3339Nano)
+			next := time.Now()
+			if !sourcesChanged {
+				next = next.Add(time.Duration(candidate.IntervalSeconds) * time.Second)
+			}
+			s.Observation.NextRunAt = next.UTC().Format(time.RFC3339Nano)
 		}
-		return SaveJSON(filepath.Join(s.StateDir, "status.json"), s.statusLocked().Observation)
+		if err := SaveJSON(filepath.Join(s.StateDir, "status.json"), s.statusLocked().Observation); err != nil {
+			if !strings.Contains(s.Observation.Error, "status persistence failed") {
+				s.Observation.Error = strings.TrimPrefix(s.Observation.Error+"; status persistence failed", "; ")
+			}
+			return err
+		}
 	}
 	return nil
+}
+
+func withoutSourceFailure(message string) string {
+	count, _, found := strings.Cut(message, " source entries failed: ")
+	n, err := strconv.Atoi(count)
+	if !found || err != nil || n < 1 {
+		return message
+	}
+	// These operational warnings may have been appended to a copy failure.
+	// Changing sources does not establish that either write has recovered.
+	warnings := []string{}
+	for {
+		removed := false
+		for _, warning := range []string{"local audit write failed", "status persistence failed"} {
+			if strings.HasSuffix(message, "; "+warning) {
+				message = strings.TrimSuffix(message, "; "+warning)
+				warnings = append([]string{warning}, warnings...)
+				removed = true
+				break
+			}
+		}
+		if !removed {
+			return strings.Join(warnings, "; ")
+		}
+	}
 }
 func (s *Service) startLocked(parent context.Context) {
 	c := s.Config

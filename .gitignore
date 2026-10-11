@@ -1,5 +1,8 @@
 /dist/
 /state/
+/.release-evidence/
+/known-problems-report.json
+/scripts/__pycache__/
 *.pem
 *.key
 *.test

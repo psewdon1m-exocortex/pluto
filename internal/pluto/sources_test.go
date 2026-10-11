@@ -5,7 +5,9 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
+	"time"
 )
 
 func TestSourceChangesPreserveExistingPathsAndPersist(t *testing.T) {
@@ -96,5 +98,155 @@ func TestSourceAdditionEnforcesCombinedLimit(t *testing.T) {
 	}
 	if _, err := addSources(current, []string{t.TempDir()}); err == nil {
 		t.Fatal("exceeded combined source limit")
+	}
+}
+
+func TestRemovingFailedSourceClearsPersistedErrorAndQueuesFreshCopy(t *testing.T) {
+	f := fixture(t)
+	dir := t.TempDir()
+	missing := filepath.Join(dir, "removed-source")
+	healthy := filepath.Join(dir, "healthy.conf")
+	if err := os.WriteFile(healthy, []byte("healthy"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	s, err := NewService(filepath.Join(dir, "config.json"), dir, "test")
+	if err != nil {
+		t.Fatal(err)
+	}
+	s.HTTP = f.server.Client()
+	s.Config.Sources = []string{missing, healthy}
+	s.Config.SaturnURL = f.server.URL
+	s.Config.AccessToken = strings.Repeat("t", 43)
+	s.Config.Enabled = true
+	s.Observation.LastSuccessAt = "2026-10-10T18:35:54Z"
+	if err := s.Apply(context.Background(), Control{Action: "run"}); err != nil {
+		t.Fatal(err)
+	}
+	waitForCopy := func() {
+		t.Helper()
+		deadline := time.Now().Add(3 * time.Second)
+		for s.Status().Running && time.Now().Before(deadline) {
+			time.Sleep(time.Millisecond)
+		}
+		if s.Status().Running {
+			t.Fatal("copy did not finish")
+		}
+	}
+	waitForCopy()
+	before := s.Status().Observation
+	if !strings.Contains(before.Error, missing) {
+		t.Fatal("did not reproduce stale source failure", before.Error)
+	}
+	if err := s.Apply(context.Background(), Control{Action: "sources-remove", Sources: []string{missing}}); err != nil {
+		t.Fatal(err)
+	}
+	after := s.Status().Observation
+	if after.Error != "" || after.LastSuccessAt != before.LastSuccessAt || after.LastAttemptAt != before.LastAttemptAt || after.UploadedFiles != before.UploadedFiles {
+		t.Fatalf("stale error or fabricated copy history: %+v", after)
+	}
+	next, err := time.Parse(time.RFC3339Nano, after.NextRunAt)
+	if err != nil || next.After(time.Now()) {
+		t.Fatal("new source list was not scheduled immediately", after.NextRunAt, err)
+	}
+	restarted, err := NewService(s.ConfigPath, s.StateDir, "test")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if restarted.Status().Observation.Error != "" || restarted.Status().Observation.LastSuccessAt != before.LastSuccessAt {
+		t.Fatal("daemon restart restored obsolete error or lost history")
+	}
+	if err := s.Apply(context.Background(), Control{Action: "run"}); err != nil {
+		t.Fatal(err)
+	}
+	waitForCopy()
+	if s.Status().Observation.Error != "" || s.Status().Observation.LastSuccessAt == before.LastSuccessAt {
+		t.Fatal("copy of remaining sources did not succeed")
+	}
+}
+
+func TestSourceChangesKeepErrorsOnNoOpAndRejectedChanges(t *testing.T) {
+	dir := t.TempDir()
+	s, err := NewService(filepath.Join(dir, "config.json"), dir, "test")
+	if err != nil {
+		t.Fatal(err)
+	}
+	s.Config.Sources = []string{dir}
+	message := "1 source entries failed: " + dir + ": cannot be read"
+	s.Observation.Error = message
+	s.Observation.NextRunAt = "2030-01-01T00:00:00Z"
+	for _, control := range []Control{
+		{Action: "sources-add", Sources: []string{dir}},
+		{Action: "sources-remove", Sources: []string{filepath.Join(dir, "not-selected")}},
+		{Action: "sources", Sources: []string{dir}},
+	} {
+		if err := s.Apply(context.Background(), control); err != nil {
+			t.Fatal(err)
+		}
+		if s.Status().Observation.Error != message || s.Status().Observation.NextRunAt != "" {
+			// Disabled copying hides NextRunAt; the underlying schedule stays intact.
+			t.Fatal("no-op changed error or visible schedule")
+		}
+		if s.Observation.NextRunAt != "2030-01-01T00:00:00Z" {
+			t.Fatal("no-op rescheduled copying")
+		}
+	}
+	for _, control := range []Control{
+		{Action: "sources-add", Sources: []string{filepath.Join(dir, "missing")}},
+		{Action: "sources-remove", Sources: []string{"relative"}},
+	} {
+		if err := s.Apply(context.Background(), control); err == nil {
+			t.Fatal("accepted invalid change")
+		}
+		if s.Status().Observation.Error != message {
+			t.Fatal("rejected change hid copy failure")
+		}
+	}
+	s.ConfigPath = dir
+	if err := s.Apply(context.Background(), Control{Action: "sources-remove", Sources: []string{dir}}); err == nil {
+		t.Fatal("ignored config persistence failure")
+	}
+	if s.Status().Observation.Error != message {
+		t.Fatal("failed config save cleared old error")
+	}
+}
+
+func TestChangedSourcesPreserveOperationalErrorsAndReportStatusWriteFailure(t *testing.T) {
+	for _, tc := range []struct{ before, after string }{
+		{"Saturn access was revoked; obtain a new setup code", "Saturn access was revoked; obtain a new setup code"},
+		{"remote request timed out; copying will retry", "remote request timed out; copying will retry"},
+		{"Configuration persistence failed", "Configuration persistence failed"},
+		{"1 source entries failed: /missing: inaccessible; local audit write failed; status persistence failed", "local audit write failed; status persistence failed"},
+	} {
+		t.Run(tc.before, func(t *testing.T) {
+			dir := t.TempDir()
+			s, err := NewService(filepath.Join(dir, "config.json"), dir, "test")
+			if err != nil {
+				t.Fatal(err)
+			}
+			s.Config.Sources = []string{dir}
+			s.Observation.Error = tc.before
+			if err := s.Apply(context.Background(), Control{Action: "sources-remove", Sources: []string{dir}}); err != nil {
+				t.Fatal(err)
+			}
+			if s.Status().Observation.Error != tc.after {
+				t.Fatalf("operational error hidden: %q", s.Status().Observation.Error)
+			}
+		})
+	}
+	dir := t.TempDir()
+	s, err := NewService(filepath.Join(dir, "config.json"), dir, "test")
+	if err != nil {
+		t.Fatal(err)
+	}
+	s.Config.Sources = []string{dir}
+	s.Observation.Error = "1 source entries failed: /missing: inaccessible"
+	if err := os.Mkdir(filepath.Join(dir, "status.json"), 0700); err != nil {
+		t.Fatal(err)
+	}
+	if err := s.Apply(context.Background(), Control{Action: "sources-remove", Sources: []string{dir}}); err == nil {
+		t.Fatal("ignored status persistence failure")
+	}
+	if s.Status().Observation.Error != "status persistence failed" {
+		t.Fatal("status write failure not visible", s.Status().Observation.Error)
 	}
 }

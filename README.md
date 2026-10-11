@@ -13,6 +13,8 @@ Pluto is the Linux outdoor file-backup agent for Exocortex. It runs independentl
 
 Navigate menus with **↑/↓**, select with **Enter** or **→**, and return with **Esc**, **←** or **q**. Number shortcuts still work. Source lists scroll as the selection moves. Text fields use ordinary line input; outdoor tokens and setup codes are hidden. TUI needs `stty` (coreutils) for interactive arrow navigation and restores the original terminal settings on exit or interruption. Piped input uses numbered menus.
 
+After a real source-list change, Pluto clears source failures from the previous list and persists the updated status, so reopening TUI or restarting the daemon does not revive that warning. Last-attempt/last-success timestamps and the previous file count remain historical until a new copy finishes. Unrelated access, network and local persistence/audit errors remain visible. If copying is enabled, the next daemon tick starts a copy of the new list; disabled copying stays disabled. Duplicate additions, removal of an unselected path and rejected changes preserve the previous status. **Copy now** refreshes the result manually; reopening TUI only reads the daemon's existing status.
+
 `/etc/nginx/nginx.conf` is saved as `backups/pluto/<connection name>/etc/nginx/nginx.conf`. Selected directories retain their full path and child hierarchy, including empty directories. File contents are stored directly, without ZIP packaging or an archive passphrase. Unix ownership, permissions and timestamps are not restored as file metadata in this initial version.
 
 Only changed contents create versions. Saturn retains at most **10 active versions per file, including the current file**; older archived bytes are removed. Source deletion does not delete a stored copy. An unreadable source does not block healthy sources; the run reports the partial failure and retries after 60 seconds while the regular interval is longer. Copy now also retries immediately. A verified temporary snapshot prevents transferring a file that changed while it was being read. Pluto checks space for that snapshot plus a 16 MiB reserve. Use completed database dump/backup files for consistent database recovery. Symbolic links to regular files copy the target's bytes at the link's original path, including targets outside the selected directory. Directory links, broken/cyclic links and special files are rejected and reported as partial failures; a file is limited to 256 MiB. A link retargeted during snapshotting is retried rather than uploaded under a stale path. Restored link contents are ordinary files; link metadata is not preserved.
@@ -46,7 +48,7 @@ journalctl -u pluto.service
 The dedicated repository is `psewdon1m-exocortex/pluto`. Release signing requires the externally provisioned `PLUTO_RELEASE_PRIVATE_KEY` GitHub Actions repository secret; it is never generated or stored in this repository.
 
 ```sh
-export PLUTO_VERSION=0.1.3
+export PLUTO_VERSION=0.1.4
 export PLUTO_REPOSITORY=https://github.com/OWNER/pluto
 export PLUTO_RELEASE_KEY_FILE=/protected/pluto-release-key.pem
 node scripts/build-release.mjs
