@@ -103,15 +103,27 @@ func (s *Service) Apply(ctx context.Context, c Control) error {
 		candidate.OutdoorToken = c.Token
 		candidate.SaturnURL = d.SaturnURL
 		candidate.ReleaseRepository = d.Repository
-	case "sources":
-		values, err := ValidateSources(c.Sources)
-		if err != nil {
-			return err
-		}
+	case "sources", "sources-add", "sources-remove":
 		if s.running {
 			return errors.New("pause copying before changing sources")
 		}
+		var values []string
+		var err error
+		switch c.Action {
+		case "sources-add":
+			values, err = addSources(candidate.Sources, c.Sources)
+		case "sources-remove":
+			values, err = removeSources(candidate.Sources, c.Sources)
+		default:
+			values, err = ValidateSources(c.Sources)
+		}
+		if err != nil {
+			return err
+		}
 		candidate.Sources = values
+		if len(values) == 0 {
+			candidate.Enabled = false
+		}
 	case "interval":
 		if c.IntervalSeconds < 60 || c.IntervalSeconds > 31536000 {
 			return errors.New("interval must be between 60 and 31536000 seconds")

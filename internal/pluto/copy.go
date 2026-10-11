@@ -13,6 +13,7 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
+	"syscall"
 )
 
 const MaxFileBytes int64 = 256 * 1024 * 1024
@@ -58,7 +59,7 @@ func Copy(ctx context.Context, r Remote, sources []string, spoolDir string) (int
 	for _, source := range sources {
 		process := func(filename string, entry fs.DirEntry, walkErr error) error {
 			if walkErr != nil {
-				return errors.New("a source cannot be read")
+				return errors.New("source cannot be read by the Pluto service account; check directory traversal and file read permissions")
 			}
 			if err := ctx.Err(); err != nil {
 				return err
@@ -71,14 +72,21 @@ func Copy(ctx context.Context, r Remote, sources []string, spoolDir string) (int
 				return ensure(relative)
 			}
 			if entry.Type()&os.ModeSymlink != 0 {
-				return errors.New("a symbolic link was found; symbolic links are not followed")
-			}
-			if entry.Type() != 0 {
+				info, err := os.Stat(filename)
+				if err != nil {
+					return errors.New("symbolic link target is missing or inaccessible to the Pluto service account")
+				}
+				if !info.Mode().IsRegular() {
+					return errors.New("symbolic links must point to regular files; directory links and special files are not followed")
+				}
+			} else if entry.Type() != 0 {
 				return errors.New("sources must contain only regular files and directories")
 			}
-			src, err := os.Open(filename)
+			// A link can change between validation and open. Nonblocking open plus
+			// fstat rejects a replacement FIFO/device without waiting for a writer.
+			src, err := os.OpenFile(filename, os.O_RDONLY|syscall.O_NONBLOCK, 0)
 			if err != nil {
-				return errors.New("source file cannot be opened")
+				return errors.New("source file cannot be opened by the Pluto service account; check target and parent-directory permissions")
 			}
 			defer src.Close()
 			before, err := src.Stat()
@@ -102,6 +110,10 @@ func Copy(ctx context.Context, r Remote, sources []string, spoolDir string) (int
 			after, err := src.Stat()
 			if err != nil || after.Size() != before.Size() || !after.ModTime().Equal(before.ModTime()) {
 				return errors.New("source changed during copying")
+			}
+			current, err := os.Stat(filename)
+			if err != nil || !os.SameFile(before, current) {
+				return errors.New("source or symbolic link target changed during copying")
 			}
 			sha := hex.EncodeToString(digest.Sum(nil))
 			if err = ensure(path.Dir(relative)); err != nil {

@@ -224,9 +224,9 @@ func TestConfigurationRejectsUnsafeSourcesAndOrigins(t *testing.T) {
 	}
 	if runtime.GOOS == "linux" {
 		file := filepath.Join(t.TempDir(), "symlink")
-		os.Symlink("/etc/passwd", file)
+		os.Symlink(t.TempDir(), file)
 		if _, err := ValidateSources([]string{file}); err == nil {
-			t.Fatal("accepted symlink")
+			t.Fatal("accepted directory symlink")
 		}
 	}
 }
@@ -351,22 +351,51 @@ func TestUpdateRestoresPreviousBinaryAfterFailedStart(t *testing.T) {
 
 func TestInterruptedUpdateRecoveryRetainsAnInstalledBinary(t *testing.T) {
 	for _, stage := range []string{"intent", "backup", "replacement"} {
-		t.Run(stage,func(t *testing.T) {
-			executable := filepath.Join(t.TempDir(),"pluto")
-			if err := os.WriteFile(executable,[]byte("old"),0755); err != nil { t.Fatal(err) }
-			if err := os.WriteFile(executable+".update-pending",[]byte("pluto-replacement-v1\n"),0600); err != nil { t.Fatal(err) }
-			if stage!="intent" { if err:=os.Link(executable,executable+".previous");err!=nil {t.Fatal(err)} }
-			if stage=="replacement" {
-				candidate:=executable+".candidate";os.WriteFile(candidate,[]byte("new"),0755)
-				if err:=os.Rename(candidate,executable);err!=nil {t.Fatal(err)}
-				if err:=recoverInterruptedUpdate(executable,func(string)error{return errors.New("offline systemd")});err==nil {t.Fatal("ignored stop failure")}
-				if _,err:=os.Stat(executable+".previous");err!=nil {t.Fatal("lost rollback after failed stop")}
+		t.Run(stage, func(t *testing.T) {
+			executable := filepath.Join(t.TempDir(), "pluto")
+			if err := os.WriteFile(executable, []byte("old"), 0755); err != nil {
+				t.Fatal(err)
 			}
-			if _,err:=os.Stat(executable);err!=nil {t.Fatal("installed path missing")}
-			started:=false
-			if err:=recoverInterruptedUpdate(executable,func(action string)error { if action=="start" {started=true};return nil });err!=nil {t.Fatal(err)}
-			bytes,_:=os.ReadFile(executable);if string(bytes)!="old"||!started {t.Fatalf("failed recovery: %s",bytes)}
-			if _,err:=os.Stat(executable+".update-pending");!os.IsNotExist(err) {t.Fatal("journal not cleared after successful recovery")}
+			if err := os.WriteFile(executable+".update-pending", []byte("pluto-replacement-v1\n"), 0600); err != nil {
+				t.Fatal(err)
+			}
+			if stage != "intent" {
+				if err := os.Link(executable, executable+".previous"); err != nil {
+					t.Fatal(err)
+				}
+			}
+			if stage == "replacement" {
+				candidate := executable + ".candidate"
+				os.WriteFile(candidate, []byte("new"), 0755)
+				if err := os.Rename(candidate, executable); err != nil {
+					t.Fatal(err)
+				}
+				if err := recoverInterruptedUpdate(executable, func(string) error { return errors.New("offline systemd") }); err == nil {
+					t.Fatal("ignored stop failure")
+				}
+				if _, err := os.Stat(executable + ".previous"); err != nil {
+					t.Fatal("lost rollback after failed stop")
+				}
+			}
+			if _, err := os.Stat(executable); err != nil {
+				t.Fatal("installed path missing")
+			}
+			started := false
+			if err := recoverInterruptedUpdate(executable, func(action string) error {
+				if action == "start" {
+					started = true
+				}
+				return nil
+			}); err != nil {
+				t.Fatal(err)
+			}
+			bytes, _ := os.ReadFile(executable)
+			if string(bytes) != "old" || !started {
+				t.Fatalf("failed recovery: %s", bytes)
+			}
+			if _, err := os.Stat(executable + ".update-pending"); !os.IsNotExist(err) {
+				t.Fatal("journal not cleared after successful recovery")
+			}
 		})
 	}
 }

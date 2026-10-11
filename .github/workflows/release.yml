@@ -35,13 +35,13 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           repository: psewdon1m-exocortex/kernel
-          ref: f0edf9b3d8363c9d00432f7c01614e62e62b9f3e
+          ref: b89703f7b23051e20f01bf607e3d2a0e922dfaf5
           path: .qualification/kernel
       - name: Check out the published Saturn contract
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           repository: psewdon1m-exocortex/saturn
-          ref: 69812bea6ef3dfe22de727fc392dd27af61513d7
+          ref: 39baf80f6976bc93dd22095a18c398f6a8f6f14d
           path: .qualification/saturn
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
         with:

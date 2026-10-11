@@ -97,14 +97,63 @@ func ValidateSources(values []string) ([]string, error) {
 		}
 		info, err := os.Lstat(v)
 		if err != nil {
-			return nil, errors.New("a selected source is inaccessible")
+			return nil, errors.New("a selected source is inaccessible to the Pluto service account")
+		}
+		if info.Mode()&os.ModeSymlink != 0 {
+			info, err = os.Stat(v)
+			if err != nil || !info.Mode().IsRegular() {
+				return nil, errors.New("a source symbolic link must point to an accessible regular file; directory links are not followed")
+			}
 		}
 		if !info.IsDir() && !info.Mode().IsRegular() {
-			return nil, errors.New("sources must be regular files or directories; symbolic links are not followed")
+			return nil, errors.New("sources must be regular files, directories or links to regular files")
 		}
 		if !seen[v] {
 			seen[v] = true
 			result = append(result, v)
+		}
+	}
+	return result, nil
+}
+
+func addSources(current, additions []string) ([]string, error) {
+	values, err := ValidateSources(additions)
+	if err != nil {
+		return nil, err
+	}
+	result := append([]string{}, current...)
+	seen := make(map[string]bool, len(result))
+	for _, value := range result {
+		seen[value] = true
+	}
+	for _, value := range values {
+		if !seen[value] {
+			result = append(result, value)
+			seen[value] = true
+		}
+	}
+	if len(result) > 128 {
+		return nil, errors.New("select at most 128 files or folders")
+	}
+	return result, nil
+}
+
+func removeSources(current, removals []string) ([]string, error) {
+	if len(removals) < 1 || len(removals) > 128 {
+		return nil, errors.New("select between 1 and 128 sources to remove")
+	}
+	remove := make(map[string]bool, len(removals))
+	for _, value := range removals {
+		value = filepath.Clean(strings.TrimSpace(value))
+		if !filepath.IsAbs(value) || value == string(filepath.Separator) {
+			return nil, errors.New("select absolute source paths to remove")
+		}
+		remove[value] = true
+	}
+	result := []string{}
+	for _, value := range current {
+		if !remove[value] {
+			result = append(result, value)
 		}
 	}
 	return result, nil
