@@ -9,6 +9,12 @@ import os from 'node:os';
 import {createHash,randomBytes} from 'node:crypto';
 import {createIsolation,OwnedDocker} from './stage13-runtime.mjs';
 
+export function assertOnlyRunningContainerIds(output,expected){
+  const ids=output.trim().split(/\r?\n/).filter(Boolean);
+  for(const id of ids)assert.match(id,/^[a-f0-9]{64}$/,'Docker must return complete container IDs');
+  assert.deepEqual(ids.sort(),[...expected].sort());
+}
+
 class OwnedLoopbackDocker extends OwnedDocker {
   checked(kind,name){
     if(kind!=='network'||!this.loopbackPeer||name!=='container:'+this.loopbackPeer)return super.checked(kind,name);
@@ -47,7 +53,7 @@ async function until(limit,probe,interval=200){
   throw new Error('bulk CI bounded observation deadline');
 }
 function runningOnly(expected){
-  assert.deepEqual(owner.cli(['ps','--no-trunc','--format','{{.ID}}']).stdout.trim().split(/\r?\n/).sort(),[...expected].sort());
+  assertOnlyRunningContainerIds(owner.cli(['ps','--no-trunc','--format','{{.ID}}']).stdout,expected);
 }
 try{
   runningOnly(spec.allowedRunning);

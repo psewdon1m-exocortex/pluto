@@ -41,6 +41,7 @@ jobs:
         run: |
           python3 -I -B scripts/test-go-ci-report.py
           python3 -I -B scripts/test-go-ci-dispatch.py
+          node --test scripts/native-fixture/bulk/producer-running.test.mjs
       - name: Prepare the four required native CI scopes
         env:
           PLUTO_GO_CI_BULK_INPUTS: ${{ inputs.qualification_bulk_inputs || vars.PLUTO_GO_CI_BULK_INPUTS }}

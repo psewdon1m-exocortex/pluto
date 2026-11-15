@@ -2,9 +2,9 @@
   "schema": "exocortex.package3.frozen-source.v1",
   "component": "pluto",
   "version": "0.1.5",
-  "baseGitCommit": "811b1483778497fb37e8f1ea56388ed71706c01d",
-  "scope": "Production Go/runtime unchanged. Correct public compiler-produced test2json tool mode to0555 for existing nonroot read-only native collector; no private state permissions or guards changed. All4native scopes and full ordinary CI mandatory.",
-  "sourceSetSHA256": "c69e2fbe12e423433d2e2eefd1a6f4e8276e18fded1295118218b6f346e57391",
+  "baseGitCommit": "013ed36a5a9930b1a13d3a82e45d4337d4b4e1a5",
+  "scope": "ProductionGo unchanged. Bulk actor-isolation guard parses emptyDockerps correctly while fullID/exactset refusal preserved. All5guardcontracts plus all4native scopes/fullordinaryCI required. Originalfailedstates retained.",
+  "sourceSetSHA256": "01597da791dc3068adb5bc7ba67ea48d7bb8eb4e27631bc98a865f8ef27fddcf",
   "files": [
     {
       "path": ".github/workflows/package3-qualification.yml",
@@ -22,9 +22,9 @@
     },
     {
       "path": ".github/workflows/verify.yml",
-      "bytes": 3626,
-      "sha256": "316885410d6a1ec9a59954256d431b4794c9e13f996c36d820986e9d7a3ae9c4",
-      "canonical_sha256": "316885410d6a1ec9a59954256d431b4794c9e13f996c36d820986e9d7a3ae9c4",
+      "bytes": 3702,
+      "sha256": "e4e3c2968f502e98063b6d902c6086b4f1a0f1a55deb6a0036cd99b7ba8a7f8b",
+      "canonical_sha256": "e4e3c2968f502e98063b6d902c6086b4f1a0f1a55deb6a0036cd99b7ba8a7f8b",
       "line_endings": "LF"
     },
     {
@@ -312,9 +312,9 @@
     },
     {
       "path": "docs/PACKAGE3_QUALIFICATION.md",
-      "bytes": 2729,
-      "sha256": "382d6385bd9fe533b7efb63bb4dc4edd0a103a0844264f02d2b2d147eca88f06",
-      "canonical_sha256": "382d6385bd9fe533b7efb63bb4dc4edd0a103a0844264f02d2b2d147eca88f06",
+      "bytes": 3292,
+      "sha256": "63653a687b87c225064351bba3d76a4ba2322e025d7ae5fa737a910f4858dc67",
+      "canonical_sha256": "63653a687b87c225064351bba3d76a4ba2322e025d7ae5fa737a910f4858dc67",
       "line_endings": "LF"
     },
     {
@@ -2914,10 +2914,17 @@
       "line_endings": "LF"
     },
     {
+      "path": "scripts/native-fixture/bulk/producer-running.test.mjs",
+      "bytes": 1069,
+      "sha256": "6c17b35d5608126503da488a0c7f656dd1962d2793fb4c8064eafd06646a89c0",
+      "canonical_sha256": "6c17b35d5608126503da488a0c7f656dd1962d2793fb4c8064eafd06646a89c0",
+      "line_endings": "LF"
+    },
+    {
       "path": "scripts/native-fixture/bulk/producer.mjs",
-      "bytes": 25926,
-      "sha256": "8b01677ddf360b1949a0c9cfe0f95bb4fc914b02dc0a3cffb0aa905d28923560",
-      "canonical_sha256": "8b01677ddf360b1949a0c9cfe0f95bb4fc914b02dc0a3cffb0aa905d28923560",
+      "bytes": 26177,
+      "sha256": "76f718d4a7d760c43a2b7d1a27e7692e91ff8e5fab20044c8999ee929953f46c",
+      "canonical_sha256": "76f718d4a7d760c43a2b7d1a27e7692e91ff8e5fab20044c8999ee929953f46c",
       "line_endings": "LF"
     },
     {
