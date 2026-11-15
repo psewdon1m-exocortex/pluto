@@ -22,9 +22,12 @@ NATIVE_CASES+=sorted({name.split('/')[0] for name in OWNER_POLICY['cases']})
 
 
 BATCH_TEST='TestSmallBatchEngineActualCLIProcessesMixedAndLostReply'
+API_POLICY=json.loads((Path(__file__).parent/'native-fixture/api/case-policy.json').read_bytes())
+if API_POLICY.get('schema')!='pluto.native-api-ci-case-policy.v1':raise ValueError('reviewed API case policy required')
+API_CASES=API_POLICY['cases'];NATIVE_CASES+=list(API_CASES)
 
 def native_package(case):
-    return 'pluto/internal/pluto/syncstate' if case==BATCH_TEST else C01_PACKAGE
+    return API_CASES[case]['package'] if case in API_CASES else 'pluto/internal/pluto/syncstate' if case==BATCH_TEST else C01_PACKAGE
 
 def events(file, maximum=MAX_LOG_BYTES):
     total = 0
@@ -378,6 +381,46 @@ def bulk_ci_evidence(directory,project,actual,elf):
     return dict(schema='pluto.bulk-ci-evidence.v1',requestID=checkpoint['requestID'],sourceFiles=32,plutoVersions=33,actualSIGKILL=crashes[0],fullOrdinaryCiGreen=False,sourceCohortSHA256=backend['sourceCohortSHA256'])
 
 
+def api_ci_script_inputs(project):
+    project=Path(project).resolve();rows=bulk_ci_script_inputs(project)
+    names={row['path'] for row in rows};names.remove('scripts/run-bulk-ci.mjs');names.add('scripts/run-api-ci.mjs')
+    root=project/'scripts/native-fixture/api'
+    for file in root.rglob('*'):
+        if file.is_symlink():raise ValueError('regular API helper source required')
+        if file.is_file():names.add(file.relative_to(project).as_posix())
+    return [dict(path=name,bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest()) for name in sorted(names) for raw in [bounded_bytes(project/name)]]
+
+def api_ci_evidence(directory,project,case,actual,elf):
+    proof=bounded_json(directory/'api-evidence.json')
+    if (proof.get('schema')!='pluto.native-api-ci-proof.v1' or proof.get('case')!=case or
+        proof.get('status')!='PASS_ORIGINAL_CASE_GENUINE_API_PG_SFTP_TYPED_LIFECYCLE' or
+        proof.get('testBinarySHA256')!=elf or proof.get('actualGoWait')!=actual or proof.get('fullOrdinaryCiGreen') is not False or
+        proof.get('containerClosure',{}).get('status')!='STOPPED_RETAINED' or proof.get('processCrashFaults')!=0 or proof.get('independentFullGraphRestoreClaimed') is not False):raise ValueError('actual closed same-case genuine API proof required')
+    backend=bounded_json(directory/'backend-inputs.json');policyRaw=bounded_bytes(Path(project)/'scripts/native-fixture/bulk/backend-policy.json');policy=json.loads(policyRaw);cohort=backend.get('files',[])
+    if (backend.get('schema')!='pluto.bulk-ci-backend-inputs.v1' or len(cohort)!=602 or [row.get('path') for row in cohort]!=policy.get('files') or
+        backend.get('policySHA256')!=hashlib.sha256(policyRaw).hexdigest() or backend.get('sourceCohortSHA256')!=proof.get('sourceCohortSHA256') or
+        hashlib.sha256(json.dumps(cohort,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()!=proof.get('sourceCohortSHA256')):raise ValueError('complete exact602 genuine backend input cohort required')
+    imageRaw=bounded_bytes(directory/'api-backend-image.json');image=json.loads(imageRaw);images=proof.get('images',{})
+    if (set(images)!={'native','saturn','postgres','sftp'} or not all(re.fullmatch('sha256:[a-f0-9]{64}',v) for v in images.values()) or
+        backend.get('images')!={k:images[k] for k in ('saturn','postgres','sftp')} or
+        image.get('schema')!='pluto.bulk-ci-backend-image.v1' or image.get('status')!='PASS_EXACT_602_IMAGE_FILES' or image.get('files')!=602 or image.get('image')!=images['saturn'] or
+        image.get('sourceCohortSHA256')!=proof.get('sourceCohortSHA256') or image.get('policySHA256')!=backend.get('policySHA256') or
+        hashlib.sha256(imageRaw).hexdigest()!=proof.get('backendImageSHA256')):raise ValueError('actual backend image bytes do not match genuine API cohort')
+    scripts=bounded_json(directory/'ci-source-inputs.json')
+    if scripts.get('schema')!='pluto.native-api-ci-script-source.v1' or scripts.get('inputs')!=api_ci_script_inputs(project):raise ValueError('API CI script input closure differs')
+    containers=proof.get('containers',[]);ids=[row.get('id') for row in containers]
+    if not containers or len(ids)!=len(set(ids)):raise ValueError('distinct actual API stand containers required')
+    for row in containers:
+        if (not re.fullmatch('[a-f0-9]{64}',row.get('id','')) or not row.get('created') or row.get('running') is not False or row.get('oomKilled') is not False or
+            type(row.get('actualExitCode')) is not int or row['actualExitCode']!=0 or row.get('publishedPorts')!={}):raise ValueError('all own API/native/backend/helper actors must actually join0 without ports')
+    ready=proof.get('apiReady',{});byId={row['id']:row for row in containers}
+    if ready.get('loopbackOnly') is not True or not re.fullmatch(r'net:\[\d+\]',ready.get('networkNamespace','')) or len(ready.get('roots',[]))!=2:raise ValueError('actual shared loopback network namespace required')
+    for role,kind in [('anchor','native'),('postgres','postgres'),('api','saturn'),('sftp','sftp')]:
+        row=byId.get(ready.get(role),{})
+        if row.get('image')!=images[kind] or row.get('networkMode')!=('none' if role=='anchor' else 'container:'+ready['anchor']):raise ValueError('actual native/API/PG/SFTP tuple binding differs')
+    return proof
+
+
 def prepared_ci_evidence(directory):
     """Bind the reviewed C12 fault to its actual, independently restored checkpoint."""
     proof = bounded_json(directory / 'prepared-backup.json')
@@ -544,6 +587,7 @@ def native_shard(directory, project, case):
             paths.add(name)
         if sum(x.endswith('/coherent-fixture.tar') for x in paths)!=6 or sum(x.endswith('/engine-cli-restore.json') for x in paths)!=3:raise ValueError('six independent batch backups and three before-CLI restore proofs required')
         proof['batch']=dict(backupFiles=len(paths),independentBackups=6,fixture='synthetic loopback receiver; actual native CLI and SQLite; not Saturn/PG/SFTP')
+    if case in API_CASES:proof['api']=api_ci_evidence(directory,project,case,actual,source['testBinarySHA256'])
     if case==BULK_TEST:proof['bulk']=bulk_ci_evidence(directory,project,actual,source['testBinarySHA256'])
     if case==PREPARED_TEST:proof['prepared']=prepared_ci_evidence(directory)
     return actual_events,actual['ExitCode'],proof

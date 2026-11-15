@@ -18,6 +18,13 @@ if POLICY.exists():
     CASES+=sorted({name.split('/')[0] for name in policy['cases']})
 
 
+API_POLICY=Path('/api-case-policy.json')
+API_CASES={}
+if API_POLICY.exists():
+    api_policy=json.loads(API_POLICY.read_bytes())
+    if api_policy.get('schema')!='pluto.native-api-ci-case-policy.v1':raise ValueError('reviewed API case policy required')
+    API_CASES=api_policy['cases'];CASES+=list(API_CASES)
+
 def collect(retained, converter, converter_sha, source_file, case=CASES[0]):
     if case not in CASES: raise ValueError("unreviewed native case")
     root=Path(retained); evidence=root/'evidence'; actor=evidence/'a-000001'
@@ -38,7 +45,7 @@ def collect(retained, converter, converter_sha, source_file, case=CASES[0]):
         raise ValueError('complete actual native stdout digest differs')
     converter=Path(converter)
     if sha(converter.read_bytes())!=converter_sha:raise ValueError('qualified converter SHA differs')
-    package='pluto/internal/pluto/syncstate' if case=='TestSmallBatchEngineActualCLIProcessesMixedAndLostReply' else 'pluto/internal/pluto'
+    package=API_CASES[case]['package'] if case in API_CASES else 'pluto/internal/pluto/syncstate' if case=='TestSmallBatchEngineActualCLIProcessesMixedAndLostReply' else 'pluto/internal/pluto'
     converted=subprocess.run([str(converter),'-t','-p',package],input=raw,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=False)
     if converted.returncode!=0 or converted.stderr or len(converted.stdout)>4*1024*1024:
         raise ValueError('standard Go test2json conversion failed')

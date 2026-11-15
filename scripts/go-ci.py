@@ -17,6 +17,9 @@ OWNER_POLICY=json.loads((PROJECT/'scripts/native-fixture/owner-case-policy.json'
 if OWNER_POLICY.get('schema')!='pluto.native-owner-case-policy.v1':raise ValueError('reviewed owner case policy required')
 NATIVE_SCOPES.update({f'owner-{index}':case for index,case in enumerate(sorted({name.split('/')[0] for name in OWNER_POLICY['cases']}))})
 
+API_POLICY=json.loads((PROJECT/'scripts/native-fixture/api/case-policy.json').read_bytes())
+if API_POLICY.get('schema')!='pluto.native-api-ci-case-policy.v1':raise ValueError('reviewed API case policy required')
+API_CASES=API_POLICY['cases'];NATIVE_SCOPES.update({'api-'+str(index):case for index,case in enumerate(API_CASES)})
 
 def capture(argv, file, *, cwd=PROJECT, separate_stderr=False):
     """Join the actual process and both drains; keep Go JSON stdout unmixed."""
@@ -99,7 +102,12 @@ def main(argv=None):
         scopes={}
         for label,case in NATIVE_SCOPES.items():
             output=evidence/label
-            if label=='bulk':
+            if case in API_CASES:
+                case_common=list(common)
+                if API_CASES[case]['package']=='pluto/internal/pluto/syncstate':case_common[case_common.index('--test-binary')+1]=syncstate
+                producer=[node,str(PROJECT/'scripts/run-api-ci.mjs'),'--case',case,'--output',str(output),'--backend-inputs',backend,'--python',sys.executable,*case_common]
+                if os.environ.get('PLUTO_GO_CI_BULK_PRIVATE_BASE'):producer+=['--private-base',os.environ['PLUTO_GO_CI_BULK_PRIVATE_BASE']]
+            elif label=='bulk':
                 producer=[node,str(PROJECT/'scripts/run-bulk-ci.mjs'),'--case',case,'--output',str(output),'--backend-inputs',backend,'--python',sys.executable,*common]
                 if os.environ.get('PLUTO_GO_CI_BULK_PRIVATE_BASE'):producer+=['--private-base',os.environ['PLUTO_GO_CI_BULK_PRIVATE_BASE']]
             else:

@@ -1,0 +1,26 @@
+import hashlib,json,os,re,secrets,socket,stat,sys,time
+from pathlib import Path
+
+ROOT='/retained/endurance-api-current'
+def artifact(file,expected):
+ p=Path(file);s=p.lstat()
+ if not re.fullmatch('[a-f0-9]{64}',expected) or not stat.S_ISREG(s.st_mode) or stat.S_IMODE(s.st_mode)!=0o555 or (s.st_uid,s.st_gid)!=(0,0) or not 0<s.st_size<=128*1024*1024:raise ValueError('exact Root-staged artifact required')
+ with p.open('rb') as f:actual=hashlib.file_digest(f,'sha256').hexdigest()
+ if actual!=expected:raise ValueError('Root-staged artifact SHA differs')
+ return dict(Path=file,SHA256=expected,Bytes=s.st_size)
+def write(file,raw,mode):
+ with os.fdopen(os.open(file,os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW|os.O_WRONLY,0o400),'wb') as f:f.write(raw);f.flush();os.fchmod(f.fileno(),mode);os.fsync(f.fileno())
+def main(cid,owner_sha,test_sha,cli_sha,run,scope,case):
+ if (os.getuid(),os.getgid())!=(0,0) or not re.fullmatch('[a-f0-9]{64}',cid) or socket.gethostname()!=cid[:12]:raise ValueError('actual isolated Root bootstrap/CID required')
+ info=Path(ROOT).lstat()
+ if not stat.S_ISDIR(info.st_mode) or stat.S_IMODE(info.st_mode)!=0o700 or (info.st_uid,info.st_gid)!=(10001,10001):raise ValueError('fresh private retained root required')
+ for value in (run,scope):
+  if not re.fullmatch('[a-zA-Z0-9_.-]{1,128}',value):raise ValueError('exact scope/run required')
+ policy=json.loads(Path('/api-case-policy.json').read_bytes())
+ if policy.get('schema')!='pluto.native-api-ci-case-policy.v1' or case not in policy['cases']:raise ValueError('reviewed genuine API case required')
+ entry=policy['cases'][case];names=[case+'/'+child for child in entry['subcases']] if entry.get('subcases') else [case]
+ if (entry['package']=='pluto/internal/pluto' and not entry['actions']) or not all(re.fullmatch('[a-z-]+',action) for action in entry['actions']):raise ValueError('exact action policy required')
+ manifest=dict(Schema='nativefixture.owner.v2',Run=run,Scope=scope,Nonce=secrets.token_hex(16),ContainerID=cid,Hostname=cid[:12],Namespaces=[os.readlink('/proc/self/ns/'+name) for name in ('mnt','pid','user')],ExpiresUnixMs=time.time_ns()//1000000+900000,Socket=ROOT+'/owner.sock',RetainedRoot=ROOT,EvidenceRoot=ROOT+'/evidence',Owner=artifact('/pluto-native-owner',owner_sha),GoTest=artifact('/pluto-native-metadata.test',test_sha),GoArgs=['-test.run=^'+case+'$','-test.count=1','-test.timeout=10m','-test.v'],Artifacts=dict(current=artifact('/pluto-current',cli_sha)),Cases={name:dict(Actions=dict.fromkeys(entry['actions'],45000),MaxFixtures=1) for name in names},Environment=['STAGE3_PLUTO_BINARY=/pluto-current','GOMAXPROCS=2','COMPLETION_CONFIG='+ROOT+'/client-output/clients.private.json','COMPLETION_HOST_IP=127.0.0.1'],OutputPrefixBytes=4*1024*1024)
+ if entry['package']=='pluto/internal/pluto/syncstate':manifest['Environment'].append('TMPDIR='+ROOT+'/tmp')
+ raw=json.dumps(manifest,separators=(',',':')).encode()+bytes([10]);write('/api-manifest.json',raw,0o444);print(hashlib.sha256(raw).hexdigest())
+if __name__=='__main__':main(*sys.argv[1:])

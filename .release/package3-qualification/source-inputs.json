@@ -2,9 +2,9 @@
   "schema": "exocortex.package3.frozen-source.v1",
   "component": "pluto",
   "version": "0.1.5",
-  "baseGitCommit": "ca1ed1f3acd90277c30500de3e8d6105547ff1a0",
-  "scope": "Package3 conditional report final metadata consistency; only legacy C01 aggregation and its regression changed after actual16guard verification",
-  "sourceSetSHA256": "b7c3f373653fd28d4f44240b31dd9b9c9c20d70318cccf7921f1300f53ce4f68",
+  "baseGitCommit": "99ad970929f0722bd0c1b2dc60093316a40242f2",
+  "scope": "Package3 actual API callers/recovery fresh disk-backed TMPDIR only; no quota/assertion/Go changes",
+  "sourceSetSHA256": "a5196f5b258087357fcded9e8873513e02f11546d472ef273e17bc1e891808d8",
   "files": [
     {
       "path": ".github/workflows/package3-qualification.yml",
@@ -2419,9 +2419,9 @@
     },
     {
       "path": "scripts/check-go-ci.py",
-      "bytes": 51379,
-      "sha256": "780fc85bb10330f803bae3a65dff328f0a2c8951962044b251e1b8b00b8ab32e",
-      "canonical_sha256": "780fc85bb10330f803bae3a65dff328f0a2c8951962044b251e1b8b00b8ab32e",
+      "bytes": 56136,
+      "sha256": "b0117436a56ed317db87fec980376841887e747071db01dba147b7f0ad361b5c",
+      "canonical_sha256": "b0117436a56ed317db87fec980376841887e747071db01dba147b7f0ad361b5c",
       "line_endings": "LF"
     },
     {
@@ -2433,9 +2433,9 @@
     },
     {
       "path": "scripts/go-ci.py",
-      "bytes": 9373,
-      "sha256": "33d6a73868fc393463eae6550de92330ac7bb5e6a757ee56b0f2c9f21f44cc7e",
-      "canonical_sha256": "33d6a73868fc393463eae6550de92330ac7bb5e6a757ee56b0f2c9f21f44cc7e",
+      "bytes": 10231,
+      "sha256": "73c37af2dfdceb1168b36a6dcde602855757316004f3d4b7a214b49ab630b18f",
+      "canonical_sha256": "73c37af2dfdceb1168b36a6dcde602855757316004f3d4b7a214b49ab630b18f",
       "line_endings": "LF"
     },
     {
@@ -2450,6 +2450,41 @@
       "bytes": 274,
       "sha256": "15745dd53d92f6838de1181d66edb99229f357efe213d2708458b21a97a44ca7",
       "canonical_sha256": "15745dd53d92f6838de1181d66edb99229f357efe213d2708458b21a97a44ca7",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/api/case-policy.json",
+      "bytes": 1284,
+      "sha256": "072ac174e99d9f13e8174f76815c96ef23dc078a914984ebc934edbb4b698691",
+      "canonical_sha256": "072ac174e99d9f13e8174f76815c96ef23dc078a914984ebc934edbb4b698691",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/api/finish.mjs",
+      "bytes": 5014,
+      "sha256": "f1f7913423ce2552ef0f2ba0dff44add643a6a4bc6fdec38a3c1864d9e8fe489",
+      "canonical_sha256": "f1f7913423ce2552ef0f2ba0dff44add643a6a4bc6fdec38a3c1864d9e8fe489",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/api/producer.mjs",
+      "bytes": 24630,
+      "sha256": "f3aa4756ef2970db0f2840d16cb899823f39269eb6966b7778c7d55ddcbac86c",
+      "canonical_sha256": "f3aa4756ef2970db0f2840d16cb899823f39269eb6966b7778c7d55ddcbac86c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/api/run-native.sh",
+      "bytes": 2629,
+      "sha256": "0ffaa9511b5743860b530ab06e2227aacc3223fb225376c085e5043fe7f6d02f",
+      "canonical_sha256": "0ffaa9511b5743860b530ab06e2227aacc3223fb225376c085e5043fe7f6d02f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/api/write-native-manifest.py",
+      "bytes": 3041,
+      "sha256": "a422996d6704d0625b84ac45a56903a5c91e49f4e087732dcac3de0168000a4b",
+      "canonical_sha256": "a422996d6704d0625b84ac45a56903a5c91e49f4e087732dcac3de0168000a4b",
       "line_endings": "LF"
     },
     {
@@ -3230,9 +3265,9 @@
     },
     {
       "path": "scripts/native-fixture/export_c01_ci.py",
-      "bytes": 5426,
-      "sha256": "d668391f6b69c7e5fac55ed1254196653184852bfd46175bf0aa9df702739455",
-      "canonical_sha256": "d668391f6b69c7e5fac55ed1254196653184852bfd46175bf0aa9df702739455",
+      "bytes": 5790,
+      "sha256": "04d0aedc083390ff9ad469ffe25be1a7a3679027a5fd66d8f206f52ba1e6a128",
+      "canonical_sha256": "04d0aedc083390ff9ad469ffe25be1a7a3679027a5fd66d8f206f52ba1e6a128",
       "line_endings": "LF"
     },
     {
@@ -3369,6 +3404,13 @@
       "line_endings": "LF"
     },
     {
+      "path": "scripts/run-api-ci.mjs",
+      "bytes": 14139,
+      "sha256": "a0e69c222973760371657688e11963321ff548b3789dc3c47b6b5f319ce00ae4",
+      "canonical_sha256": "a0e69c222973760371657688e11963321ff548b3789dc3c47b6b5f319ce00ae4",
+      "line_endings": "LF"
+    },
+    {
       "path": "scripts/run-bulk-ci.mjs",
       "bytes": 13811,
       "sha256": "0009952b07b8c8cd9e556b1f18149074718f133dc9a98fa1d7eb27297f041f6c",
@@ -3426,16 +3468,16 @@
     },
     {
       "path": "scripts/test-go-ci-dispatch.py",
-      "bytes": 11086,
-      "sha256": "7fb7e47134eb96c4b29e1a38adc9e7d2d060dcf8a2a073d68447b14fc7d97256",
-      "canonical_sha256": "7fb7e47134eb96c4b29e1a38adc9e7d2d060dcf8a2a073d68447b14fc7d97256",
+      "bytes": 11758,
+      "sha256": "f125bed6be319d4230b1c68cb8a14a93e95e2b4631dbaaa6645e6f4bdaa374f2",
+      "canonical_sha256": "f125bed6be319d4230b1c68cb8a14a93e95e2b4631dbaaa6645e6f4bdaa374f2",
       "line_endings": "LF"
     },
     {
       "path": "scripts/test-go-ci-report.py",
-      "bytes": 42072,
-      "sha256": "00804fb88deee81a2e228ba66a72cd48881a9a73f2ffee41d57b1ec50626efec",
-      "canonical_sha256": "00804fb88deee81a2e228ba66a72cd48881a9a73f2ffee41d57b1ec50626efec",
+      "bytes": 45078,
+      "sha256": "5d57eea6fe9559b1003fe1b3ab424939b00b2cf64ad839961c280e75f74dcb7b",
+      "canonical_sha256": "5d57eea6fe9559b1003fe1b3ab424939b00b2cf64ad839961c280e75f74dcb7b",
       "line_endings": "LF"
     },
     {

@@ -70,7 +70,7 @@ class DispatchTests(unittest.TestCase):
     def test_native_exclusion_only_after_all_four_producers_and_preflight(self):
         code,calls,_=self.run_case(self.native_env())
         self.assertEqual(code,0)
-        producers=[i for i,argv in enumerate(calls) if any(arg.endswith(('run-c01-ci.py','run-bulk-ci.mjs')) for arg in argv)]
+        producers=[i for i,argv in enumerate(calls) if any(arg.endswith(('run-c01-ci.py','run-bulk-ci.mjs','run-api-ci.mjs')) for arg in argv)]
         preflight=next(i for i,argv in enumerate(calls) if '--validate-native-shards' in argv)
         ordinary=next(i for i,argv in enumerate(calls) if argv[:3]==['go','test','-race'])
         self.assertEqual(len(producers),len(dispatch.NATIVE_SCOPES))
@@ -87,6 +87,15 @@ class DispatchTests(unittest.TestCase):
                 case=call[call.index('--case')+1]
                 expected='/syncstate-test' if case=='TestSmallBatchEngineActualCLIProcessesMixedAndLostReply' else '/test'
                 self.assertEqual(call[call.index('--test-binary')+1],expected)
+
+    def test_each_genuine_api_case_gets_backend_and_its_own_package_binary(self):
+        code,calls,_=self.run_case(self.native_env());self.assertEqual(code,0)
+        selected=[call for call in calls if any(arg.endswith('run-api-ci.mjs') for arg in call)]
+        self.assertEqual(len(selected),5)
+        for call in selected:
+            case=call[call.index('--case')+1];self.assertIn(case,dispatch.API_CASES)
+            expected='/syncstate-test' if dispatch.API_CASES[case]['package']=='pluto/internal/pluto/syncstate' else '/test'
+            self.assertEqual(call[call.index('--test-binary')+1],expected);self.assertIn('--backend-inputs',call)
 
     def test_each_producer_failure_closes_ordinary_admission(self):
         for case in dispatch.NATIVE_SCOPES.values():

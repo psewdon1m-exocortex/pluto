@@ -223,6 +223,7 @@ class OrdinaryCIReportTests(unittest.TestCase):
         (shard / "events.jsonl").write_text("".join(json.dumps(event)+"\n" for event in actual), encoding="utf-8")
         if case==reporter.BULK_TEST:self.bulk_metadata_fixture(project,shard,wait)
         if case==reporter.PREPARED_TEST:self.prepared_metadata_fixture(shard)
+        if case in reporter.API_CASES:self.api_metadata_fixture(project,shard,wait,case)
         if case==reporter.BATCH_TEST:
             records['backup-inventory.json']=[dict(path='snapshot-%d/%s'%(n,name),bytes=1,sha256='b'*64) for n in range(6) for name in (['coherent-fixture.tar','engine-cli-restore.json'] if n<3 else ['coherent-fixture.tar'])]
             (shard/'backup-inventory.json').write_text(json.dumps(records['backup-inventory.json']))
@@ -458,10 +459,37 @@ class OrdinaryCIReportTests(unittest.TestCase):
 
 
 
+    def api_metadata_fixture(self,project,shard,actual,case):
+        # Synthetic unit metadata only; never an actual API or process result.
+        self.bulk_metadata_fixture(project,shard,actual)
+        backend=json.loads((shard/'backend-inputs.json').read_bytes());bulk=json.loads((shard/'bulk-evidence.json').read_bytes())
+        image=(shard/'backend-image.json').read_bytes();(shard/'api-backend-image.json').write_bytes(image)
+        (shard/'ci-source-inputs.json').write_text(json.dumps(dict(schema='pluto.native-api-ci-script-source.v1',inputs=reporter.api_ci_script_inputs(project))))
+        images=bulk['images'];roles=[('anchor','native','1'),('postgres','postgres','2'),('api','saturn','4'),('sftp','sftp','3')]
+        containers=[dict(id=letter*64,created='synthetic-unit',image=images[kind],actualExitCode=0,oomKilled=False,running=False,publishedPorts={},networkMode='none' if role=='anchor' else 'container:'+'1'*64) for role,kind,letter in roles]
+        ready={role:letter*64 for role,kind,letter in roles};ready.update(loopbackOnly=True,networkNamespace='net:[1]',roots=['unit-root-one','unit-root-two'])
+        proof=dict(schema='pluto.native-api-ci-proof.v1',case=case,status='PASS_ORIGINAL_CASE_GENUINE_API_PG_SFTP_TYPED_LIFECYCLE',testBinarySHA256='a'*64,actualGoWait=actual,containerClosure=dict(status='STOPPED_RETAINED'),images=images,sourceCohortSHA256=backend['sourceCohortSHA256'],backendImageSHA256=hashlib.sha256(image).hexdigest(),containers=containers,apiReady=ready,fullOrdinaryCiGreen=False,processCrashFaults=0,independentFullGraphRestoreClaimed=False)
+        (shard/'api-evidence.json').write_text(json.dumps(proof))
+
+    def test_api_receipts_refuse_wrong_backend_identity_or_open_actor(self):
+        case=next(iter(reporter.API_CASES))
+        for mutation in ('wrong-case','wrong-pg','wrong-image','running','port','nonzero','full-claim'):
+            with self.subTest(mutation=mutation),tempfile.TemporaryDirectory() as directory:
+                project,shard,_=self.native_receipt_fixture(directory,case);file=shard/'api-evidence.json';proof=json.loads(file.read_bytes())
+                if mutation=='wrong-case':proof['case']='TestUnreviewed'
+                if mutation=='wrong-pg':proof['apiReady']['postgres']='f'*64
+                if mutation=='wrong-image':proof['images']['saturn']='sha256:'+'f'*64
+                if mutation=='running':proof['containers'][0]['running']=True
+                if mutation=='port':proof['containers'][0]['publishedPorts']={'443/tcp':[] }
+                if mutation=='nonzero':proof['containers'][0]['actualExitCode']=1
+                if mutation=='full-claim':proof['fullOrdinaryCiGreen']=True
+                file.write_text(json.dumps(proof))
+                with self.assertRaises(ValueError):reporter.native_shard(shard,project,case)
+
     def bulk_metadata_fixture(self, project, shard, actual):
         """Synthetic unit metadata only; never product/runtime acceptance evidence."""
         source=Path(__file__).resolve().parents[1]
-        names=reporter.bulk_ci_script_inputs(source)
+        names=list({row["path"]:row for row in reporter.bulk_ci_script_inputs(source)+reporter.api_ci_script_inputs(source)}.values())
         for row in names:
             dest=project/row['path'];dest.parent.mkdir(parents=True,exist_ok=True)
             dest.write_bytes((source/row['path']).read_bytes())

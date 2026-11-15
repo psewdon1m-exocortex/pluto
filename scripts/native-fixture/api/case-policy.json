@@ -1,0 +1,49 @@
+{
+  "schema": "pluto.native-api-ci-case-policy.v1",
+  "cases": {
+    "TestCompletionRealOperatorBindingAdoptThroughNativeCLI": {
+      "package": "pluto/internal/pluto",
+      "actions": [
+        "daemon",
+        "status",
+        "migrate-plan",
+        "adopt"
+      ]
+    },
+    "TestCompletionNativeExcludeReincludePreservesCopies": {
+      "package": "pluto/internal/pluto",
+      "actions": [
+        "daemon",
+        "status",
+        "pause",
+        "resume",
+        "policy-plan",
+        "policy-apply"
+      ]
+    },
+    "TestCompletionNativeBackupVersionsDeletionAndSizeBoundaries": {
+      "package": "pluto/internal/pluto",
+      "actions": [
+        "daemon",
+        "status",
+        "pause",
+        "resume"
+      ]
+    },
+    "TestCompletionActualSaturnCallers": {
+      "package": "pluto/internal/pluto/syncstate",
+      "actions": []
+    },
+    "TestCompletionActualSaturnRecovery": {
+      "package": "pluto/internal/pluto/syncstate",
+      "actions": [],
+      "subcases": [
+        "mutations-batch",
+        "stream-uploads-prepare",
+        "stream-uploads-chunk",
+        "stream-uploads-seal"
+      ]
+    }
+  },
+  "scope": "Original ordinary CI genuineAPI cases, fresh exclusive backend; no process-crash fault and no archival reader replacement."
+}
