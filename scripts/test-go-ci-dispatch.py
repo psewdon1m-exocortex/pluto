@@ -207,5 +207,15 @@ class DispatchTests(unittest.TestCase):
         self.assertEqual(code,1);self.assertEqual(len(calls),1)
         self.assertIn('PLUTO_GO_CI_TEST_BINARIES',report['missing'])
 
+    def test_container_driver_uses_owned_inherited_docker_endpoint(self):
+        env=self.native_env();env['DOCKER_HOST']='unix:///unit-owned/docker.proxy.sock'
+        code,calls,_=self.run_case(env);self.assertEqual(code,0)
+        driver=next(argv for argv in calls if any(arg.endswith('run-container-go-ci.py') for arg in argv))
+        self.assertEqual(driver[driver.index('--docker-host')+1],env['DOCKER_HOST'])
+        env['PLUTO_GO_CI_DOCKER_HOST']='unix:///unit-explicit/docker.sock'
+        code,calls,_=self.run_case(env);self.assertEqual(code,0)
+        driver=next(argv for argv in calls if any(arg.endswith('run-container-go-ci.py') for arg in argv))
+        self.assertEqual(driver[driver.index('--docker-host')+1],env['PLUTO_GO_CI_DOCKER_HOST'])
+
 
 if __name__=='__main__':unittest.main()

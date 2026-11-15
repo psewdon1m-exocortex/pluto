@@ -147,7 +147,7 @@ def main(argv=None):
                 '--source-inputs',os.environ['PLUTO_GO_CI_C01_SOURCE_INPUTS'],
                 '--converter',os.environ['PLUTO_GO_CI_C01_CONVERTER'],'--image',image,
                 '--docker',os.environ.get('PLUTO_GO_CI_DOCKER','docker'),
-                '--docker-host',os.environ.get('PLUTO_GO_CI_DOCKER_HOST','unix:///var/run/docker.sock')]
+                '--docker-host',os.environ.get('PLUTO_GO_CI_DOCKER_HOST') or os.environ.get('DOCKER_HOST') or 'unix:///var/run/docker.sock']
         for value in allowed:driver+=['--allow-running-id',value]
         actual,captured=capture(driver,evidence/'container-driver.log')
         try:

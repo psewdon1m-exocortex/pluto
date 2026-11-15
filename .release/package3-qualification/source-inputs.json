@@ -2,9 +2,9 @@
   "schema": "exocortex.package3.frozen-source.v1",
   "component": "pluto",
   "version": "0.1.5",
-  "baseGitCommit": "a1b6e833102fa50cc6ad003be6527b9793d59dcb",
-  "scope": "§8 complete ordinary container CI orchestration after native20 preflight; 67 unit regressions and canary2/mount2 qualified, full actualCI pending",
-  "sourceSetSHA256": "1747b6b1437423a8d1756dae8b0ef76f80f9d582ce94111e2393a81dd6cc8877",
+  "baseGitCommit": "0ba53e507c37c54380f3771db9fbb7e6c79191c2",
+  "scope": "§8 owned inherited Docker endpoint propagation after preserved actualCI fail; native20 source/producers unchanged",
+  "sourceSetSHA256": "95018595982f22e39c3d5bd5984560c3430b16d956fc7fbf73c04034df4c7891",
   "files": [
     {
       "path": ".github/workflows/package3-qualification.yml",
@@ -2440,9 +2440,9 @@
     },
     {
       "path": "scripts/go-ci.py",
-      "bytes": 12660,
-      "sha256": "b238d04ea3da9319e519555287e2ff50909299efd586064062866cfbcadba8ff",
-      "canonical_sha256": "b238d04ea3da9319e519555287e2ff50909299efd586064062866cfbcadba8ff",
+      "bytes": 12696,
+      "sha256": "f30d397bd092c9db83a0323e44dede83b95c6d21046b4dc1cd1069f71b23ba11",
+      "canonical_sha256": "f30d397bd092c9db83a0323e44dede83b95c6d21046b4dc1cd1069f71b23ba11",
       "line_endings": "LF"
     },
     {
@@ -3531,9 +3531,9 @@
     },
     {
       "path": "scripts/test-go-ci-dispatch.py",
-      "bytes": 13054,
-      "sha256": "5c88f61fe485c47c15efc3b343bf9fa7fb0fc32ed46f6ba2b93e2ed35f401fcd",
-      "canonical_sha256": "5c88f61fe485c47c15efc3b343bf9fa7fb0fc32ed46f6ba2b93e2ed35f401fcd",
+      "bytes": 13818,
+      "sha256": "84fc2bb2905c6f3fc1823ad239ec2c5cc9b2660b2428f3d869e4f90c24656ad2",
+      "canonical_sha256": "84fc2bb2905c6f3fc1823ad239ec2c5cc9b2660b2428f3d869e4f90c24656ad2",
       "line_endings": "LF"
     },
     {
