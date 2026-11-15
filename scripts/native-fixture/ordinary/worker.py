@@ -27,6 +27,83 @@ def children():
     return [int(pid) for pid in Path('/proc/self/task/1/children').read_text().split()]
 
 
+def _reap_adopted(evidence):
+    """Reap kernel-confirmed terminal descendants; a live orphan still fails admission."""
+    adopted = children()
+    initial, reaped, live = [], [], []
+    for pid in adopted:
+        event = os.waitid(os.P_PID, pid, os.WEXITED | os.WNOHANG | os.WNOWAIT)
+        proc = Path('/proc') / str(pid)
+        status = dict(line.split(':', 1) for line in (proc / 'status').read_text().splitlines() if ':' in line)
+        snapshot = dict(pid=pid, stat=(proc / 'stat').read_text(),
+                        state=status['State'].strip(), parentPID=int(status['PPid']),
+                        uid=status['Uid'].split())
+        assert snapshot['parentPID'] == 1 and snapshot['uid'] == ['10001'] * 4
+        snapshot['terminalWaitEvent'] = (dict(pid=event.si_pid, uid=event.si_uid,
+                                            code=event.si_code, status=event.si_status)
+                                         if event is not None else None)
+        initial.append(snapshot)
+        if event is None:
+            live.append(pid)
+            continue
+        assert event.si_pid == pid and event.si_uid == 10001
+        assert snapshot['state'].startswith('Z')
+        assert event.si_code in (os.CLD_EXITED, os.CLD_KILLED, os.CLD_DUMPED)
+        actual_pid, raw_status = os.waitpid(pid, 0)
+        assert actual_pid == pid
+        if event.si_code == os.CLD_EXITED:
+            assert os.WIFEXITED(raw_status) and os.WEXITSTATUS(raw_status) == event.si_status
+        else:
+            assert os.WIFSIGNALED(raw_status) and os.WTERMSIG(raw_status) == event.si_status
+        reaped.append(dict(pid=pid, rawStatus=raw_status, kernelTerminalBeforeReap=True,
+                           waitEvent=snapshot['terminalWaitEvent'], result='TERMINAL_DESCENDANT_REAPED'))
+        write(evidence / ('adopted-wait-' + str(pid) + '.json'), reaped[-1])
+    unreviewed = [pid for pid in children() if pid not in live]
+    if live or children():
+        write(evidence / 'adopted-children-pending.json', dict(pids=children(), noKill=True,
+                                                            admissionClosed=True))
+        # PID1 must remain alive while any descendant can still execute.
+        # Join naturally, retain the FAIL, and never turn this into success.
+        while children():
+            while True:
+                pid, raw_status = os.waitpid(-1, os.WNOHANG)
+                if not pid:
+                    break
+                reaped.append(dict(pid=pid, rawStatus=raw_status, kernelTerminalBeforeReap=False,
+                                   result='LIVE_AT_BOUNDARY_DESCENDANT_JOINED_LATER'))
+                write(evidence / ('adopted-wait-' + str(pid) + '.json'), reaped[-1])
+                if not children():
+                    break
+            time.sleep(0.1)
+    result = dict(adoptedAtRootExit=initial, adoptedWaits=reaped, liveAtRootExit=live,
+                  noLiveAdoptedChildren=not live, unreviewedAfterInitial=unreviewed,
+                  allAdoptedChildrenReapedBeforePID1Exit=not children(), noKill=True,
+                  observerError='')
+    write(evidence / 'adopted-descendants.json', result)
+    return result
+
+
+def reap_adopted(evidence):
+    try:
+        return _reap_adopted(evidence)
+    except BaseException as error:
+        # Even an observer/metadata error cannot make PID1 kill a live actor.
+        pending = children()
+        waits = []
+        while children():
+            pid, raw_status = os.waitpid(-1, 0)
+            waits.append(dict(pid=pid, rawStatus=raw_status))
+        result = dict(adoptedAtRootExit=[], adoptedWaits=waits, liveAtRootExit=pending,
+                      noLiveAdoptedChildren=False, unreviewedAfterInitial=pending,
+                      allAdoptedChildrenReapedBeforePID1Exit=not children(), noKill=True,
+                      observerError=str(error) or repr(error))
+        try:
+            write(evidence / 'adopted-descendants-observer-error.json', result)
+        except OSError:
+            pass
+        return result
+
+
 def main():
     os.umask(0o077)
     assert os.getpid() == 1 and os.getuid() == os.getgid() == 10001
@@ -115,31 +192,20 @@ def main():
         poll.register(pidfd, select.POLLIN)
         terminal = bool(poll.poll(1000))
         os.close(pidfd)
-    adopted = children()
-    reaped = []
-    if adopted:
-        write(evidence / 'adopted-children-pending.json', dict(pids=adopted, noKill=True,
-                                                            admissionClosed=True))
-        # Exiting PID1 would kill remaining actors. Join naturally instead;
-        # the outer bounded observer retains this container if they stay live.
-        while children():
-            while True:
-                pid, status = os.waitpid(-1, os.WNOHANG)
-                if not pid:
-                    break
-                reaped.append(dict(pid=pid, rawStatus=status))
-                if not children():
-                    break
-            time.sleep(0.1)
+    descendants = reap_adopted(evidence)
     raw = evidence / 'stdout.log'
-    result = dict(schema='pluto.ordinary-ci-process.v1', package=spec['package'], cases=names,
+    result = dict(schema='pluto.ordinary-ci-process.v2', package=spec['package'], cases=names,
                   containerId=spec['containerId'], actualWait=actual, actualJoin=True,
                   pidfdTerminal=terminal, observed=observed, observationError=observation_error,
-                  noAdoptedChildren=not adopted, adoptedWaits=reaped, noKill=True,
+                  noAdoptedChildren=not descendants['adoptedAtRootExit'],
+                  descendants=descendants, noKill=True,
                   stdoutBytes=raw.stat().st_size, stdoutSHA256=digest(raw),
                   inputRoot='/retained/inputs', backupRoot='/backups/store')
     passed = (actual['Exited'] and not actual['Signaled'] and actual['ExitCode'] == 0
-              and terminal and observed and not observation_error and not adopted)
+              and terminal and observed and not observation_error
+              and descendants['noLiveAdoptedChildren']
+              and not descendants['unreviewedAfterInitial']
+              and descendants['allAdoptedChildrenReapedBeforePID1Exit'])
     result['status'] = 'PASS_ACTUAL_UNPRIVILEGED_GO_SHARD' if passed else 'FAIL'
     write(evidence / 'process.json', result)
     return 0 if passed else 1

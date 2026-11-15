@@ -52,6 +52,8 @@ fi
 image_tag="pluto-c01-ci-runtime:${GITHUB_RUN_ID:-local}-${GITHUB_RUN_ATTEMPT:-1}"
 docker build --platform linux/amd64 --network none -f scripts/native-fixture/Dockerfile.ci -t "$image_tag" scripts/native-fixture
 image_id="$(docker image inspect --format '{{.Id}}' "$image_tag")"
+python3 -I -B scripts/test-ordinary-process-ci.py --image "$image_id" \
+  --output "$project/.release-evidence/go-ci/observer-selftest-${GITHUB_RUN_ID:-local}-${GITHUB_RUN_ATTEMPT:-1}"
 {
   printf 'PLUTO_GO_CI_BULK_INPUTS=%s\n' "$bulk_inputs"
   printf 'PLUTO_GO_CI_C01_IMAGE=%s\n' "$image_id"

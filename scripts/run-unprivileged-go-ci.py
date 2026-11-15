@@ -209,7 +209,7 @@ def main():
     collector_code = """import base64,hashlib,json,subprocess
 from pathlib import Path
 root=Path('/retained/evidence');files={}
-for name in ('stdout.log','actual-wait.json','started.json','process.json','inventory.stdout'):
+for name in ('stdout.log','actual-wait.json','started.json','process.json','inventory.stdout','adopted-descendants.json'):
  p=root/name;b=p.read_bytes();assert len(b)<=16*1024*1024
  files[name]=dict(bytes=len(b),sha256=hashlib.sha256(b).hexdigest(),base64=base64.b64encode(b).decode())
 converted=subprocess.run(['/converter','-t','-p',__import__('sys').argv[1]],input=(root/'stdout.log').read_bytes(),stdout=subprocess.PIPE,stderr=subprocess.PIPE)

@@ -42,6 +42,28 @@ def profile(record):
     assert all(int(record[key], 16) == 0 for key in ('CapInh', 'CapPrm', 'CapEff', 'CapBnd', 'CapAmb'))
 
 
+def validate_descendants(descendants):
+    assert descendants['noLiveAdoptedChildren'] and not descendants['liveAtRootExit']
+    assert not descendants['unreviewedAfterInitial']
+    assert not descendants['observerError']
+    assert descendants['allAdoptedChildrenReapedBeforePID1Exit'] and descendants['noKill']
+    initial = {item['pid']: item for item in descendants['adoptedAtRootExit']}
+    assert len(initial) == len(descendants['adoptedAtRootExit']) == len(descendants['adoptedWaits'])
+    assert len({item['pid'] for item in descendants['adoptedWaits']}) == len(initial)
+    for child in descendants['adoptedWaits']:
+        snapshot = initial[child['pid']]
+        assert snapshot['state'].startswith('Z')
+        assert child['kernelTerminalBeforeReap'] and snapshot['parentPID'] == 1 and snapshot['uid'] == ['10001'] * 4
+        event = child['waitEvent']
+        assert snapshot['terminalWaitEvent'] == event and event['pid'] == child['pid'] and event['uid'] == 10001
+        assert child['result'] == 'TERMINAL_DESCENDANT_REAPED'
+        if event['code'] == os.CLD_EXITED:
+            assert os.WIFEXITED(child['rawStatus']) and os.WEXITSTATUS(child['rawStatus']) == event['status']
+        else:
+            assert event['code'] in (os.CLD_KILLED, os.CLD_DUMPED)
+            assert os.WIFSIGNALED(child['rawStatus']) and os.WTERMSIG(child['rawStatus']) == event['status']
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('output', 'inventory', 'native-shards', 'binaries', 'source-inputs',
@@ -178,7 +200,11 @@ def main():
             assert wait == process['actualWait'] == proof['actualWait']
             assert wait['Observed'] and wait['Exited'] and not wait['Signaled'] and wait['ExitCode'] == wait['RawStatus'] == 0
             assert process['status'] == 'PASS_ACTUAL_UNPRIVILEGED_GO_SHARD' and process['actualJoin']
-            assert process['pidfdTerminal'] and process['noAdoptedChildren'] and not process['observationError']
+            assert process['schema'] == 'pluto.ordinary-ci-process.v2'
+            assert process['pidfdTerminal'] and not process['observationError']
+            descendants = report.bounded_json(directory / 'adopted-descendants.json')
+            assert descendants == process['descendants']
+            validate_descendants(descendants)
             assert process['containerId'] == proof['containerId'] == terminal['Id'] and terminal['Image'] == args.image
             assert terminal['State']['Status'] == 'exited' and terminal['State']['Pid'] == 0
             assert terminal['State']['ExitCode'] == proof['actualContainerExit'] == proof['converterActualExit'] == 0
