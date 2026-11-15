@@ -74,7 +74,7 @@ def main(argv=None):
     evidence=Path(tempfile.mkdtemp(prefix='ordinary-',dir=base))
     print('Ordinary Go CI evidence: '+str(evidence),flush=True)
     print('Archival C03: WAIVED_BY_OWNER / ARCHIVAL_INPUT_UNAVAILABLE; runtime NOT_RUN; old reader v8/downgrade UNCONFIRMED.',flush=True)
-    discovery,captured=capture(['go','test','-list','^Test','-json','./...'],evidence/'inventory.jsonl',separate_stderr=True)
+    discovery,captured=capture(['go','test','-list','.','-json','./...'],evidence/'inventory.jsonl',separate_stderr=True)
     if discovery or captured:return failure(evidence,'FAIL_DISCOVERY',actualDiscoveryExit=discovery,actualCaptureExit=captured)
     image=os.environ.get('PLUTO_GO_CI_C01_IMAGE')
     native_args=[]
@@ -85,6 +85,8 @@ def main(argv=None):
         missing=[value for value in required.values() if not os.environ.get(value)]
         syncstate=os.environ.get('PLUTO_GO_CI_SYNCSTATE_TEST_BINARY')
         if not syncstate:missing.append('PLUTO_GO_CI_SYNCSTATE_TEST_BINARY')
+        binaries=os.environ.get('PLUTO_GO_CI_TEST_BINARIES')
+        if not binaries and not args.native_preflight_only:missing.append('PLUTO_GO_CI_TEST_BINARIES')
         backend=os.environ.get('PLUTO_GO_CI_BULK_INPUTS');node=os.environ.get('PLUTO_GO_CI_NODE') or shutil.which('node')
         if not backend:missing.append('PLUTO_GO_CI_BULK_INPUTS')
         if not node:missing.append('PLUTO_GO_CI_NODE or node on PATH')
@@ -138,6 +140,35 @@ def main(argv=None):
         if args.native_preflight_only:
             not_run_report(evidence,'PASS_REQUIRED_NATIVE_PREFLIGHT_ORDINARY_NOT_RUN',nativeScopes=scopes)
             return 0
+        container_output=evidence/'container-scopes'
+        driver=[sys.executable,'-I','-B',str(PROJECT/'scripts/run-container-go-ci.py'),
+                '--output',str(container_output),'--inventory',str(evidence/'inventory.jsonl'),
+                '--native-shards',str(scope_file),'--binaries',binaries,
+                '--source-inputs',os.environ['PLUTO_GO_CI_C01_SOURCE_INPUTS'],
+                '--converter',os.environ['PLUTO_GO_CI_C01_CONVERTER'],'--image',image,
+                '--docker',os.environ.get('PLUTO_GO_CI_DOCKER','docker'),
+                '--docker-host',os.environ.get('PLUTO_GO_CI_DOCKER_HOST','unix:///var/run/docker.sock')]
+        for value in allowed:driver+=['--allow-running-id',value]
+        actual,captured=capture(driver,evidence/'container-driver.log')
+        try:
+            result=json.loads((container_output/'report.json').read_bytes())
+            if result.get('schema')!='pluto.container-ordinary-ci.v1' or not isinstance(result.get('errors'),list):raise ValueError('container accounting report required')
+        except (OSError,ValueError) as error:
+            result=dict(schema='pluto.container-ordinary-ci.v1',status='FAIL_INVALID_CONTAINER_CI_REPORT',
+                        ordinaryRuntime='PARTIAL_OR_NOT_RUN',errors=[str(error)],fullOrdinaryCIGreen=False)
+        result.update(actualContainerDriverExit=actual,actualContainerDriverCaptureExit=captured)
+        if actual or captured or result['errors'] or not result.get('completeInventoryAccounted'):
+            result.update(status='FAIL_REQUIRED_ORDINARY_GO_TEST_SUITE',fullOrdinaryCIGreen=False)
+            result['errors']+=['ACTUAL_CONTAINER_DRIVER_OR_ACCOUNTING_FAILED']
+        else:
+            vet_exit,vet_capture=capture(['go','vet','./...'],evidence/'vet.log')
+            result.update(actualVetExit=vet_exit,actualVetCaptureExit=vet_capture)
+            if vet_exit or vet_capture:
+                result.update(status='FAIL_REQUIRED_ORDINARY_GO_TEST_SUITE',fullOrdinaryCIGreen=False)
+                result['errors']+=['ACTUAL_VET_OR_CAPTURE_FAILED']
+        with (evidence/'report.json').open('x') as stream:json.dump(result,stream,indent=2);stream.write('\n')
+        print(json.dumps(result))
+        return 1 if result['errors'] else 0
     elif args.native_preflight_only:
         return failure(evidence,'FAIL_NATIVE_PROVISIONING',missing=['PLUTO_GO_CI_C01_IMAGE'])
     go_exit,capture_exit=capture(ordinary+['./...'],evidence/'events.jsonl',separate_stderr=True)

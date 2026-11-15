@@ -49,6 +49,11 @@ class DispatchTests(unittest.TestCase):
             def capture(argv,file,**unused):
                 calls.append(argv)
                 Path(file).write_bytes(b'')
+                if any(arg.endswith('run-container-go-ci.py') for arg in argv):
+                    output=Path(argv[argv.index('--output')+1]);output.mkdir()
+                    (output/'report.json').write_text(json.dumps(dict(schema='pluto.container-ordinary-ci.v1',
+                        status='PASS_REQUIRED_ORDINARY_GO_TEST_SUITE',errors=[],completeInventoryAccounted=True,
+                        fullOrdinaryCIGreen=False,unitFixtureOnly=True)))
                 return fail(argv) if fail else (0,0)
             with patch.dict(os.environ,values,clear=True),patch.object(dispatch,'capture',side_effect=capture),patch('sys.stdout',io.StringIO()):
                 code=dispatch.main(args or [])
@@ -58,7 +63,8 @@ class DispatchTests(unittest.TestCase):
     def native_env(self):
         return dict(PLUTO_GO_CI_C01_IMAGE='sha256:'+'a'*64,PLUTO_GO_CI_C01_SOURCE_INPUTS='/inputs',
                     PLUTO_GO_CI_C01_TEST_BINARY='/test',STAGE3_PLUTO_BINARY='/cli',PLUTO_GO_CI_C01_OWNER='/owner',
-                    PLUTO_GO_CI_C01_CONVERTER='/converter',PLUTO_GO_CI_SYNCSTATE_TEST_BINARY='/syncstate-test')
+                    PLUTO_GO_CI_C01_CONVERTER='/converter',PLUTO_GO_CI_SYNCSTATE_TEST_BINARY='/syncstate-test',
+                    PLUTO_GO_CI_TEST_BINARIES='/test-binaries.json')
 
     def test_default_keeps_c01_in_whole_ordinary_run(self):
         code,calls,_=self.run_case()
@@ -72,13 +78,13 @@ class DispatchTests(unittest.TestCase):
         self.assertEqual(code,0)
         producers=[i for i,argv in enumerate(calls) if any(arg.endswith(('run-c01-ci.py','run-bulk-ci.mjs','run-api-ci.mjs')) for arg in argv)]
         preflight=next(i for i,argv in enumerate(calls) if '--validate-native-shards' in argv)
-        ordinary=next(i for i,argv in enumerate(calls) if argv[:3]==['go','test','-race'])
+        ordinary=next(i for i,argv in enumerate(calls) if any(arg.endswith('run-container-go-ci.py') for arg in argv))
         self.assertEqual(len(producers),len(dispatch.NATIVE_SCOPES))
         self.assertEqual([calls[i][calls[i].index('--case')+1] for i in producers],list(dispatch.NATIVE_SCOPES.values()))
         self.assertLess(max(producers),preflight);self.assertLess(preflight,ordinary)
-        self.assertEqual(calls[ordinary][calls[ordinary].index('-skip')+1],'^('+'|'.join(dispatch.NATIVE_SCOPES.values())+')$')
-        audit=next(argv for argv in calls if any(arg.endswith('check-go-ci.py') for arg in argv) and '--validate-native-shards' not in argv)
-        self.assertIn('--native-shards',audit)
+        self.assertIn('--native-shards',calls[ordinary])
+        self.assertIn('--binaries',calls[ordinary])
+        self.assertFalse(any(argv[:3]==['go','test','-race'] for argv in calls))
 
     def test_batch_uses_its_own_race_package_binary(self):
         code,calls,_=self.run_case(self.native_env());self.assertEqual(code,0)
@@ -186,6 +192,20 @@ class DispatchTests(unittest.TestCase):
         self.assertEqual(code,1)
         self.assertEqual(report['status'],'FAIL_NATIVE_PROVISIONING')
         self.assertFalse(report['fullOrdinaryCiGreen'])
+
+    def test_container_driver_or_capture_failure_cannot_pass_even_with_green_report(self):
+        for outcome in ((7,0),(0,1)):
+            with self.subTest(outcome=outcome):
+                def fail(argv):return outcome if any(arg.endswith('run-container-go-ci.py') for arg in argv) else (0,0)
+                code,calls,report=self.run_case(self.native_env(),fail)
+                self.assertEqual(code,1);self.assertFalse(report['fullOrdinaryCIGreen'])
+                self.assertFalse(any(argv[:2]==['go','vet'] for argv in calls))
+
+    def test_missing_binary_manifest_closes_admission_before_native_runtime(self):
+        env=self.native_env();del env['PLUTO_GO_CI_TEST_BINARIES']
+        code,calls,report=self.run_case(env)
+        self.assertEqual(code,1);self.assertEqual(len(calls),1)
+        self.assertIn('PLUTO_GO_CI_TEST_BINARIES',report['missing'])
 
 
 if __name__=='__main__':unittest.main()
