@@ -66,7 +66,9 @@ func sourceWalAssertSame(t *testing.T, before, after map[string]sourceWalFileFac
 	for name, old := range before {
 		now, ok := after[name]
 		if !ok || !os.SameFile(old.info, now.info) || old.Bytes != now.Bytes || old.Mode != now.Mode || old.MtimeNs != now.MtimeNs || old.ChangeTime != now.ChangeTime || old.SHA256 != now.SHA256 {
-			t.Fatal("original inode/bytes/mode/timestamps changed during WAL restore proof", name)
+			t.Fatalf("original inode/bytes/mode/timestamps changed during WAL restore proof %s: present=%t sameFile=%t bytes=%d/%d mode=%v/%v mtime=%d/%d ctime=%q/%q sha256=%s/%s",
+				name, ok, ok && os.SameFile(old.info, now.info), old.Bytes, now.Bytes, old.Mode, now.Mode,
+				old.MtimeNs, now.MtimeNs, old.ChangeTime, now.ChangeTime, old.SHA256, now.SHA256)
 		}
 	}
 }

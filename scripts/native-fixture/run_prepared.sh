@@ -73,4 +73,11 @@ as_fixture /bin/sh -ec '
     fi
 ' sh "$retained_root"
 printf 'NATIVE_PREPARED_LAUNCHER_EXIT=%s\n' "$status"
+for pair in "/native-prepared-manifest.json:fixture-manifest.json" "/native-prepared-backup-receipt.json:fault-receipt.json"; do
+    source=${pair%%:*}
+    target="$retained_root/${pair#*:}"
+    if test -f "$source"; then
+        as_fixture /bin/sh -ec 'test ! -e "$2" && test ! -L "$2"; install -m 0444 "$1" "$2"' sh "$source" "$target"
+    fi
+done
 exit "$status"

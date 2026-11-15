@@ -11,9 +11,31 @@ from unittest.mock import patch
 
 spec=importlib.util.spec_from_file_location('go_ci_dispatch',Path(__file__).with_name('go-ci.py'))
 dispatch=importlib.util.module_from_spec(spec);spec.loader.exec_module(dispatch)
+producer_spec=importlib.util.spec_from_file_location('native_ci_producer',Path(__file__).with_name('run-c01-ci.py'))
+producer=importlib.util.module_from_spec(producer_spec);producer_spec.loader.exec_module(producer)
 
 
 class DispatchTests(unittest.TestCase):
+    def test_public_helper_copy_preserves_private_source_mode_and_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);source=root/'export.py';source.write_bytes(b'public helper only\n')
+            source.chmod(0o600);mode=source.stat().st_mode
+            target=root/'inputs';target.mkdir()
+            copy,proof=producer.stage_public_helper(source,target)
+            self.assertEqual(copy.read_bytes(),source.read_bytes())
+            self.assertEqual(source.stat().st_mode,mode)
+            self.assertEqual(copy.stat().st_mode&0o222,0)
+            self.assertEqual(proof['sha256'],producer.digest(source))
+            with self.assertRaises(FileExistsError):producer.stage_public_helper(source,target)
+
+    def test_public_helper_staging_refuses_empty_directory_and_oversized_input(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);target=root/'inputs';target.mkdir()
+            for name,content in [('empty',b''),('oversized',b'x'*(4*1024*1024+1))]:
+                source=root/name;source.write_bytes(content)
+                with self.assertRaises(ValueError):producer.stage_public_helper(source,target)
+            with self.assertRaises(ValueError):producer.stage_public_helper(root,target)
+
     def run_case(self,env=None,fail=None,args=None):
         with tempfile.TemporaryDirectory() as directory:
             values={'PLUTO_GO_CI_EVIDENCE_DIR':directory}
@@ -51,7 +73,7 @@ class DispatchTests(unittest.TestCase):
         producers=[i for i,argv in enumerate(calls) if any(arg.endswith(('run-c01-ci.py','run-bulk-ci.mjs')) for arg in argv)]
         preflight=next(i for i,argv in enumerate(calls) if '--validate-native-shards' in argv)
         ordinary=next(i for i,argv in enumerate(calls) if argv[:3]==['go','test','-race'])
-        self.assertEqual(len(producers),4)
+        self.assertEqual(len(producers),len(dispatch.NATIVE_SCOPES))
         self.assertEqual([calls[i][calls[i].index('--case')+1] for i in producers],list(dispatch.NATIVE_SCOPES.values()))
         self.assertLess(max(producers),preflight);self.assertLess(preflight,ordinary)
         self.assertEqual(calls[ordinary][calls[ordinary].index('-skip')+1],'^('+'|'.join(dispatch.NATIVE_SCOPES.values())+')$')
@@ -129,7 +151,7 @@ class DispatchTests(unittest.TestCase):
         self.assertEqual(report['ordinaryRuntime'],'NOT_RUN')
         self.assertFalse(report['fullOrdinaryCiGreen'])
         self.assertEqual(report['archival']['status'],'WAIVED_BY_OWNER')
-        self.assertEqual(len(report['nativeScopes']),4)
+        self.assertEqual(len(report['nativeScopes']),len(dispatch.NATIVE_SCOPES))
         self.assertFalse(any(argv[:3]==['go','test','-race'] or argv[:2]==['go','vet'] for argv in calls))
 
     def test_bulk_input_is_required_before_any_producer(self):

@@ -182,7 +182,46 @@ class OrdinaryCIReportTests(unittest.TestCase):
                   dict(Package=reporter.C01_PACKAGE, Action="pass")]
         (shard / "events.jsonl").write_text("".join(json.dumps(event)+"\n" for event in actual), encoding="utf-8")
         if case==reporter.BULK_TEST:self.bulk_metadata_fixture(project,shard,wait)
+        if case==reporter.PREPARED_TEST:self.prepared_metadata_fixture(shard)
         return project, shard, records
+
+    def prepared_metadata_fixture(self, shard):
+        # Synthetic metadata for checker unit tests only; never runtime evidence.
+        root='/retained/endurance-unit'
+        receipt=dict(schema='pluto.prepared-backup-root-authorization.v1',run='unit',scope='unit',nonce='a'*32,
+                     containerId='b'*64,case=reporter.PREPARED_TEST,site='adoption-prepared-changes-entry',
+                     base=root+'/f-0001',evidence='/checkpoint/verified-backup.json',
+                     condition='independent archive restore, every-file SHA, actual v8 open and default-trust TLS readback of 260 originals')
+        receipt_raw=json.dumps(receipt).encode()
+        manifest=dict(Schema='nativefixture.owner.v2',Run='unit',Scope='unit',Nonce='a'*32,ContainerID='b'*64,
+                      RetainedRoot=root,GoArgs=['-test.run=^'+reporter.PREPARED_TEST+'$'],
+                      Cases={reporter.PREPARED_TEST:dict(Faults={'adoption-prepared-changes-entry':dict(
+                          Site=receipt['site'],BackupPath='/native-prepared-backup-receipt.json',
+                          BackupSHA=hashlib.sha256(receipt_raw).hexdigest(),CheckpointRoot='/checkpoint',BarrierRequired=True)})})
+        inventory=[dict(path=('source' if i<130 else 'second/.hidden')+'/file-%03d'%i,kind='file',mode=0o600,
+                        bytes=1,sha256=hashlib.sha256(bytes([i%256])).hexdigest()) for i in range(260)]
+        raw=json.dumps(inventory).encode()
+        proof=dict(schema='pluto.prepared-checkpoint-qualified.v1',case=reporter.PREPARED_TEST,base=root+'/f-0001',
+                   database=dict(schemaVersion=8,acknowledged=266,pending=0,fileOperations=260,directoryOperations=6),
+                   restoredFiles=260,sourceFiles=260,uploads=260,productStoreOpened=True,trustedReceiverHttpStatus=200,
+                   inventorySHA256=hashlib.sha256(raw).hexdigest(),archiveSHA256='c'*64,backupSHA256='d'*64,
+                   backendSHA256='e'*64,planDigest='f'*64)
+        (shard/'prepared-fault-receipt.json').write_bytes(receipt_raw)
+        (shard/'prepared-inventory.json').write_bytes(raw)
+        for name,value in [('prepared-manifest.json',manifest),('prepared-backup.json',proof)]:
+            (shard/name).write_text(json.dumps(value))
+
+    def test_prepared_fault_requires_complete_same_case_restore_and_actual_source_pins(self):
+        for name,change in [('prepared-backup.json',lambda x:x.update(productStoreOpened=False)),
+                            ('prepared-backup.json',lambda x:x['database'].update(pending=1)),
+                            ('prepared-fault-receipt.json',lambda x:x.update(containerId='c'*64)),
+                            ('prepared-manifest.json',lambda x:x['Cases'][reporter.PREPARED_TEST]['Faults']['adoption-prepared-changes-entry'].update(BarrierRequired=False)),
+                            ('prepared-inventory.json',lambda x:x[0].update(sha256='0'*64))]:
+            with self.subTest(file=name),tempfile.TemporaryDirectory() as directory:
+                project,shard,_=self.native_receipt_fixture(directory,reporter.PREPARED_TEST)
+                value=json.loads((shard/name).read_bytes());change(value)
+                (shard/name).write_text(json.dumps(value))
+                with self.assertRaises(ValueError):reporter.native_shard(shard,project,reporter.PREPARED_TEST)
 
     def test_native_c01_receipts_match_output_source_and_actual_wait(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -283,7 +322,7 @@ class OrdinaryCIReportTests(unittest.TestCase):
     def test_four_native_scopes_merge_without_waiving_any_discovered_test(self):
         result=reporter.audit_native_lanes(self.all_native_inventory(),completed(),self.all_native_events(),0,0)
         self.assertEqual(result['status'],'PASS_REQUIRED_ORDINARY_GO_TEST_SUITE')
-        self.assertEqual(result['ordinaryPassed'],5)
+        self.assertEqual(result['ordinaryPassed'],1+len(reporter.NATIVE_CASES))
         self.assertEqual(set(result['lanes']['native']),set(reporter.NATIVE_CASES))
         self.assertEqual(result['archival']['runtime'],'NOT_RUN')
         for scope in result['lanes']['native'].values():self.assertFalse(scope['fullOrdinaryCiGreen'])
@@ -342,6 +381,7 @@ class OrdinaryCIReportTests(unittest.TestCase):
                 for index,case in enumerate(reporter.NATIVE_CASES):
                     parent=root/str(index);parent.mkdir()
                     project,shard,_=self.native_receipt_fixture(parent,case)
+                    if case==reporter.BULK_TEST:shared_project=project
                     scopes[case]=dict(directory=str(shard.resolve()),actualRunnerExit=0,actualCaptureExit=0)
                 first,second=reporter.NATIVE_CASES[:2]
                 if mutation=='missing':del scopes[first]
@@ -350,11 +390,11 @@ class OrdinaryCIReportTests(unittest.TestCase):
                 if mutation=='unknown':scopes['TestUnreviewed']=scopes.pop(first)
                 file=root/'scopes.json';file.write_text(json.dumps(dict(schema='pluto.native-ci-scopes.v1',scopes=scopes)))
                 if mutation=='valid':
-                    result=reporter.preflight_native_scopes(self.all_native_inventory(),reporter.native_scopes(file,project))
+                    result=reporter.preflight_native_scopes(self.all_native_inventory(),reporter.native_scopes(file,shared_project))
                     self.assertEqual(result['status'],'PASS_REQUIRED_NATIVE_SCOPES')
                     self.assertEqual(result['ordinaryRuntime'],'NOT_RUN')
                 else:
-                    with self.assertRaises(ValueError):reporter.native_scopes(file,project)
+                    with self.assertRaises(ValueError):reporter.native_scopes(file,shared_project)
 
 
 

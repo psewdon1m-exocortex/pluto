@@ -7,7 +7,15 @@ from pathlib import Path
 import subprocess
 
 
-CASES = ["TestStage3C01OrdinaryDaemonRestartBackupSemantics","TestCompletionDaemonProxyReopenRetainsDeletedSourceOriginal","TestCompletionDaemonRestartsAfterOwnedRouteLossWithoutFileEvent","TestCompletionNativeBulkReadbackPauseRestartNoCopies"]
+PREPARED="TestStage3C12NativeReviewedPolicyScopesAndRestart"
+CASES = ["TestStage3C01OrdinaryDaemonRestartBackupSemantics","TestCompletionDaemonProxyReopenRetainsDeletedSourceOriginal","TestCompletionDaemonRestartsAfterOwnedRouteLossWithoutFileEvent","TestCompletionNativeBulkReadbackPauseRestartNoCopies",PREPARED]
+# Container collector uses an explicit case name; the host consumer enforces
+# the complete policy and inventory. Keep the root policy bound into collection.
+POLICY=Path('/owner-policy.json')
+if POLICY.exists():
+    policy=json.loads(POLICY.read_bytes())
+    if policy.get('schema')!='pluto.native-owner-case-policy.v1':raise ValueError('reviewed owner policy required')
+    CASES+=sorted({name.split('/')[0] for name in policy['cases']})
 
 
 def collect(retained, converter, converter_sha, source_file, case=CASES[0]):
@@ -40,6 +48,11 @@ def collect(retained, converter, converter_sha, source_file, case=CASES[0]):
            'observed-after-exec.json':(actor/'observed-after-exec.json').read_bytes(),
            'owner-final.json':(evidence/'owner-final.json').read_bytes(),
            'source-inputs.json':Path(source_file).read_bytes()}
+    if case==PREPARED:
+        files.update({'prepared-backup.json':Path('/checkpoint/verified-backup.json').read_bytes(),
+                      'prepared-inventory.json':Path('/checkpoint/inventory.json').read_bytes(),
+                      'prepared-manifest.json':(root/'fixture-manifest.json').read_bytes(),
+                      'prepared-fault-receipt.json':(root/'fault-receipt.json').read_bytes()})
     return dict(schema='pluto.native-ci-export.v1',case=case,converterActualExit=converted.returncode,actualGoWait=wait,
                 files={name:dict(bytes=len(body),sha256=sha(body),base64=base64.b64encode(body).decode()) for name,body in files.items()})
 

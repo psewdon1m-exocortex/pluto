@@ -12,7 +12,10 @@ import threading
 
 PROJECT=Path(__file__).resolve().parents[1]
 C01='TestStage3C01OrdinaryDaemonRestartBackupSemantics'
-NATIVE_SCOPES={"c01":"TestStage3C01OrdinaryDaemonRestartBackupSemantics","proxy":"TestCompletionDaemonProxyReopenRetainsDeletedSourceOriginal","route":"TestCompletionDaemonRestartsAfterOwnedRouteLossWithoutFileEvent","bulk":"TestCompletionNativeBulkReadbackPauseRestartNoCopies"}
+NATIVE_SCOPES={"c01":"TestStage3C01OrdinaryDaemonRestartBackupSemantics","proxy":"TestCompletionDaemonProxyReopenRetainsDeletedSourceOriginal","route":"TestCompletionDaemonRestartsAfterOwnedRouteLossWithoutFileEvent","bulk":"TestCompletionNativeBulkReadbackPauseRestartNoCopies","prepared":"TestStage3C12NativeReviewedPolicyScopesAndRestart"}
+OWNER_POLICY=json.loads((PROJECT/'scripts/native-fixture/owner-case-policy.json').read_bytes())
+if OWNER_POLICY.get('schema')!='pluto.native-owner-case-policy.v1':raise ValueError('reviewed owner case policy required')
+NATIVE_SCOPES.update({f'owner-{index}':case for index,case in enumerate(sorted({name.split('/')[0] for name in OWNER_POLICY['cases']}))})
 
 
 def capture(argv, file, *, cwd=PROJECT, separate_stderr=False):
@@ -118,7 +121,7 @@ def main(argv=None):
         if actual or captured:
             return failure(evidence,'FAIL_NATIVE_PREFLIGHT',actualPreflightExit=actual,actualPreflightCaptureExit=captured)
         selector='^('+'|'.join(NATIVE_SCOPES.values())+')$'
-        print('All four required native scopes passed actual producer/capture and receipt preflight; exact ordinary exclusion: '+selector,flush=True)
+        print('All required native scopes passed actual producer/capture and receipt preflight; exact ordinary exclusion: '+selector,flush=True)
         ordinary+=['-skip',selector]
         if args.native_preflight_only:
             not_run_report(evidence,'PASS_REQUIRED_NATIVE_PREFLIGHT_ORDINARY_NOT_RUN',nativeScopes=scopes)

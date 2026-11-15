@@ -14,7 +14,11 @@ MAX_EVENT_BYTES = 4 * 1024 * 1024
 MAX_LOG_BYTES = 256 * 1024 * 1024
 C01_PACKAGE = "pluto/internal/pluto"
 C01_TEST = "TestStage3C01OrdinaryDaemonRestartBackupSemantics"
-NATIVE_CASES = ["TestStage3C01OrdinaryDaemonRestartBackupSemantics", "TestCompletionDaemonProxyReopenRetainsDeletedSourceOriginal", "TestCompletionDaemonRestartsAfterOwnedRouteLossWithoutFileEvent", "TestCompletionNativeBulkReadbackPauseRestartNoCopies"]
+PREPARED_TEST = "TestStage3C12NativeReviewedPolicyScopesAndRestart"
+NATIVE_CASES = ["TestStage3C01OrdinaryDaemonRestartBackupSemantics", "TestCompletionDaemonProxyReopenRetainsDeletedSourceOriginal", "TestCompletionDaemonRestartsAfterOwnedRouteLossWithoutFileEvent", "TestCompletionNativeBulkReadbackPauseRestartNoCopies", PREPARED_TEST]
+OWNER_POLICY=json.loads((Path(__file__).parent/'native-fixture/owner-case-policy.json').read_bytes())
+if OWNER_POLICY.get('schema')!='pluto.native-owner-case-policy.v1':raise ValueError('reviewed owner case policy required')
+NATIVE_CASES+=sorted({name.split('/')[0] for name in OWNER_POLICY['cases']})
 
 
 def events(file, maximum=MAX_LOG_BYTES):
@@ -322,6 +326,67 @@ def bulk_ci_evidence(directory,project,actual,elf):
     return dict(schema='pluto.bulk-ci-evidence.v1',requestID=checkpoint['requestID'],sourceFiles=32,plutoVersions=33,actualSIGKILL=crashes[0],fullOrdinaryCiGreen=False,sourceCohortSHA256=backend['sourceCohortSHA256'])
 
 
+def prepared_ci_evidence(directory):
+    """Bind the reviewed C12 fault to its actual, independently restored checkpoint."""
+    proof = bounded_json(directory / 'prepared-backup.json')
+    inventory_raw = bounded_bytes(directory / 'prepared-inventory.json')
+    inventory = json.loads(inventory_raw)
+    manifest = bounded_json(directory / 'prepared-manifest.json')
+    receipt_raw = bounded_bytes(directory / 'prepared-fault-receipt.json')
+    receipt = json.loads(receipt_raw)
+    if (not isinstance(proof, dict) or not isinstance(inventory, list) or not inventory or
+            not isinstance(manifest, dict) or not isinstance(receipt, dict)):
+        raise ValueError('prepared checkpoint objects required')
+    fault = manifest.get('Cases', {}).get(PREPARED_TEST, {}).get('Faults', {}).get('adoption-prepared-changes-entry', {})
+    root = manifest.get('RetainedRoot', '')
+    if (manifest.get('Schema') != 'nativefixture.owner.v2' or
+            not re.fullmatch(r'/retained/endurance-[a-zA-Z0-9_.-]{1,128}', root) or
+            manifest.get('GoArgs', []).count('-test.run=^'+PREPARED_TEST+'$') != 1 or
+            fault.get('BarrierRequired') is not True or fault.get('Site') != 'adoption-prepared-changes-entry' or
+            fault.get('BackupSHA') != hashlib.sha256(receipt_raw).hexdigest() or
+            fault.get('BackupPath') != '/native-prepared-backup-receipt.json' or
+            fault.get('CheckpointRoot') != '/checkpoint'):
+        raise ValueError('exact prepared owner manifest and fault barrier required')
+    expected_receipt = dict(schema='pluto.prepared-backup-root-authorization.v1', run=manifest.get('Run'),
+        scope=manifest.get('Scope'), nonce=manifest.get('Nonce'), containerId=manifest.get('ContainerID'),
+        case=PREPARED_TEST, site=fault['Site'], base=root+'/f-0001', evidence='/checkpoint/verified-backup.json',
+        condition='independent archive restore, every-file SHA, actual v8 open and default-trust TLS readback of 260 originals')
+    if receipt != expected_receipt:
+        raise ValueError('same container, case and checkpoint authorization required')
+    database = dict(schemaVersion=8, acknowledged=266, pending=0, fileOperations=260, directoryOperations=6)
+    if (proof.get('schema') != 'pluto.prepared-checkpoint-qualified.v1' or proof.get('case') != PREPARED_TEST or
+            proof.get('base') != root+'/f-0001' or proof.get('database') != database or
+            proof.get('sourceFiles') != 260 or proof.get('uploads') != 260 or
+            proof.get('productStoreOpened') is not True or proof.get('trustedReceiverHttpStatus') != 200 or
+            proof.get('inventorySHA256') != hashlib.sha256(inventory_raw).hexdigest() or
+            any(not re.fullmatch('[a-f0-9]{64}', proof.get(key, '')) for key in
+                ('archiveSHA256', 'backupSHA256', 'backendSHA256', 'planDigest'))):
+        raise ValueError('complete independent restore, v8 open and TLS readback proof required')
+    files = {}
+    for item in inventory:
+        if not isinstance(item, dict): raise ValueError('prepared inventory entry required')
+        name = item.get('path', '')
+        if (not name or name.startswith('/') or '\\' in name or
+                any(part in ('', '.', '..') for part in name.split('/')) or name in files):
+            raise ValueError('unique local checkpoint member required')
+        if item.get('kind') not in ('file', 'directory'): raise ValueError('regular checkpoint graph required')
+        if item['kind'] == 'file':
+            if type(item.get('bytes')) is not int or item['bytes'] < 0 or not re.fullmatch('[a-f0-9]{64}', item.get('sha256', '')):
+                raise ValueError('checkpoint file size and SHA required')
+        files[name] = item
+    if proof.get('restoredFiles') != sum(item['kind']=='file' for item in inventory):
+        raise ValueError('every checkpoint file must be restored')
+    for index in range(260):
+        name = ('source' if index < 130 else 'second/.hidden') + '/file-%03d' % index
+        item = files.get(name, {})
+        if item.get('kind') != 'file' or item.get('bytes') != 1 or item.get('sha256') != hashlib.sha256(bytes([index % 256])).hexdigest():
+            raise ValueError('all260 actual original source pins required')
+    return dict(status='PASS_REVIEWED_C12_BACKUP_BARRIER', database=database, sourceFiles=260,
+                archiveSHA256=proof['archiveSHA256'], inventorySHA256=proof['inventorySHA256'],
+                declaredFault='adoption-prepared-changes-entry', faultIsGraceful=False,
+                historicalReaderExecuted=False, realSaturnCredit=False)
+
+
 def native_shard(directory, project, case):
     """Read actual native-owner receipts; no inferred zero exit or waived test."""
     if case not in NATIVE_CASES:
@@ -416,6 +481,7 @@ def native_shard(directory, project, case):
         sourceInputs=len(source["inputs"]), actualWait=actual, allProductsJoined=True,
         stdoutSHA256=hashlib.sha256(raw).hexdigest())
     if case==BULK_TEST:proof['bulk']=bulk_ci_evidence(directory,project,actual,source['testBinarySHA256'])
+    if case==PREPARED_TEST:proof['prepared']=prepared_ci_evidence(directory)
     return actual_events,actual['ExitCode'],proof
 
 
@@ -484,7 +550,7 @@ def native_scopes(file, project):
         raise ValueError('exact native scope manifest schema required')
     scopes = record['scopes']
     if not isinstance(scopes, dict) or set(scopes) != set(NATIVE_CASES):
-        raise ValueError('all four reviewed native scopes are required')
+        raise ValueError('all reviewed native scopes are required')
     result = {}
     directories = set()
     for case in NATIVE_CASES:

@@ -1,0 +1,214 @@
+{
+  "schema": "pluto.native-owner-case-policy.v1",
+  "cases": {
+    "TestCompletionDaemonReopensSameProcess/pause-resume": {
+      "Actions": {
+        "daemon": 45000,
+        "status": 45000,
+        "pause": 45000,
+        "resume": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestCompletionDaemonReopensSameProcess/route-recovery": {
+      "Actions": {
+        "daemon": 45000,
+        "status": 45000,
+        "pause": 45000,
+        "resume": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestMetadataFollowupManualPausedCopyCancelsWithContinuousHints": {
+      "Actions": {
+        "daemon": 45000,
+        "status": 45000,
+        "pause": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestMetadataFollowupNativeDisabledCapabilityKeepsNoopOriginals": {
+      "Actions": {
+        "daemon": 45000,
+        "status": 45000,
+        "pause": 45000,
+        "resume": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/activated-config": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/after-policy": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/changed-input": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/changed-profile": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/invalid-cap-binding": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/invalid-cap-codec": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/invalid-cap-receipt": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/pending-original": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/remote-cut": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/resume": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/source-owner": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/unknown-stored-codec": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/wrong-digest": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestPreparedAdoptionResumesInterruptedInitialPolicyThroughNativeCLI/wrong-stored-binding": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestStage3C01ActivationFenceNoLegacyFallback/corrupt": {
+      "Actions": {
+        "daemon": 45000,
+        "status": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestStage3C01ActivationFenceNoLegacyFallback/missing": {
+      "Actions": {
+        "daemon": 45000,
+        "status": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestStage3C01ActivationFenceNoLegacyFallback/wrong-domain": {
+      "Actions": {
+        "daemon": 45000,
+        "status": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestStage3C01NativeFileCapAndRetention": {
+      "Actions": {
+        "daemon": 45000,
+        "status": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestStage3C12NativeAdoptQualification/device": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestStage3C12NativeAdoptQualification/receipt": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestStage3C12NativeAdoptQualification/source": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestStage3C12NativeAdoptQualification/valid": {
+      "Actions": {
+        "migrate-plan": 45000,
+        "adopt": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestStage3C12NativeLifecycleAndWriterFence": {
+      "Actions": {
+        "daemon": 45000,
+        "status": 45000,
+        "pause": 45000,
+        "resume": 45000,
+        "inspect": 45000,
+        "checkpoint": 45000,
+        "backup": 45000,
+        "diagnostics": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestStage3C13ConcurrentStatusShutdownAndCheckinWire": {
+      "Actions": {
+        "daemon": 45000,
+        "status": 45000
+      },
+      "MaxFixtures": 1
+    }
+  }
+}
