@@ -25,6 +25,9 @@ python3 -I -B scripts/run-c01-ci.py --record-source "$artifacts/source-inputs.js
 go build -trimpath -p=2 -o "$artifacts/pluto-native-owner" ./internal/testsupport/cmd/pluto-native-owner
 go test -race -p=2 -c -o "$artifacts/pluto.test" ./internal/pluto
 CGO_ENABLED=0 go build -trimpath -p=2 -o "$artifacts/test2json" cmd/test2json
+# The read-only collector runs as UID 10001. This compiler-produced public
+# executable is a tool input, separate from all private retained test state.
+chmod 0555 -- "$artifacts/test2json"
 if [[ -z "$release_cli" ]]; then
   CGO_ENABLED=0 go build -trimpath -p=2 -o "$artifacts/pluto-ci" ./cmd/pluto
   release_cli="$artifacts/pluto-ci"
