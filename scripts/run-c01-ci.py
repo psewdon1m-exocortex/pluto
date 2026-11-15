@@ -182,6 +182,7 @@ def main():
     packet=json.loads(docker(*collector))
     if packet.get('schema')!='pluto.native-ci-export.v1' or packet.get('case')!=case or packet.get('converterActualExit')!=0:raise ValueError('actual native collector failed')
     expected={'events.jsonl','stdout.log','actual-wait.json','joined-streams.json','prepared-before-Start.json','observed-after-exec.json','owner-final.json','source-inputs.json'}
+    if case=='TestSmallBatchEngineActualCLIProcessesMixedAndLostReply':expected.add('backup-inventory.json')
     if case==PREPARED:expected|={'prepared-backup.json','prepared-inventory.json','prepared-manifest.json','prepared-fault-receipt.json'}
     if set(packet.get('files',{}))!=expected:raise ValueError('exact native evidence file set required')
     for name,item in packet['files'].items():

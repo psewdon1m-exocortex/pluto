@@ -14,7 +14,13 @@ def main(cid,owner_sha,test_sha,cli_sha,run,scope,root,case):
  policy=json.loads(Path('/owner-policy.json').read_bytes());assert policy['schema']=='pluto.native-owner-case-policy.v1'
  cases={k:v for k,v in policy['cases'].items() if k.split('/')[0]==case};assert cases
  assert all(set(v)=={'Actions','MaxFixtures'} and v['MaxFixtures']==1 and v['Actions'] and all(ms==45000 for ms in v['Actions'].values()) for v in cases.values())
+ batch=case=='TestSmallBatchEngineActualCLIProcessesMixedAndLostReply'
+ if batch:
+  backup=Path('/retained/backups');assert not backup.exists();backup.mkdir(mode=0o700);os.chown(backup,10001,10001)
  manifest=dict(Schema='nativefixture.owner.v2',Run=run,Scope=scope,Nonce=secrets.token_hex(16),ContainerID=cid,Hostname=cid[:12],Namespaces=[os.readlink('/proc/self/ns/'+n) for n in ('mnt','pid','user')],ExpiresUnixMs=time.time_ns()//1000000+900000,Socket=root+'/owner.sock',RetainedRoot=root,EvidenceRoot=root+'/evidence',Owner=artifact('/pluto-native-owner',owner_sha),GoTest=artifact('/pluto-native-metadata.test',test_sha),GoArgs=['-test.run=^'+case+'$','-test.count=1','-test.timeout=10m','-test.v'],Artifacts={'current':artifact('/pluto-current',cli_sha)},Cases=cases,Environment=['STAGE3_PLUTO_BINARY=/pluto-current','GOMAXPROCS=2'],OutputPrefixBytes=4*1024*1024)
+ if batch:
+  manifest['Artifacts']['batch-current']=manifest['Artifacts']['current']
+  manifest['Environment']+=['PLUTO_BATCH_ENGINE_CLI=/pluto-current','PLUTO_FAULT_INPUT_DIR='+root,'PLUTO_FAULT_BACKUP_DIR=/retained/backups']
  raw=json.dumps(manifest,separators=(',',':')).encode()+b'\n';assert len(raw)<=65536
  with open('/native-owner-manifest.json','xb') as f:f.write(raw);f.flush();os.fsync(f.fileno())
  os.chmod('/native-owner-manifest.json',0o444);print(hashlib.sha256(raw).hexdigest())

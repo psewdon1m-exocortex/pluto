@@ -58,7 +58,7 @@ class DispatchTests(unittest.TestCase):
     def native_env(self):
         return dict(PLUTO_GO_CI_C01_IMAGE='sha256:'+'a'*64,PLUTO_GO_CI_C01_SOURCE_INPUTS='/inputs',
                     PLUTO_GO_CI_C01_TEST_BINARY='/test',STAGE3_PLUTO_BINARY='/cli',PLUTO_GO_CI_C01_OWNER='/owner',
-                    PLUTO_GO_CI_C01_CONVERTER='/converter')
+                    PLUTO_GO_CI_C01_CONVERTER='/converter',PLUTO_GO_CI_SYNCSTATE_TEST_BINARY='/syncstate-test')
 
     def test_default_keeps_c01_in_whole_ordinary_run(self):
         code,calls,_=self.run_case()
@@ -79,6 +79,14 @@ class DispatchTests(unittest.TestCase):
         self.assertEqual(calls[ordinary][calls[ordinary].index('-skip')+1],'^('+'|'.join(dispatch.NATIVE_SCOPES.values())+')$')
         audit=next(argv for argv in calls if any(arg.endswith('check-go-ci.py') for arg in argv) and '--validate-native-shards' not in argv)
         self.assertIn('--native-shards',audit)
+
+    def test_batch_uses_its_own_race_package_binary(self):
+        code,calls,_=self.run_case(self.native_env());self.assertEqual(code,0)
+        for call in calls:
+            if any(arg.endswith('run-c01-ci.py') for arg in call):
+                case=call[call.index('--case')+1]
+                expected='/syncstate-test' if case=='TestSmallBatchEngineActualCLIProcessesMixedAndLostReply' else '/test'
+                self.assertEqual(call[call.index('--test-binary')+1],expected)
 
     def test_each_producer_failure_closes_ordinary_admission(self):
         for case in dispatch.NATIVE_SCOPES.values():

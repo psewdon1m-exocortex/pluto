@@ -21,6 +21,11 @@ if OWNER_POLICY.get('schema')!='pluto.native-owner-case-policy.v1':raise ValueEr
 NATIVE_CASES+=sorted({name.split('/')[0] for name in OWNER_POLICY['cases']})
 
 
+BATCH_TEST='TestSmallBatchEngineActualCLIProcessesMixedAndLostReply'
+
+def native_package(case):
+    return 'pluto/internal/pluto/syncstate' if case==BATCH_TEST else C01_PACKAGE
+
 def events(file, maximum=MAX_LOG_BYTES):
     total = 0
     with Path(file).open("rb") as stream:
@@ -37,7 +42,40 @@ def events(file, maximum=MAX_LOG_BYTES):
             yield event
 
 
-def audit(inventory, actual, go_exit, capture_exit):
+def conditional_policy(project, environment):
+    project=Path(project).resolve()
+    raw=(project/'scripts/default-ci-conditional-policy.json').read_bytes()
+    if len(raw)>128*1024:raise ValueError('bounded conditional policy required')
+    policy=json.loads(raw)
+    if policy.get('schema')!='pluto.default-ci-conditional-policy.v1' or policy.get('sourceDigest')!='UTF8_LF_NORMALIZED_SHA256' or len(policy.get('cases',{}))!=16:raise ValueError('exact reviewed conditional registry required')
+    result={}
+    for case,item in policy['cases'].items():
+        relative=item.get('source','');file=project/relative
+        if (not re.fullmatch('Test[A-Za-z0-9]+',case) or relative.startswith('/') or '\\' in relative or '..' in relative.split('/') or
+            not relative.startswith('internal/pluto/') or not relative.endswith('_test.go') or file.is_symlink() or not file.is_file()):raise ValueError('exact regular conditional test source required')
+        source=file.read_bytes()
+        if hashlib.sha256(source.replace(b'\r\n',b'\n')).hexdigest()!=item.get('sourceSHA256'):raise ValueError('conditional source guard changed: '+case)
+        message=item.get('skipMessage','')
+        if not message or ('func '+case+'(').encode() not in source or ('t.Skip('+json.dumps(message)+')').encode() not in source:raise ValueError('original conditional skip guard required')
+        keys=item.get('environment',[])
+        if not keys or len(keys)!=len(set(keys)) or not all(re.fullmatch('PLUTO_[A-Z0-9_]+',key) for key in keys):raise ValueError('exact conditional environment predicates required')
+        if item.get('status')!='NOT_RUN' or item.get('ownerWaiver') is not False:raise ValueError('conditional execution cannot become PASS or owner waiver')
+        condition=item.get('condition')
+        if condition=='ANY_EMPTY':allowed=any(not environment.get(key,'') for key in keys)
+        elif condition=='ANY_NOT_ONE':allowed=any(environment.get(key)!='1' for key in keys)
+        else:raise ValueError('unreviewed conditional predicate')
+        if allowed:result[(item['package'],case)]=item
+    return result
+
+def ordinary_status(result):
+    if result['errors']:return 'FAIL_REQUIRED_ORDINARY_GO_TEST_SUITE'
+    if result.get('conditionalNotRun'):return 'PASS_DEFAULT_ORDINARY_WITH_EXPLICIT_CONDITIONAL_NOT_RUN'
+    return 'PASS_REQUIRED_ORDINARY_GO_TEST_SUITE'
+
+
+def audit(inventory, actual, go_exit, capture_exit, *, conditional=None):
+    conditional=conditional or {}
+    conditional_output={}
     expected = set()
     errors = []
     for event in inventory:
@@ -69,6 +107,9 @@ def audit(inventory, actual, go_exit, capture_exit):
             continue
         key = (package, name)
         root = (package, name.split("/", 1)[0])
+        if key in conditional and action=="output":
+            conditional_output[key]=conditional_output.get(key,"")+event.get("Output","")
+            if len(conditional_output[key])>MAX_EVENT_BYTES:errors.append("OVERSIZED_CONDITIONAL_SKIP_OUTPUT")
         if root not in expected:
             errors.append(f"UNDISCOVERED_TEST: {package} {name}")
         if action == "run":
@@ -90,7 +131,10 @@ def audit(inventory, actual, go_exit, capture_exit):
     if results_without_start:
         errors.append("TEST_RESULTS_WITHOUT_START")
     ordinary = {key for key in expected if key[1] != ARCHIVAL_TEST}
-    missing = sorted(key for key in ordinary if key not in started or terminal.get(key) != "pass")
+    accepted_conditional={key for key in ordinary if key in conditional and key in started and terminal.get(key)=="skip" and conditional[key]["skipMessage"] in conditional_output.get(key,"")}
+    unexpected_skips=[key for key in skipped if key not in accepted_conditional]
+    if set(conditional)-expected:errors.append("CONDITIONAL_TEST_NOT_DISCOVERED")
+    missing = sorted(key for key in ordinary if key not in accepted_conditional and (key not in started or terminal.get(key) != "pass"))
     unfinished_packages = sorted(package for package, _ in ordinary if packages.get(package) != "pass")
     archival_present = any(name == ARCHIVAL_TEST for _, name in expected | started | set(terminal))
     if archival_present:
@@ -99,7 +143,7 @@ def audit(inventory, actual, go_exit, capture_exit):
         errors.append(f"ACTUAL_GO_EXIT: {go_exit}")
     if capture_exit != 0:
         errors.append(f"ACTUAL_CAPTURE_EXIT: {capture_exit}")
-    if skipped:
+    if unexpected_skips:
         errors.append("REQUIRED_TESTS_SKIPPED")
     if failed:
         errors.append("REQUIRED_TESTS_FAILED")
@@ -109,13 +153,16 @@ def audit(inventory, actual, go_exit, capture_exit):
         errors.append("REQUIRED_PACKAGES_NOT_PASSED")
     def named(items):
         return [dict(package=p, test=n) for p, n in sorted(set(items))]
-    return dict(
+    result = dict(
         schema="pluto.ordinary-go-ci.v1",
         status="PASS_REQUIRED_ORDINARY_GO_TEST_SUITE" if not errors else "FAIL_REQUIRED_ORDINARY_GO_TEST_SUITE",
         actualGoExit=go_exit, actualCaptureExit=capture_exit,
         ordinaryDiscovered=len(ordinary),
         ordinaryPassed=sum(key in started and terminal.get(key) == "pass" for key in ordinary),
-        skipped=named(skipped), failed=named(failed), missingOrNotPassed=named(missing),
+        skipped=named(skipped), requiredSkipped=named(unexpected_skips),
+        conditionalNotRun=[dict(package=p,test=n,status="NOT_RUN",reason=conditional[(p,n)]["reason"],sourceSHA256=conditional[(p,n)]["sourceSHA256"],ownerWaiver=False) for p,n in sorted(accepted_conditional)],
+        conditionalQualificationComplete=not accepted_conditional,
+        failed=named(failed), missingOrNotPassed=named(missing),
         unfinishedTests=named(unfinished_tests), resultsWithoutStart=named(results_without_start),
         packagesNotPassed=sorted(set(unfinished_packages)), errors=sorted(set(errors)),
         archival=dict(test=ARCHIVAL_TEST, status="WAIVED_BY_OWNER",
@@ -123,6 +170,10 @@ def audit(inventory, actual, go_exit, capture_exit):
                       runtime="UNEXPECTED_ORDINARY_LANE_RESULT" if archival_present else "NOT_RUN",
                       historicalV8CompatibilityConfirmed=False, downgradeSafetyConfirmed=False),
     )
+
+    result['status']=ordinary_status(result)
+    result['fullOrdinaryCIGreen']=not result['errors'] and not accepted_conditional
+    return result
 
 
 def audit_lanes(inventory, ordinary, c01, go_exit, capture_exit, c01_go_exit, c01_runner_exit, c01_capture_exit):
@@ -163,7 +214,8 @@ def audit_lanes(inventory, ordinary, c01, go_exit, capture_exit, c01_go_exit, c0
         if code != 0:
             lane_errors.append(f"ACTUAL_C01_{name}_EXIT: {code}")
     result["errors"] = sorted(set(result["errors"] + lane_errors))
-    result["status"] = "FAIL_REQUIRED_ORDINARY_GO_TEST_SUITE" if result["errors"] else "PASS_REQUIRED_ORDINARY_GO_TEST_SUITE"
+    result["status"] = ordinary_status(result)
+    result["fullOrdinaryCIGreen"] = not result["errors"] and not result.get("conditionalNotRun")
     result["lanes"] = dict(ordinary=dict(actualGoExit=go_exit, actualCaptureExit=capture_exit),
                            c01=dict(package=C01_PACKAGE, test=C01_TEST, required=True,
                                     actualGoExit=c01_go_exit, actualRunnerExit=c01_runner_exit,
@@ -466,11 +518,12 @@ def native_shard(directory, project, case):
     actual_events = list(events(directory / "events.jsonl", maximum=MAX_EVENT_BYTES))
     if "".join(event.get("Output", "") for event in actual_events) != raw.decode("utf-8").replace("\x16", ""):
         raise ValueError("native JSON events do not preserve actual Go stdout")
-    scoped = audit([dict(Package=C01_PACKAGE, Action="output", Output=case+"\n")],
+    package = native_package(case)
+    scoped = audit([dict(Package=package, Action="output", Output=case+"\n")],
                    actual_events, actual["ExitCode"], 0)
     package_results = [event.get("Action") for event in actual_events if not event.get("Test")
                        and event.get("Action") in ("pass", "fail", "skip")]
-    if (scoped["errors"] or package_results != ["pass"] or any(event.get("Package") != C01_PACKAGE or
+    if (scoped["errors"] or package_results != ["pass"] or any(event.get("Package") != package or
             event.get("Test") and event["Test"].split("/", 1)[0] != case for event in actual_events)):
         raise ValueError("native scope must actually pass every started test and subtest exactly once")
     if (source.get("schema") != "pluto.c01-ci-source.v1" or
@@ -480,6 +533,17 @@ def native_shard(directory, project, case):
     proof = dict(schema="pluto.native-ci-evidence.v1", test=case, testBinarySHA256=source["testBinarySHA256"],
         sourceInputs=len(source["inputs"]), actualWait=actual, allProductsJoined=True,
         stdoutSHA256=hashlib.sha256(raw).hexdigest())
+    if case==BATCH_TEST:
+        inventory=bounded_json(directory/'backup-inventory.json')
+        if not isinstance(inventory,list) or not 1<=len(inventory)<=4096:raise ValueError('bounded actual batch backup inventory required')
+        paths=set()
+        for item in inventory:
+            name=item.get('path','')
+            if (not isinstance(name,str) or not name or name.startswith('/') or '\\' in name or any(x in ('','..','.') for x in name.split('/')) or name in paths or
+                type(item.get('bytes')) is not int or item['bytes']<0 or not re.fullmatch('[a-f0-9]{64}',item.get('sha256',''))):raise ValueError('exact regular batch backup file pins required')
+            paths.add(name)
+        if sum(x.endswith('/coherent-fixture.tar') for x in paths)!=6 or sum(x.endswith('/engine-cli-restore.json') for x in paths)!=3:raise ValueError('six independent batch backups and three before-CLI restore proofs required')
+        proof['batch']=dict(backupFiles=len(paths),independentBackups=6,fixture='synthetic loopback receiver; actual native CLI and SQLite; not Saturn/PG/SFTP')
     if case==BULK_TEST:proof['bulk']=bulk_ci_evidence(directory,project,actual,source['testBinarySHA256'])
     if case==PREPARED_TEST:proof['prepared']=prepared_ci_evidence(directory)
     return actual_events,actual['ExitCode'],proof
@@ -520,17 +584,18 @@ def preflight_native(inventory, native, go_exit, runner_exit, capture_exit, case
     discovered = [(event.get('Package'), line) for event in inventory if event.get('Action') == 'output'
                   for line in event.get('Output', '').splitlines()]
     errors = []
-    if discovered.count((C01_PACKAGE, case)) != 1: errors.append('REQUIRED_NATIVE_TEST_NOT_DISCOVERED: ' + case)
+    package=native_package(case)
+    if discovered.count((package, case)) != 1: errors.append('REQUIRED_NATIVE_TEST_NOT_DISCOVERED: ' + case)
     if any(event.get('Action') == 'fail' for event in inventory): errors.append('DISCOVERY_FAILED')
     if any(name == ARCHIVAL_TEST for _, name in discovered): errors.append('ARCHIVAL_TEST_PRESENT_IN_ORDINARY_CI')
     ended = []
     for event in native:
         name = event.get('Test', '')
-        if event.get('Package') != C01_PACKAGE or name and name.split('/', 1)[0] != case:
+        if event.get('Package') != package or name and name.split('/', 1)[0] != case:
             errors.append('UNEXPECTED_TEST_IN_NATIVE_SCOPE: ' + case)
         if not name and event.get('Action') in ('pass', 'fail', 'skip'): ended.append(event.get('Action'))
     if ended != ['pass']: errors.append('NATIVE_SCOPE_PACKAGE_NOT_PASSED_ONCE: ' + case)
-    selected = [dict(Package=C01_PACKAGE, Action='output', Output=case+'\n')]
+    selected = [dict(Package=package, Action='output', Output=case+'\n')]
     scoped = audit(selected, native, go_exit, capture_exit)
     errors += scoped['errors']
     if type(runner_exit) is not int or runner_exit != 0: errors.append('ACTUAL_NATIVE_RUNNER_EXIT: ' + str(runner_exit))
@@ -567,8 +632,9 @@ def native_scopes(file, project):
         actual, code, proof = native_shard(scope['directory'], project, case)
         result[case] = dict(events=actual, goExit=code, runnerExit=scope['actualRunnerExit'],
                             captureExit=scope['actualCaptureExit'], evidence=proof)
-    if len({scope['evidence']['testBinarySHA256'] for scope in result.values()}) != 1:
-        raise ValueError('all native scopes must use the same source-bound test ELF')
+    for package in {native_package(case) for case in NATIVE_CASES}:
+        if len({scope['evidence']['testBinarySHA256'] for case,scope in result.items() if native_package(case)==package})!=1:
+            raise ValueError('all native scopes in one package must use the same source-bound test ELF')
     return result
 
 
@@ -583,27 +649,28 @@ def preflight_native_scopes(inventory, scopes):
                 archival=next(iter(reports.values()))['archival'])
 
 
-def audit_native_lanes(inventory, ordinary, scopes, go_exit, capture_exit):
+def audit_native_lanes(inventory, ordinary, scopes, go_exit, capture_exit, *, conditional=None):
     inventory, ordinary = list(inventory), list(ordinary)
     preflight = preflight_native_scopes(inventory, scopes)
     errors = list(preflight['errors'])
     ended = {}
     for event in ordinary:
         package, name, action = (event.get(key, '') for key in ('Package', 'Test', 'Action'))
-        if package == C01_PACKAGE and name.split('/', 1)[0] in NATIVE_CASES:
+        if (package,name.split('/',1)[0]) in {(native_package(case),case) for case in NATIVE_CASES}:
             errors.append('NATIVE_TEST_EXECUTED_IN_ORDINARY_SCOPE: ' + name)
         if not name and action in ('pass', 'fail', 'skip'):
             if package in ended: errors.append('DUPLICATE_PACKAGE_RESULT_IN_ORDINARY_SCOPE: ' + package)
             ended[package] = action
     required = {event.get('Package', '') for event in inventory if event.get('Action') == 'output'
                 and any(line.startswith('Test') and not any(c.isspace() for c in line) and '/' not in line
-                    and (event.get('Package'), line) not in {(C01_PACKAGE, case) for case in NATIVE_CASES}
+                    and (event.get('Package'), line) not in {(native_package(case), case) for case in NATIVE_CASES}
                     for line in event.get('Output', '').splitlines())}
     if any(ended.get(package) != 'pass' for package in required): errors.append('ORDINARY_SCOPE_PACKAGES_NOT_PASSED')
     merged = itertools.chain(ordinary, *(scopes[case]['events'] for case in NATIVE_CASES))
-    result = audit(inventory, merged, go_exit, capture_exit)
+    result = audit(inventory, merged, go_exit, capture_exit, conditional=conditional)
     result['errors'] = sorted(set(result['errors'] + errors))
-    result['status'] = 'FAIL_REQUIRED_ORDINARY_GO_TEST_SUITE' if result['errors'] else 'PASS_REQUIRED_ORDINARY_GO_TEST_SUITE'
+    result['status'] = ordinary_status(result)
+    result['fullOrdinaryCIGreen']=not result['errors'] and not result.get('conditionalNotRun')
     result['lanes'] = dict(ordinary=dict(actualGoExit=go_exit, actualCaptureExit=capture_exit),
                           native=preflight['scopes'])
     result['nativeEvidence'] = {case: scopes[case]['evidence'] for case in NATIVE_CASES}
@@ -624,8 +691,12 @@ def main():
     parser.add_argument("--c01-runner-exit", type=int)
     parser.add_argument("--c01-capture-exit", type=int)
     parser.add_argument("--source-root", default=Path(__file__).resolve().parents[1])
+    parser.add_argument("--report-source-bound-conditionals",action="store_true",help="Report exact unchanged default guards as NOT_RUN, never archived acceptance")
     args = parser.parse_args()
     try:
+        import os
+        conditional=conditional_policy(args.source_root,os.environ) if args.report_source_bound_conditionals else None
+        if conditional and (args.validate_c01_shard or args.validate_native_shards or args.c01_shard):raise ValueError("conditional reporting applies only to the complete default ordinary lane")
         if args.native_shards:
             if args.validate_c01_shard or any(value is not None for value in (args.c01_shard, args.c01_runner_exit, args.c01_capture_exit)):
                 raise ValueError("cannot mix native scope manifests with legacy C01 arguments")
@@ -635,7 +706,7 @@ def main():
             else:
                 if any(value is None for value in (args.events, args.go_exit, args.capture_exit)):
                     raise ValueError("actual ordinary events and both ordinary exits required")
-                report = audit_native_lanes(events(args.inventory), events(args.events), scopes, args.go_exit, args.capture_exit)
+                report = audit_native_lanes(events(args.inventory), events(args.events), scopes, args.go_exit, args.capture_exit, conditional=conditional)
         elif args.validate_native_shards:
             raise ValueError("complete native scope manifest required for preflight")
         elif any(value is not None for value in (args.c01_shard, args.c01_runner_exit, args.c01_capture_exit)):
@@ -655,14 +726,14 @@ def main():
         else:
             if args.validate_c01_shard or any(value is None for value in (args.events, args.go_exit, args.capture_exit)):
                 raise ValueError("complete ordinary evidence or explicit C01 preflight required")
-            report = audit(events(args.inventory), events(args.events), args.go_exit, args.capture_exit)
+            report = audit(events(args.inventory), events(args.events), args.go_exit, args.capture_exit, conditional=conditional)
     except (OSError, ValueError, TypeError) as error:
         report = dict(schema="pluto.ordinary-go-ci.v1", status="FAIL_INVALID_CI_EVIDENCE", error=str(error))
     raw = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     with Path(args.report).open("x", encoding="utf-8") as stream:
         stream.write(raw)
     print(raw, end="")
-    return 0 if report["status"] in ("PASS_REQUIRED_ORDINARY_GO_TEST_SUITE", "PASS_REQUIRED_C01_NATIVE_SCOPE", "PASS_REQUIRED_NATIVE_SCOPES") else 1
+    return 0 if report["status"] in ("PASS_REQUIRED_ORDINARY_GO_TEST_SUITE", "PASS_DEFAULT_ORDINARY_WITH_EXPLICIT_CONDITIONAL_NOT_RUN", "PASS_REQUIRED_C01_NATIVE_SCOPE", "PASS_REQUIRED_NATIVE_SCOPES") else 1
 
 
 if __name__ == "__main__":

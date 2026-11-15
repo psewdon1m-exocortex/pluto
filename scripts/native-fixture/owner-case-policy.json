@@ -209,6 +209,24 @@
         "status": 45000
       },
       "MaxFixtures": 1
+    },
+    "TestSmallBatchEngineActualCLIProcessesMixedAndLostReply/normal": {
+      "Actions": {
+        "batch-current": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestSmallBatchEngineActualCLIProcessesMixedAndLostReply/lost": {
+      "Actions": {
+        "batch-current": 45000
+      },
+      "MaxFixtures": 1
+    },
+    "TestSmallBatchEngineActualCLIProcessesMixedAndLostReply/disabled": {
+      "Actions": {
+        "batch-current": 45000
+      },
+      "MaxFixtures": 1
     }
   }
 }

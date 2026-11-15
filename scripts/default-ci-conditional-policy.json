@@ -1,0 +1,216 @@
+{
+  "schema": "pluto.default-ci-conditional-policy.v1",
+  "semantics": "Only pre-existing actual root-level conditional skips are reported NOT_RUN, never PASS or owner waiver. Missing tests, nested/unknown skips and configured-input skips remain failures. Historical qualification stays open.",
+  "cases": {
+    "TestArtifactLargeCorruptCatalogRefusalBounded": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/artifact_resource_test.go",
+      "sourceSHA256": "8bc1f7939b1c806348d9fe5067905c25c316c8a55517c14415ea7937f12b42c8",
+      "skipMessage": "dedicated bounded structural resource qualification",
+      "condition": "ANY_NOT_ONE",
+      "environment": [
+        "PLUTO_ARTIFACT_RESOURCE"
+      ],
+      "status": "NOT_RUN",
+      "reason": "DEDICATED_RESOURCE_MODE_NOT_ENABLED",
+      "ownerWaiver": false
+    },
+    "TestCapturedLargeIndexedPublicationAndReceiptHistory": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/captured_resource_test.go",
+      "sourceSHA256": "75eaee21495e5369a89e174b151e9aa62a6e8275141e6e5b6e3ae44c27fcdc74",
+      "skipMessage": "dedicated bounded 100k/500k captured executor qualification",
+      "condition": "ANY_NOT_ONE",
+      "environment": [
+        "PLUTO_CAPTURED_RESOURCE"
+      ],
+      "status": "NOT_RUN",
+      "reason": "DEDICATED_RESOURCE_MODE_NOT_ENABLED",
+      "ownerWaiver": false
+    },
+    "TestCapturedServerActualSQLBackedSnapshotFeedExact64": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/captured_server_fixture_test.go",
+      "sourceSHA256": "1185176fe705a084d7587661d6c0a2724aaf0d9d2c758008b4ebeaf7e2ea6db3",
+      "skipMessage": "dedicated root-frozen actual S2 fixture gate requires PLUTO_R1C_SERVER_FIXTURES",
+      "condition": "ANY_EMPTY",
+      "environment": [
+        "PLUTO_R1C_SERVER_FIXTURES"
+      ],
+      "status": "NOT_RUN",
+      "reason": "SQL_BACKED_FIXTURE_NOT_PROVIDED",
+      "ownerWaiver": false
+    },
+    "TestHTTPCurrentScanIndexed100k500kRetainedVerification": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/http_binding_resource_test.go",
+      "sourceSHA256": "d742fa41c2aaaadf2b70182764b8371c027698982ef03f4d5565f7bce57d5009",
+      "skipMessage": "qualified separately in bounded dedicated container",
+      "condition": "ANY_NOT_ONE",
+      "environment": [
+        "PLUTO_HTTP_BINDING_RESOURCE"
+      ],
+      "status": "NOT_RUN",
+      "reason": "DEDICATED_RESOURCE_MODE_NOT_ENABLED",
+      "ownerWaiver": false
+    },
+    "TestPlannerPendingLookupWithLargeAckHistory": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/planner_guards_test.go",
+      "sourceSHA256": "6f554e58a56e6884ac26e58051831fb65bf76ec72f52939d04ae88f4ddcfe2da",
+      "skipMessage": "bounded 10k/100k acknowledged-history qualification",
+      "condition": "ANY_NOT_ONE",
+      "environment": [
+        "PLUTO_PLANNER_LARGE_FIXTURE"
+      ],
+      "status": "NOT_RUN",
+      "reason": "DEDICATED_RESOURCE_MODE_NOT_ENABLED",
+      "ownerWaiver": false
+    },
+    "TestPlannerSparseDirtyLargeIndex": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/planner_test.go",
+      "sourceSHA256": "57dd77c6fec84d3ce70010ba2a478974795a88085b1a4f24ed5af29b23b8b022",
+      "skipMessage": "separate bounded 100k/500k qualification fixture",
+      "condition": "ANY_NOT_ONE",
+      "environment": [
+        "PLUTO_PLANNER_LARGE_FIXTURE"
+      ],
+      "status": "NOT_RUN",
+      "reason": "DEDICATED_RESOURCE_MODE_NOT_ENABLED",
+      "ownerWaiver": false
+    },
+    "TestRemoteIndexedLargeCatalogOneChangeBounded": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/remote_resource_test.go",
+      "sourceSHA256": "a3e83496c182a118082f0c56fa4f28c669d7ee863e80deafb7a4435097f20cef",
+      "skipMessage": "dedicated bounded100k/500k catalog qualification",
+      "condition": "ANY_NOT_ONE",
+      "environment": [
+        "PLUTO_REMOTE_RESOURCE"
+      ],
+      "status": "NOT_RUN",
+      "reason": "DEDICATED_RESOURCE_MODE_NOT_ENABLED",
+      "ownerWaiver": false
+    },
+    "TestSourceLargeStructuralStreamingAndIndexedWork": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/source_resource_test.go",
+      "sourceSHA256": "b6900714a877fe120d848495ee7a88b5f58755e2d87d12e82cce83a8d8c4e33e",
+      "skipMessage": "qualified separately with bounded dedicated resources",
+      "condition": "ANY_NOT_ONE",
+      "environment": [
+        "PLUTO_SOURCE_RESOURCE"
+      ],
+      "status": "NOT_RUN",
+      "reason": "DEDICATED_RESOURCE_MODE_NOT_ENABLED",
+      "ownerWaiver": false
+    },
+    "TestActualRuntimeBuildInfoRejectsFalseLegacyAndExtractsNotices": {
+      "package": "pluto/internal/pluto",
+      "source": "internal/pluto/runtime_contract_test.go",
+      "sourceSHA256": "9c55a7b1541cfb6d53f7e6154cd48c78a1245320cad7a030ed073f117818a60d",
+      "skipMessage": "actual produced binary is separately qualified in audit release build",
+      "condition": "ANY_EMPTY",
+      "environment": [
+        "PLUTO_RELEASE_FIXTURE_DIR"
+      ],
+      "status": "NOT_RUN",
+      "reason": "SIGNED_RELEASE_FIXTURE_NOT_PROVIDED",
+      "ownerWaiver": false
+    },
+    "TestActualProducedReleaseRuntimeNotices": {
+      "package": "pluto/internal/pluto",
+      "source": "internal/pluto/update_notices_test.go",
+      "sourceSHA256": "055d58f9a75adc9e418aa5459320302732316538c5114eb326418349a5bf137d",
+      "skipMessage": "qualified actual release assets provided in audit build container",
+      "condition": "ANY_EMPTY",
+      "environment": [
+        "PLUTO_RELEASE_FIXTURE_DIR"
+      ],
+      "status": "NOT_RUN",
+      "reason": "SIGNED_RELEASE_FIXTURE_NOT_PROVIDED",
+      "ownerWaiver": false
+    },
+    "TestArtifactActualV3ReaderRefusesBeforeWrite": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/artifact_module_test.go",
+      "sourceSHA256": "8adcd51191e5f5c0c2f59bf46e093a9ac7cbd331654b54fe0a4a844ee564660b",
+      "skipMessage": "qualified separately with actual frozen schema 3 source binary",
+      "condition": "ANY_EMPTY",
+      "environment": [
+        "PLUTO_ARTIFACT_V3_READER"
+      ],
+      "status": "NOT_RUN",
+      "reason": "ARCHIVAL_INPUT_NOT_PROVIDED",
+      "ownerWaiver": false
+    },
+    "TestHTTPRebootstrapHistoricalSignedCLIRefusesBothInterruptedPhases": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/guarded_http_rebootstrap_rollback_test.go",
+      "sourceSHA256": "4fd8a2e313c99ffc189e3a03a2035c56b3f9c6d14c1c287fed5c13bb99c06d4a",
+      "skipMessage": "requires exact accepted predecessor signed CLI fixture",
+      "condition": "ANY_EMPTY",
+      "environment": [
+        "PLUTO_R1E_ACTUAL_CLI"
+      ],
+      "status": "NOT_RUN",
+      "reason": "ARCHIVAL_INPUT_NOT_PROVIDED",
+      "ownerWaiver": false
+    },
+    "TestHTTPBindingModuleSixActualV5ReaderRefusesWithoutMutation": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/http_binding_test.go",
+      "sourceSHA256": "380af3dc7720d23420196e7f0a50abf4a6a1b778dab2b22038b62f444f8eb024",
+      "skipMessage": "actual frozen v5 reader qualified in release container",
+      "condition": "ANY_EMPTY",
+      "environment": [
+        "PLUTO_HTTP_V5_READER"
+      ],
+      "status": "NOT_RUN",
+      "reason": "ARCHIVAL_INPUT_NOT_PROVIDED",
+      "ownerWaiver": false
+    },
+    "TestRemoteActualOldReaderRefusesModuleFivePreservingBytes": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/remote_migration_compat_test.go",
+      "sourceSHA256": "32c53dbfea93eecced0f1e9e83e47a3bf6e1e63f712a589567ab39714c3e6092",
+      "skipMessage": "dedicated actual frozen module4 reader gate",
+      "condition": "ANY_EMPTY",
+      "environment": [
+        "PLUTO_REMOTE_V4_READER"
+      ],
+      "status": "NOT_RUN",
+      "reason": "ARCHIVAL_INPUT_NOT_PROVIDED",
+      "ownerWaiver": false
+    },
+    "TestSmallBatchStateActualV6ReaderPreservesDurableState": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/small_batch_state_test.go",
+      "sourceSHA256": "22dbcdd04dd8a78ec3fcf19cc7d9f0ecc2bf7589a83014b1c3bee19d658d0b28",
+      "skipMessage": "requires frozen actual v6 executable",
+      "condition": "ANY_EMPTY",
+      "environment": [
+        "PLUTO_BATCH_V6_READER"
+      ],
+      "status": "NOT_RUN",
+      "reason": "ARCHIVAL_INPUT_NOT_PROVIDED",
+      "ownerWaiver": false
+    },
+    "TestOwnerMountActualSignedCLIOriginalRecoveryAndFresh": {
+      "package": "pluto/internal/pluto/syncstate",
+      "source": "internal/pluto/syncstate/source_remount_cli_test.go",
+      "sourceSHA256": "5087234c54f6f54b6fcda5a1a7c681bbd993cd0af7f14dfb61349b97f47141e5",
+      "skipMessage": "requires exact signed R1f and final successor CLI fixtures",
+      "condition": "ANY_EMPTY",
+      "environment": [
+        "PLUTO_R1F_ACTUAL_CLI",
+        "PLUTO_R1G_ACTUAL_CLI"
+      ],
+      "status": "NOT_RUN",
+      "reason": "ARCHIVAL_INPUT_NOT_PROVIDED",
+      "ownerWaiver": false
+    }
+  },
+  "sourceDigest": "UTF8_LF_NORMALIZED_SHA256"
+}

@@ -26,6 +26,45 @@ def completed(name="TestExample", result="pass"):
 
 
 class OrdinaryCIReportTests(unittest.TestCase):
+    def test_source_bound_default_skip_is_explicit_not_run_never_pass(self):
+        policy=reporter.conditional_policy(Path(__file__).resolve().parents[1],{})
+        self.assertEqual(len(policy),16)
+        key,item=next(iter(policy.items()));package,name=key
+        inventory=[dict(Package=package,Action='output',Output=name+'\n')]
+        actual=[dict(Package=package,Test=name,Action='run'),dict(Package=package,Test=name,Action='output',Output=item['skipMessage']+'\n'),dict(Package=package,Test=name,Action='skip'),dict(Package=package,Action='pass')]
+        result=reporter.audit(inventory,actual,0,0,conditional={key:item})
+        self.assertEqual(result['status'],'PASS_DEFAULT_ORDINARY_WITH_EXPLICIT_CONDITIONAL_NOT_RUN')
+        self.assertEqual(result['ordinaryPassed'],0);self.assertEqual(len(result['conditionalNotRun']),1)
+        self.assertEqual(result['conditionalNotRun'][0]['status'],'NOT_RUN')
+        self.assertFalse(result['conditionalNotRun'][0]['ownerWaiver']);self.assertFalse(result['fullOrdinaryCIGreen'])
+        self.assertFalse(result['conditionalQualificationComplete'])
+        for mutation in ('missing','wrong-message','nested-skip','failed','configured'):
+            changed=[dict(row) for row in actual];selected={key:item}
+            if mutation=='missing':changed=[]
+            if mutation=='wrong-message':changed[1]['Output']='another skip'
+            if mutation=='nested-skip':changed+=[dict(Package=package,Test=name+'/child',Action='run'),dict(Package=package,Test=name+'/child',Action='skip')]
+            if mutation=='failed':changed[2]['Action']='fail'
+            if mutation=='configured':selected={}
+            with self.subTest(mutation=mutation):self.assertTrue(reporter.audit(inventory,changed,0,0,conditional=selected)['status'].startswith('FAIL_'))
+
+    def test_conditional_registry_cannot_cover_configured_or_changed_source(self):
+        project=Path(__file__).resolve().parents[1]
+        policy=json.loads((project/'scripts/default-ci-conditional-policy.json').read_bytes())
+        env={key:'1' for item in policy['cases'].values() for key in item['environment']}
+        self.assertEqual(reporter.conditional_policy(project,env),{})
+        self.assertNotIn(reporter.ARCHIVAL_TEST,policy['cases'])
+        self.assertTrue(all(item['ownerWaiver'] is False for item in policy['cases'].values()))
+        with tempfile.TemporaryDirectory() as directory:
+            copy=Path(directory);(copy/'scripts').mkdir()
+            (copy/'scripts/default-ci-conditional-policy.json').write_text(json.dumps(policy))
+            for relative in {item['source'] for item in policy['cases'].values()}:
+                target=copy/relative;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((project/relative).read_bytes())
+            for relative in {item['source'] for item in policy['cases'].values()}:
+                target=copy/relative;target.write_bytes(target.read_bytes().replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))
+            self.assertEqual(len(reporter.conditional_policy(copy,{})),16)
+            chosen=copy/next(iter(policy['cases'].values()))['source'];chosen.write_bytes(chosen.read_bytes()+b'//changed guard source\n')
+            with self.assertRaisesRegex(ValueError,'source guard changed'):reporter.conditional_policy(copy,{})
+
     def test_pass_keeps_archival_waiver_separate(self):
         result = reporter.audit(discovery(), completed(), 0, 0)
         self.assertEqual(result["status"], "PASS_REQUIRED_ORDINARY_GO_TEST_SUITE")
@@ -132,6 +171,7 @@ class OrdinaryCIReportTests(unittest.TestCase):
         self.assertIn("ORDINARY_SCOPE_PACKAGES_NOT_PASSED", result["errors"])
         result = reporter.audit_lanes(self.lane_inventory(), completed(), self.native_completed()[:-1], 0, 0, 0, 0, 0)
         self.assertIn("C01_SCOPE_PACKAGE_NOT_PASSED", result["errors"])
+        self.assertFalse(result["fullOrdinaryCIGreen"])
 
     def test_c01_scope_still_rejects_unfinished_and_skipped_subtests(self):
         child = dict(Package=reporter.C01_PACKAGE, Test=reporter.C01_TEST+"/child", Action="run")
@@ -176,14 +216,34 @@ class OrdinaryCIReportTests(unittest.TestCase):
         for name, value in records.items():
             (shard / name).write_text(json.dumps(value), encoding="utf-8")
         (shard / "stdout.log").write_bytes(raw)
-        actual = [dict(Package=reporter.C01_PACKAGE, Test=case, Action="run"),
-                  dict(Package=reporter.C01_PACKAGE, Action="output", Output=output),
-                  dict(Package=reporter.C01_PACKAGE, Test=case, Action="pass"),
-                  dict(Package=reporter.C01_PACKAGE, Action="pass")]
+        actual = [dict(Package=reporter.native_package(case), Test=case, Action="run"),
+                  dict(Package=reporter.native_package(case), Action="output", Output=output),
+                  dict(Package=reporter.native_package(case), Test=case, Action="pass"),
+                  dict(Package=reporter.native_package(case), Action="pass")]
         (shard / "events.jsonl").write_text("".join(json.dumps(event)+"\n" for event in actual), encoding="utf-8")
         if case==reporter.BULK_TEST:self.bulk_metadata_fixture(project,shard,wait)
         if case==reporter.PREPARED_TEST:self.prepared_metadata_fixture(shard)
+        if case==reporter.BATCH_TEST:
+            records['backup-inventory.json']=[dict(path='snapshot-%d/%s'%(n,name),bytes=1,sha256='b'*64) for n in range(6) for name in (['coherent-fixture.tar','engine-cli-restore.json'] if n<3 else ['coherent-fixture.tar'])]
+            (shard/'backup-inventory.json').write_text(json.dumps(records['backup-inventory.json']))
         return project, shard, records
+
+    def test_batch_requires_its_syncstate_package_and_actual_backup_receipts(self):
+        for mutation in ('wrong-package','missing-backup','duplicate-file','invalid-digest','missing-restore'):
+            with self.subTest(mutation=mutation),tempfile.TemporaryDirectory() as directory:
+                project,shard,records=self.native_receipt_fixture(directory,reporter.BATCH_TEST)
+                if mutation=='wrong-package':
+                    items=[json.loads(line) for line in (shard/'events.jsonl').read_text().splitlines()]
+                    for item in items:item['Package']=reporter.C01_PACKAGE
+                    (shard/'events.jsonl').write_text(''.join(json.dumps(item)+'\n' for item in items))
+                elif mutation=='missing-backup':(shard/'backup-inventory.json').unlink()
+                else:
+                    inventory=records['backup-inventory.json']
+                    if mutation=='duplicate-file':inventory.append(inventory[0])
+                    if mutation=='invalid-digest':inventory[0]['sha256']='invalid'
+                    if mutation=='missing-restore':inventory[:]=[x for x in inventory if not x['path'].endswith('/engine-cli-restore.json')]
+                    (shard/'backup-inventory.json').write_text(json.dumps(inventory))
+                with self.assertRaises((ValueError,FileNotFoundError)):reporter.native_shard(shard,project,reporter.BATCH_TEST)
 
     def prepared_metadata_fixture(self, shard):
         # Synthetic metadata for checker unit tests only; never runtime evidence.
@@ -309,13 +369,13 @@ class OrdinaryCIReportTests(unittest.TestCase):
                     with self.assertRaises(ValueError):reporter.native_shard(shard,project,case)
 
     def all_native_inventory(self):
-        return discovery()+[dict(Package=reporter.C01_PACKAGE, Action='output', Output=case+'\n')
+        return discovery()+[dict(Package=reporter.native_package(case), Action='output', Output=case+'\n')
                             for case in reporter.NATIVE_CASES]
 
     def all_native_events(self):
-        return {case:dict(events=[dict(Package=reporter.C01_PACKAGE, Test=case, Action='run'),
-                                 dict(Package=reporter.C01_PACKAGE, Test=case, Action='pass'),
-                                 dict(Package=reporter.C01_PACKAGE, Action='pass')],
+        return {case:dict(events=[dict(Package=reporter.native_package(case), Test=case, Action='run'),
+                                 dict(Package=reporter.native_package(case), Test=case, Action='pass'),
+                                 dict(Package=reporter.native_package(case), Action='pass')],
                           goExit=0, runnerExit=0, captureExit=0, evidence={'test':case})
                 for case in reporter.NATIVE_CASES}
 

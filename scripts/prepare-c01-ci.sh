@@ -24,6 +24,7 @@ export GOMAXPROCS=2 GOMEMLIMIT=1GiB
 python3 -I -B scripts/run-c01-ci.py --record-source "$artifacts/source-inputs.json"
 go build -trimpath -p=2 -o "$artifacts/pluto-native-owner" ./internal/testsupport/cmd/pluto-native-owner
 go test -race -p=2 -c -o "$artifacts/pluto.test" ./internal/pluto
+go test -race -p=2 -c -o "$artifacts/syncstate.test" ./internal/pluto/syncstate
 CGO_ENABLED=0 go build -trimpath -p=2 -o "$artifacts/test2json" cmd/test2json
 # The read-only collector runs as UID 10001. This compiler-produced public
 # executable is a tool input, separate from all private retained test state.
@@ -41,6 +42,7 @@ image_id="$(docker image inspect --format '{{.Id}}' "$image_tag")"
   printf 'PLUTO_GO_CI_C01_IMAGE=%s\n' "$image_id"
   printf 'PLUTO_GO_CI_C01_SOURCE_INPUTS=%s\n' "$artifacts/source-inputs.json"
   printf 'PLUTO_GO_CI_C01_TEST_BINARY=%s\n' "$artifacts/pluto.test"
+  printf 'PLUTO_GO_CI_SYNCSTATE_TEST_BINARY=%s\n' "$artifacts/syncstate.test"
   printf 'PLUTO_GO_CI_C01_OWNER=%s\n' "$artifacts/pluto-native-owner"
   printf 'PLUTO_GO_CI_C01_CONVERTER=%s\n' "$artifacts/test2json"
   printf 'STAGE3_PLUTO_BINARY=%s\n' "$release_cli"

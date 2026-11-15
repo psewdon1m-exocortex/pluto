@@ -2,9 +2,9 @@
   "schema": "exocortex.package3.frozen-source.v1",
   "component": "pluto",
   "version": "0.1.5",
-  "baseGitCommit": "3a24ae8ec541f8d2f59d53227d3e9fd0d90d5010",
-  "scope": "Previous408source plus actual freshdisposable negative rollback producer; sourceGo unchanged",
-  "sourceSetSHA256": "755e30507c46e38d515c37714abe3681737f6db873beee19cc3acf2adcfeafd6",
+  "baseGitCommit": "ca1ed1f3acd90277c30500de3e8d6105547ff1a0",
+  "scope": "Package3 conditional report final metadata consistency; only legacy C01 aggregation and its regression changed after actual16guard verification",
+  "sourceSetSHA256": "b7c3f373653fd28d4f44240b31dd9b9c9c20d70318cccf7921f1300f53ce4f68",
   "files": [
     {
       "path": ".github/workflows/package3-qualification.yml",
@@ -312,9 +312,9 @@
     },
     {
       "path": "docs/PACKAGE3_QUALIFICATION.md",
-      "bytes": 3292,
-      "sha256": "63653a687b87c225064351bba3d76a4ba2322e025d7ae5fa737a910f4858dc67",
-      "canonical_sha256": "63653a687b87c225064351bba3d76a4ba2322e025d7ae5fa737a910f4858dc67",
+      "bytes": 4859,
+      "sha256": "a7e6268725600fef443e70ae2aa19a0c64b879cf881d18982a0b8a2b37a8966e",
+      "canonical_sha256": "a7e6268725600fef443e70ae2aa19a0c64b879cf881d18982a0b8a2b37a8966e",
       "line_endings": "LF"
     },
     {
@@ -2419,16 +2419,23 @@
     },
     {
       "path": "scripts/check-go-ci.py",
-      "bytes": 45619,
-      "sha256": "964f5f0d71ff57c7e6cb5dc2c70d982cd51a19806609cd81ab6e26e05139f4c8",
-      "canonical_sha256": "964f5f0d71ff57c7e6cb5dc2c70d982cd51a19806609cd81ab6e26e05139f4c8",
+      "bytes": 51379,
+      "sha256": "780fc85bb10330f803bae3a65dff328f0a2c8951962044b251e1b8b00b8ab32e",
+      "canonical_sha256": "780fc85bb10330f803bae3a65dff328f0a2c8951962044b251e1b8b00b8ab32e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/default-ci-conditional-policy.json",
+      "bytes": 9369,
+      "sha256": "d89e8e7c1184f5b898a97b7b518e55fd806c68d99397376568971e6b0a62ed32",
+      "canonical_sha256": "d89e8e7c1184f5b898a97b7b518e55fd806c68d99397376568971e6b0a62ed32",
       "line_endings": "LF"
     },
     {
       "path": "scripts/go-ci.py",
-      "bytes": 9020,
-      "sha256": "e54cf23baa77fbdbfbc336e4a41c7799d65eee85d21e072aa2397d375b99a732",
-      "canonical_sha256": "e54cf23baa77fbdbfbc336e4a41c7799d65eee85d21e072aa2397d375b99a732",
+      "bytes": 9373,
+      "sha256": "33d6a73868fc393463eae6550de92330ac7bb5e6a757ee56b0f2c9f21f44cc7e",
+      "canonical_sha256": "33d6a73868fc393463eae6550de92330ac7bb5e6a757ee56b0f2c9f21f44cc7e",
       "line_endings": "LF"
     },
     {
@@ -3223,9 +3230,9 @@
     },
     {
       "path": "scripts/native-fixture/export_c01_ci.py",
-      "bytes": 4512,
-      "sha256": "b3551ef63a95c7316e0d378438266dde8836545bdc9205f40f53cdca0ea4c788",
-      "canonical_sha256": "b3551ef63a95c7316e0d378438266dde8836545bdc9205f40f53cdca0ea4c788",
+      "bytes": 5426,
+      "sha256": "d668391f6b69c7e5fac55ed1254196653184852bfd46175bf0aa9df702739455",
+      "canonical_sha256": "d668391f6b69c7e5fac55ed1254196653184852bfd46175bf0aa9df702739455",
       "line_endings": "LF"
     },
     {
@@ -3244,9 +3251,9 @@
     },
     {
       "path": "scripts/native-fixture/owner-case-policy.json",
-      "bytes": 5620,
-      "sha256": "d0934efe43b4522adbf99fa799df31855f313b20d77665986c4f469ff789bf9b",
-      "canonical_sha256": "d0934efe43b4522adbf99fa799df31855f313b20d77665986c4f469ff789bf9b",
+      "bytes": 6103,
+      "sha256": "c803164c3f7054c110f9e59824ef2a48a8f0d281cfadd340dbcb35b4fe6ed5a4",
+      "canonical_sha256": "c803164c3f7054c110f9e59824ef2a48a8f0d281cfadd340dbcb35b4fe6ed5a4",
       "line_endings": "LF"
     },
     {
@@ -3307,9 +3314,9 @@
     },
     {
       "path": "scripts/native-fixture/write_owner_manifest.py",
-      "bytes": 2348,
-      "sha256": "56e6354cf76ed45beb002c4b5cdb211111cbcdaeb62bb368af776291e474d648",
-      "canonical_sha256": "56e6354cf76ed45beb002c4b5cdb211111cbcdaeb62bb368af776291e474d648",
+      "bytes": 2773,
+      "sha256": "1e01e41f145a5904f8fcf8fbbbc006c7eabd7805ab7007b2375bad91fd75721a",
+      "canonical_sha256": "1e01e41f145a5904f8fcf8fbbbc006c7eabd7805ab7007b2375bad91fd75721a",
       "line_endings": "LF"
     },
     {
@@ -3328,9 +3335,9 @@
     },
     {
       "path": "scripts/prepare-c01-ci.sh",
-      "bytes": 2785,
-      "sha256": "675a18a2a6737133d402ce6e82edbfaeb1a5330148ac679f9411945c2dd8e7cc",
-      "canonical_sha256": "675a18a2a6737133d402ce6e82edbfaeb1a5330148ac679f9411945c2dd8e7cc",
+      "bytes": 2943,
+      "sha256": "d4a4e75099da453f82fb0fa971944d0ea8c8721b8d42c1ea0663addcc43116c5",
+      "canonical_sha256": "d4a4e75099da453f82fb0fa971944d0ea8c8721b8d42c1ea0663addcc43116c5",
       "line_endings": "LF"
     },
     {
@@ -3370,9 +3377,9 @@
     },
     {
       "path": "scripts/run-c01-ci.py",
-      "bytes": 15191,
-      "sha256": "340eae799da3313ca901c0f7a217b65281e9eb49f9c2a245a0d725ee7ec77496",
-      "canonical_sha256": "340eae799da3313ca901c0f7a217b65281e9eb49f9c2a245a0d725ee7ec77496",
+      "bytes": 15300,
+      "sha256": "e1597de65c34094b077d68a97791e6dc0fdd9c5762831e50ac5cb88f02c2d935",
+      "canonical_sha256": "e1597de65c34094b077d68a97791e6dc0fdd9c5762831e50ac5cb88f02c2d935",
       "line_endings": "LF"
     },
     {
@@ -3419,16 +3426,16 @@
     },
     {
       "path": "scripts/test-go-ci-dispatch.py",
-      "bytes": 10549,
-      "sha256": "7a0b802817c3f20b5cfe9a25e102c2949618c3216a35c370f85b94c19258403a",
-      "canonical_sha256": "7a0b802817c3f20b5cfe9a25e102c2949618c3216a35c370f85b94c19258403a",
+      "bytes": 11086,
+      "sha256": "7fb7e47134eb96c4b29e1a38adc9e7d2d060dcf8a2a073d68447b14fc7d97256",
+      "canonical_sha256": "7fb7e47134eb96c4b29e1a38adc9e7d2d060dcf8a2a073d68447b14fc7d97256",
       "line_endings": "LF"
     },
     {
       "path": "scripts/test-go-ci-report.py",
-      "bytes": 36837,
-      "sha256": "30116cdebaedfd24a7bd86f3cd40f83045ffba162d66c1b5a32891559f584e90",
-      "canonical_sha256": "30116cdebaedfd24a7bd86f3cd40f83045ffba162d66c1b5a32891559f584e90",
+      "bytes": 42072,
+      "sha256": "00804fb88deee81a2e228ba66a72cd48881a9a73f2ffee41d57b1ec50626efec",
+      "canonical_sha256": "00804fb88deee81a2e228ba66a72cd48881a9a73f2ffee41d57b1ec50626efec",
       "line_endings": "LF"
     },
     {

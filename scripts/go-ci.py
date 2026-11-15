@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run complete ordinary CI, admitting four reviewed cases through explicit native scopes."""
+"""Run complete ordinary CI with explicit, source-bound native scopes."""
 import argparse
 import json
 import shutil
@@ -80,6 +80,8 @@ def main(argv=None):
         required={'source-inputs':'PLUTO_GO_CI_C01_SOURCE_INPUTS','test-binary':'PLUTO_GO_CI_C01_TEST_BINARY',
                   'cli':'STAGE3_PLUTO_BINARY','owner':'PLUTO_GO_CI_C01_OWNER','converter':'PLUTO_GO_CI_C01_CONVERTER'}
         missing=[value for value in required.values() if not os.environ.get(value)]
+        syncstate=os.environ.get('PLUTO_GO_CI_SYNCSTATE_TEST_BINARY')
+        if not syncstate:missing.append('PLUTO_GO_CI_SYNCSTATE_TEST_BINARY')
         backend=os.environ.get('PLUTO_GO_CI_BULK_INPUTS');node=os.environ.get('PLUTO_GO_CI_NODE') or shutil.which('node')
         if not backend:missing.append('PLUTO_GO_CI_BULK_INPUTS')
         if not node:missing.append('PLUTO_GO_CI_NODE or node on PATH')
@@ -101,8 +103,10 @@ def main(argv=None):
                 producer=[node,str(PROJECT/'scripts/run-bulk-ci.mjs'),'--case',case,'--output',str(output),'--backend-inputs',backend,'--python',sys.executable,*common]
                 if os.environ.get('PLUTO_GO_CI_BULK_PRIVATE_BASE'):producer+=['--private-base',os.environ['PLUTO_GO_CI_BULK_PRIVATE_BASE']]
             else:
+                case_common=list(common)
+                if case=='TestSmallBatchEngineActualCLIProcessesMixedAndLostReply':case_common[case_common.index('--test-binary')+1]=syncstate
                 producer=[sys.executable,'-I','-B',str(PROJECT/'scripts/run-c01-ci.py'),
-                          '--case',case,'--output',str(output),*common]
+                          '--case',case,'--output',str(output),*case_common]
             actual,captured=capture(producer,evidence/(label+'-producer.log'))
             scopes[case]=dict(directory=str(output.resolve()),actualRunnerExit=actual,actualCaptureExit=captured)
             if actual or captured:
@@ -131,7 +135,7 @@ def main(argv=None):
     go_exit,capture_exit=capture(ordinary+['./...'],evidence/'events.jsonl',separate_stderr=True)
     audit=[sys.executable,'-I','-B',str(PROJECT/'scripts/check-go-ci.py'),'--inventory',str(evidence/'inventory.jsonl'),
            '--events',str(evidence/'events.jsonl'),'--go-exit',str(go_exit),'--capture-exit',str(capture_exit),
-           *native_args,'--report',str(evidence/'report.json')]
+           *native_args,'--report-source-bound-conditionals','--report',str(evidence/'report.json')]
     audit_exit,audit_capture=capture(audit,evidence/'report.log')
     if audit_exit or audit_capture or go_exit or capture_exit:return 1
     vet_exit,vet_capture=capture(['go','vet','./...'],evidence/'vet.log')

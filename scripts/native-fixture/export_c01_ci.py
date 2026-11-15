@@ -38,7 +38,8 @@ def collect(retained, converter, converter_sha, source_file, case=CASES[0]):
         raise ValueError('complete actual native stdout digest differs')
     converter=Path(converter)
     if sha(converter.read_bytes())!=converter_sha:raise ValueError('qualified converter SHA differs')
-    converted=subprocess.run([str(converter),'-t','-p','pluto/internal/pluto'],input=raw,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=False)
+    package='pluto/internal/pluto/syncstate' if case=='TestSmallBatchEngineActualCLIProcessesMixedAndLostReply' else 'pluto/internal/pluto'
+    converted=subprocess.run([str(converter),'-t','-p',package],input=raw,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=False)
     if converted.returncode!=0 or converted.stderr or len(converted.stdout)>4*1024*1024:
         raise ValueError('standard Go test2json conversion failed')
     files={'events.jsonl':converted.stdout,'stdout.log':raw,
@@ -48,6 +49,16 @@ def collect(retained, converter, converter_sha, source_file, case=CASES[0]):
            'observed-after-exec.json':(actor/'observed-after-exec.json').read_bytes(),
            'owner-final.json':(evidence/'owner-final.json').read_bytes(),
            'source-inputs.json':Path(source_file).read_bytes()}
+    if case=='TestSmallBatchEngineActualCLIProcessesMixedAndLostReply':
+        inventory=[]
+        for file in sorted(Path('/retained/backups').rglob('*')):
+            if file.is_symlink():raise ValueError('regular independent backup files required')
+            if file.is_file():
+                with file.open('rb') as stream:pin=hashlib.file_digest(stream,'sha256').hexdigest()
+                inventory.append(dict(path=file.relative_to('/retained/backups').as_posix(),bytes=file.stat().st_size,sha256=pin))
+            if len(inventory)>4096:raise ValueError('bounded independent backup inventory required')
+        if not inventory:raise ValueError('actual independent batch backups required')
+        files['backup-inventory.json']=json.dumps(inventory,sort_keys=True).encode()
     if case==PREPARED:
         files.update({'prepared-backup.json':Path('/checkpoint/verified-backup.json').read_bytes(),
                       'prepared-inventory.json':Path('/checkpoint/inventory.json').read_bytes(),
