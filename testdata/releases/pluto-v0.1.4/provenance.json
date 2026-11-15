@@ -1,0 +1,14 @@
+{
+  "purpose": "Public immutable metadata regression fixture; no executable, state, authority or signing secret",
+  "repository": "https://github.com/psewdon1m-exocortex/pluto",
+  "tag": "pluto-v0.1.4",
+  "sourceRevision": "28b114b26754f43fd2cdd95d71e5cd5fdfa1c1a2",
+  "observed_utc_date": "2026-11-02",
+  "manifest_sha256": "18e45f92b3c2c4570ef9841cdbdd23714aa548a19a75ae0e7b0c0b50f7fe5d40",
+  "signature_sha256": "19f564088650795972505e001e0256b5ef20805f7a696ac0e59e45ec21c00e70",
+  "public_key_file_sha256": "2e7e2b857ceb0bf0d2488c5f1ca9c1248b38d759728e549b17545be764508b29",
+  "actual_linux_amd64_sha256": "59d12873a01aee77cc7bdf36f1166dc008ea8f846c6909fb70fe5e17c037a9b0",
+  "actual_linux_amd64_size": 7172258,
+  "actual_linux_amd64_buildinfo": {"goVersion":"go1.26.9","moduleDependencies":[]},
+  "payload_policy": "Actual payload qualification separately supplies PLUTO_LEGACY_FIXTURE_BINARY, verifies signed size/hash, then independently inspects Go build info without executing the old binary."
+}

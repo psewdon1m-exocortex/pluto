@@ -3,18 +3,30 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {isDeepStrictEqual} from 'node:util';
+import {noticeAsset,noticeFormat,noticeMaximum,verifyNotices} from './runtime-notices.mjs';
+import {parseUniqueJSON,validateRuntimeContract,inspectLinkedModules,verifyLinkedRuntime,verifyEmbeddedArchive,canonicalVersion,requiresContract,qualifiedToolchain} from './runtime-contract.mjs';
 
 export function verifyManifest(raw,envelopeBytes,pinnedKey,{version,revision,repository}) {
   if(raw.length>65536||envelopeBytes.length>4096) throw Error('Release metadata exceeds limit');
-  const key=createPublicKey(pinnedKey),envelope=JSON.parse(envelopeBytes),manifest=JSON.parse(raw);
+  const key=createPublicKey(pinnedKey),envelope=parseUniqueJSON(envelopeBytes,4096),manifest=parseUniqueJSON(raw);
   const keyId=createHash('sha256').update(key.export({type:'spki',format:'der'})).digest('hex');
   if(key.asymmetricKeyType!=='rsa'||key.asymmetricKeyDetails.modulusLength<3072||envelope.schema!=='exocortex.release-signature.v1'||envelope.algorithm!=='RSA-PSS-SHA256'||envelope.key_id!==keyId||!verify('sha256',raw,{key,padding:constants.RSA_PKCS1_PSS_PADDING,saltLength:32},Buffer.from(envelope.signature,'base64'))) throw Error('Release signature rejected');
-  if(manifest.schema!==1||manifest.version!==version||manifest.sourceRevision!==revision||!/^\d+\.\d+\.\d+$/.test(version)||!/^[a-f0-9]{40}$/.test(revision)||manifest.toolchain!=='go1.26.9') throw Error('Release identity rejected');
+  if(![1,2].includes(manifest.schema)||manifest.version!==version||manifest.sourceRevision!==revision||!canonicalVersion.test(version)||!/^[a-f0-9]{40}$/.test(revision)) throw Error('Release identity rejected');
+  // Current candidate qualification is exact. The authenticated published 0.1.4
+  // baseline may name its historical compiler; installing its payload requires
+  // independent build-info inspection proving that SQLite is not linked.
+  const publishedLegacyCompiler=!requiresContract(version)&&version==='0.1.4'&&manifest.toolchain==='go1.26.9';
+  if(manifest.toolchain!==qualifiedToolchain&&!publishedLegacyCompiler)throw Error('Release toolchain rejected');
   if(!/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/.test(repository)) throw Error('Release repository rejected');
   for(const arch of ['amd64','arm64']) {
     const item=manifest.artifacts['linux-'+arch];
     if(item?.url!==repository+'/releases/download/pluto-v'+version+'/pluto-linux-'+arch||!Number.isSafeInteger(item.size)||item.size<1||item.size>64*1024*1024||!/^([a-f0-9]{64})$/.test(item.sha256)) throw Error('Release artifact rejected');
   }
+  if(manifest.schema===2||manifest.runtimeContract!==undefined) {
+    const notices=manifest.runtimeNotices,item=notices?.artifact;
+    if(notices?.format!==noticeFormat||item?.url!==repository+'/releases/download/pluto-v'+version+'/'+noticeAsset||!Number.isSafeInteger(item.size)||item.size<1||item.size>noticeMaximum||!/^[a-f0-9]{64}$/.test(item.sha256)) throw Error('Release runtime notices rejected');
+  }
+  validateRuntimeContract(manifest);
   return manifest;
 }
 export function verifyBytes(bytes,item) {
@@ -51,7 +63,7 @@ export async function verifyPublishedReport({reportPath,version,revision,reposit
   return {status:'PASS',mode:'report',anonymous:true,version,revision};
 }
 
-export async function verifyRelease({directory,keyPath,version,revision,repository,mode='local',fetchBytes=download}) {
+export async function verifyRelease({directory,keyPath,version,revision,repository,mode='local',fetchBytes=download,inspectModules=inspectLinkedModules}) {
   if(!['local','published'].includes(mode)) throw Error('Unknown release verification mode');
   const read=async(name,maximum)=>{
     const file=path.join(directory,name),stat=await fs.stat(file);
@@ -69,6 +81,12 @@ export async function verifyRelease({directory,keyPath,version,revision,reposito
     'release-public.pem':16384,'bootstrap.sh':65536,
     'pluto-linux-amd64':64*1024*1024,'pluto-linux-arm64':64*1024*1024,
   };
+  let archive,noticeInventory;
+  if(manifest.runtimeNotices){
+    inventory[noticeAsset]=noticeMaximum;
+    archive=await read(noticeAsset,noticeMaximum);verifyBytes(archive,manifest.runtimeNotices.artifact);
+    noticeInventory=JSON.parse(verifyNotices(archive).get('INVENTORY.json'));
+  }
   const tag='pluto-v'+version,base=repository+'/releases/download/'+tag+'/',api='https://api.github.com/repos/'+repository.slice('https://github.com/'.length);
   let assets;
   if(mode==='published') {
@@ -87,7 +105,12 @@ export async function verifyRelease({directory,keyPath,version,revision,reposito
   }
   for(const [name,maximum] of Object.entries(inventory)) {
     const candidate=await read(name,maximum);
-    if(name.startsWith('pluto-linux-')) verifyBytes(candidate,manifest.artifacts[name.slice('pluto-'.length)]);
+    if(name.startsWith('pluto-linux-')) {
+      verifyBytes(candidate,manifest.artifacts[name.slice('pluto-'.length)]);
+      verifyLinkedRuntime(await inspectModules(path.join(directory,name),{architecture:name.slice('pluto-'.length),qualified:!!manifest.runtimeContract}),manifest,noticeInventory,name.slice('pluto-'.length));
+      if(manifest.runtimeContract)verifyEmbeddedArchive(candidate,archive);
+    }
+    if(name===noticeAsset) {verifyBytes(candidate,manifest.runtimeNotices.artifact);verifyNotices(candidate);}
     if(mode==='published') {
       const item=assets.get(name);
       if(item.state!=='uploaded'||item.size!==candidate.length||item.browser_download_url!==base+name) throw Error('Published asset metadata mismatch: '+name);

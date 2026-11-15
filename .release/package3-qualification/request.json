@@ -1,0 +1,49 @@
+{
+  "schema": "exocortex.package3.pluto-ci-request.v1",
+  "version": "0.1.5",
+  "expectedPublisherKeyId": "d2566217360195ec9570aba66296a90eff14a7daa69520c64bd23b89ec759200",
+  "sourceManifest": ".release/package3-qualification/source-inputs.json",
+  "scope": "Full ordinary current-source CI, no archival reader search, no publish or key transfer.",
+  "fullOrdinaryCINativeAdmissionRequired": true,
+  "requiredRunnerRAMFreeGiB": 14,
+  "requiredRunnerDiskFreeGiB": 85,
+  "requiredBulkInputs": "PLUTO_GO_CI_BULK_INPUTS",
+  "knownEnvironmentStatus": "BLOCKED_ENV_UNTIL_PROVISIONED",
+  "existingSignedArtifacts": [
+    {
+      "name": "bootstrap.sh",
+      "bytes": 23781,
+      "sha256": "f84ca5c3dc837c4778df3f85cfa123509f489c86da859a15ac03c0d5684c423e"
+    },
+    {
+      "name": "pluto-linux-amd64",
+      "bytes": 14155938,
+      "sha256": "db14d9c6520508816e1dfa06b1489f575e4635e6e05cf888217efacc1b922f75"
+    },
+    {
+      "name": "pluto-linux-arm64",
+      "bytes": 13303970,
+      "sha256": "7be06c50593fe6c756a987246dd2637f3467d2cd97b17467b9a645dc48e4c87a"
+    },
+    {
+      "name": "pluto-release.json",
+      "bytes": 1321,
+      "sha256": "41dbe70bdcd975f00ee3e21a2d651794a5c0e56cc5a0ec20959c1965e72f0a07"
+    },
+    {
+      "name": "pluto-release.json.sig.json",
+      "bytes": 676,
+      "sha256": "9048317950fdec78ce165801f15f7f3518de0aec658afea2e10ada7329aac738"
+    },
+    {
+      "name": "pluto-runtime-notices.tar",
+      "bytes": 86528,
+      "sha256": "7323edf3d80be66f5f6b98a861476736daa2116f7883f74a0b95c0c95cd8cec0"
+    },
+    {
+      "name": "release-public.pem",
+      "bytes": 625,
+      "sha256": "2e7e2b857ceb0bf0d2488c5f1ca9c1248b38d759728e549b17545be764508b29"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+name: Package 3 Pluto candidate qualification
+on:
+  push:
+    branches: ["release-qualification/package3-*"]
+permissions:
+  contents: read
+concurrency:
+  group: package3-pluto-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  full-ordinary-ci:
+    uses: ./.github/workflows/verify.yml
+    with:
+      qualification_source_manifest: .release/package3-qualification/source-inputs.json
+      qualification_runner_label: exocortex-p3-ci-a1182-9d846f01c2ab
+      qualification_bulk_inputs: /run/desktop/mnt/host/wsl/exocortex-p3-ci-a1182-9d846f01c2ab/inputs/backend-inputs.json
+      qualification_bulk_private_base: /run/desktop/mnt/host/wsl/exocortex-p3-ci-a1182-9d846f01c2ab/native-private

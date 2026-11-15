@@ -83,7 +83,11 @@ func (t *tuiInput) read(ctx context.Context, label string, secret bool) (string,
 }
 
 func (t *tuiInput) key(ctx context.Context) (string, error) {
-	b, err := t.byte(ctx, 0)
+	return t.keyWithin(ctx, 0)
+}
+
+func (t *tuiInput) keyWithin(ctx context.Context, timeout time.Duration) (string, error) {
+	b, err := t.byte(ctx, timeout)
 	if err != nil {
 		return "", err
 	}
@@ -136,6 +140,10 @@ func (t *tuiInput) key(ctx context.Context) (string, error) {
 }
 
 func (t *tuiInput) choose(ctx context.Context, render func(), items []string, selected *int) (int, error) {
+	return t.chooseRefreshing(ctx, render, items, selected, nil)
+}
+
+func (t *tuiInput) chooseRefreshing(ctx context.Context, render func(), items []string, selected *int, refresh func(context.Context) error) (int, error) {
 	if err := t.mode(t.interactive, false); err != nil {
 		return -1, err
 	}
@@ -143,8 +151,19 @@ func (t *tuiInput) choose(ctx context.Context, render func(), items []string, se
 	if *selected < 0 || *selected >= len(items) {
 		*selected = 0
 	}
+	canRefresh := refresh != nil && t.interactive && t.wait != nil
 	for {
+		var refreshErr error
+		if canRefresh {
+			refreshErr = refresh(ctx)
+			if err := ctx.Err(); err != nil {
+				return -1, err
+			}
+		}
 		fmt.Fprint(t.output, "\033[2J\033[H")
+		if refreshErr != nil {
+			fmt.Fprintln(t.output, "Status unavailable (last known values):", terminalText(refreshErr.Error()))
+		}
 		render()
 		start := 0
 		if *selected >= 12 {
@@ -168,9 +187,16 @@ func (t *tuiInput) choose(ctx context.Context, render func(), items []string, se
 		var err error
 		if t.interactive {
 			fmt.Fprintln(t.output, "\nUp/Down: move | Enter/Right: select | Esc/Left/q: back | 1-9: shortcut")
-			key, err = t.key(ctx)
+			if canRefresh {
+				key, err = t.keyWithin(ctx, 500*time.Millisecond)
+			} else {
+				key, err = t.key(ctx)
+			}
 		} else {
 			key, err = t.read(ctx, "Select number (q to go back)", false)
+		}
+		if errors.Is(err, errKeyTimeout) && canRefresh {
+			continue
 		}
 		if err != nil {
 			return -1, err
@@ -289,9 +315,22 @@ func runTUI(ctx context.Context, remote Remote, input *tuiInput, checkUpdate fun
 		if err := remote.request(ctx, "GET", "/status", nil, -1, nil, &status); err != nil {
 			return err
 		}
-		choice, err := input.choose(ctx, func() {
+		choice, err := input.chooseRefreshing(ctx, func() {
+			fmt.Fprint(input.output, renderRunProgress(status.Progress))
 			fmt.Fprintf(input.output, "PLUTO %s\nConnection: %s | Connected: %t | Copying: %t | Running: %t\nInterval: %d seconds\nLast success: %s\nError: %s\nSources: %d\n\n", terminalText(status.Version), terminalText(status.ConnectionName), status.Connected, status.Observation.Enabled, status.Running, status.Observation.IntervalSeconds, terminalText(status.Observation.LastSuccessAt), terminalText(status.Observation.Error), len(status.Sources))
-		}, []string{"Kernel connection", "Files and folders", "Interval", "Paste Saturn setup code", "Enable/disable copying", "Copy now", "Check update", "Install update", "Disconnect locally", "Exit"}, &selected)
+			if e := status.Observation.Engine; e != nil {
+				fmt.Fprintf(input.output, "Backup phase: %s | Waiting: %s\nPending: %d | Captured: %d | Published: %d | Recovered: %d | Failed: %d\nOldest pending: %d ms | Reconciliation gap: %t\n\n", terminalText(e.Phase), terminalText(e.WaitReason), e.Queued, e.Captured, e.Published, e.Recovered, e.Failed, e.OldestPendingMS, e.Gap)
+			}
+		}, []string{"Kernel connection", "Files and folders", "Interval", "Paste Saturn setup code", "Enable/disable copying", "Copy now", "Check update", "Install update", "Disconnect locally", "Exit"}, &selected, func(ctx context.Context) error {
+			deadline, cancel := context.WithTimeout(ctx, time.Second)
+			defer cancel()
+			var next Status
+			if err := remote.request(deadline, "GET", "/status", nil, -1, nil, &next); err != nil {
+				return err
+			}
+			status = next
+			return nil
+		})
 		if err != nil || choice < 0 || choice == 9 {
 			return err
 		}

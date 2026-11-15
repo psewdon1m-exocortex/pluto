@@ -1,6 +1,23 @@
 name: Pluto verify
 on:
   workflow_call:
+    inputs:
+      qualification_source_manifest:
+        description: Frozen package 3 source-input manifest; empty for ordinary CI.
+        type: string
+        default: ''
+      qualification_runner_label:
+        description: Isolated one-job package 3 runner; empty preserves ordinary runner selection.
+        type: string
+        default: ''
+      qualification_bulk_inputs:
+        description: Immutable backend manifest on the isolated package 3 runner.
+        type: string
+        default: ''
+      qualification_bulk_private_base:
+        description: Private native bulk state outside uploaded evidence.
+        type: string
+        default: ''
   pull_request:
   push:
     branches: [main]
@@ -8,18 +25,46 @@ permissions:
   contents: read
 jobs:
   quality:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.qualification_runner_label || vars.PLUTO_NATIVE_CI_RUNNER || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Restore and verify frozen package 3 source bytes
+        if: ${{ inputs.qualification_source_manifest != '' }}
+        run: python3 scripts/verify-package3-source.py "${{ inputs.qualification_source_manifest }}" --report "${{ runner.temp }}/package3-source-${{ github.job }}.json"
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
         with:
-          go-version: '1.26.9'
+          go-version: '1.26.10'
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '24'
-      - run: go test -race -count=1 ./... && go vet ./...
-      - run: sh -n packaging/bootstrap.sh && python3 scripts/test-known-problems-gate.py && node --test scripts/verify-release.test.mjs
+      - name: Check ordinary Go CI result accounting
+        run: |
+          python3 -I -B scripts/test-go-ci-report.py
+          python3 -I -B scripts/test-go-ci-dispatch.py
+      - name: Prepare the four required native CI scopes
+        env:
+          PLUTO_GO_CI_BULK_INPUTS: ${{ inputs.qualification_bulk_inputs || vars.PLUTO_GO_CI_BULK_INPUTS }}
+          PLUTO_GO_CI_BULK_PRIVATE_BASE: ${{ inputs.qualification_bulk_private_base }}
+        run: |
+          if [[ -n "$PLUTO_GO_CI_BULK_PRIVATE_BASE" ]]; then
+            python3 -I -B -c 'import pathlib,sys;p=pathlib.Path(sys.argv[1]);assert p.is_absolute() and p.is_dir() and not p.is_symlink() and "\n" not in str(p) and "\r" not in str(p)' "$PLUTO_GO_CI_BULK_PRIVATE_BASE"
+            printf 'PLUTO_GO_CI_BULK_PRIVATE_BASE=%s\n' "$PLUTO_GO_CI_BULK_PRIVATE_BASE" >> "$GITHUB_ENV"
+          fi
+          bash scripts/prepare-c01-ci.sh "$RUNNER_TEMP/pluto-c01-ci"
+          cat "$RUNNER_TEMP/pluto-c01-ci/c01.env" >> "$GITHUB_ENV"
+      - name: Run ordinary Go CI with complete test accounting
+        run: bash scripts/run-go-ci.sh
+      - name: Preserve ordinary Go CI evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pluto-ordinary-go-ci-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .release-evidence/go-ci/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+      - run: sh -n packaging/bootstrap.sh && python3 scripts/test-known-problems-gate.py && node --test scripts/verify-release.test.mjs scripts/runtime-notices.test.mjs scripts/runtime-contract.test.mjs
       - name: Isolated bootstrap failure regression
-        run: docker run --rm --env PLUTO_BOOTSTRAP_FIXTURE=1 -v "$PWD:/workspace:ro" -w /workspace node:24-bookworm node --test scripts/bootstrap.test.mjs
+        run: docker run --rm --env PLUTO_BOOTSTRAP_FIXTURE=1 -v "$PWD:/workspace:ro" -w /workspace node:24-bookworm node --test --test-concurrency=1 scripts/bootstrap.test.mjs scripts/bootstrap-contract.test.mjs
       - run: go install golang.org/x/vuln/cmd/govulncheck@v1.1.4 && govulncheck ./...
       - run: python3 scripts/known-problems-gate.py --phase structure

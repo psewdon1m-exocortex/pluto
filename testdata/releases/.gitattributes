@@ -1,0 +1,2 @@
+# Signature and fingerprint fixtures must retain the exact published bytes.
+pluto-v0.1.4/* -text

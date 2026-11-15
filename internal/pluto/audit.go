@@ -1,10 +1,13 @@
 package pluto
 
 import (
+	"context"
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"os"
+	"pluto/internal/pluto/syncstate"
 	"strings"
 	"time"
 )
@@ -24,8 +27,11 @@ func appendAudit(filename, event string, fields map[string]any) error {
 		return err
 	}
 	outcome := "success"
-	if strings.Contains(event, "failed") {
+	if strings.Contains(event, "failed") || fields["success"] == false {
 		outcome = "failure"
+	}
+	if fields["cancelled"] == true {
+		outcome = "cancelled"
 	}
 	actor := "pluto_agent"
 	if event == "configuration.changed" {
@@ -44,4 +50,41 @@ func appendAudit(filename, event string, fields map[string]any) error {
 		return err
 	}
 	return file.Sync()
+}
+
+// Durable diagnostics intentionally exclude raw errors: HTTP messages and URLs
+// may contain credentials or user data. Status and classified cause suffice
+// to distinguish retries, cancellation and a product failure after a restart.
+func copyCompletionFields(count int, err error) map[string]any {
+	fields := map[string]any{"uploadedFiles": count, "success": err == nil}
+	if err == nil {
+		return fields
+	}
+	if errors.Is(err, context.Canceled) {
+		fields["cancelled"] = true
+		fields["errorClass"] = "CANCELLED"
+		return fields
+	}
+	category := networkWaitState(err)
+	if category == "" {
+		if value, ok := syncstate.RetryClass(err); ok {
+			category = value
+		}
+	}
+	if category == "" {
+		category = "UNCLASSIFIED_FAILURE"
+	}
+	fields["errorClass"] = category
+	status := syncstate.HTTPStatus(err)
+	var remote *HTTPError
+	if errors.As(err, &remote) {
+		status = remote.Status
+	}
+	if status != 0 {
+		fields["httpStatus"] = status
+	}
+	if retry := networkRetryAfter(err); retry > 0 {
+		fields["retryAfterMs"] = retry.Milliseconds()
+	}
+	return fields
 }

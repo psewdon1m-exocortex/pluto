@@ -12,7 +12,7 @@ jobs:
     uses: ./.github/workflows/verify.yml
   build:
     needs: test
-    runs-on: ubuntu-24.04
+    runs-on: ${{ vars.PLUTO_NATIVE_CI_RUNNER || 'ubuntu-24.04' }}
     timeout-minutes: 50
     services:
       postgres:
@@ -45,7 +45,7 @@ jobs:
           path: .qualification/saturn
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
         with:
-          go-version: '1.26.9'
+          go-version: '1.26.10'
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '24'
@@ -97,17 +97,34 @@ jobs:
           python3 scripts/known-problems-gate.py --record native-lifecycle
           --command sudo bash scripts/qualify-native-lifecycle.sh
           dist/pluto-linux-amd64 "${GITHUB_REF_NAME#pluto-v}" packaging/pluto.service
+      - name: Prepare native CI scopes against the actual signed candidate CLI
+        run: |
+          export PLUTO_GO_CI_BULK_INPUTS="${{ vars.PLUTO_GO_CI_BULK_INPUTS }}"
+          bash scripts/prepare-c01-ci.sh "$RUNNER_TEMP/pluto-c01-ci" "$GITHUB_WORKSPACE/dist/pluto-linux-amd64"
+          cat "$RUNNER_TEMP/pluto-c01-ci/c01.env" >> "$GITHUB_ENV"
       - name: Verify final binaries and local signed release
+        env:
+          PLUTO_RELEASE_FIXTURE_DIR: ${{ github.workspace }}/dist
+          PLUTO_GO_CI_C01_ALLOWED_RUNNING_IDS: '["${{ job.services.postgres.id }}"]'
         run: |
           go install golang.org/x/vuln/cmd/govulncheck@v1.1.4
           govulncheck -mode=binary dist/pluto-linux-amd64
           govulncheck -mode=binary dist/pluto-linux-arm64
           node scripts/verify-release.mjs dist dist/release-public.pem "${GITHUB_REF_NAME#pluto-v}" "$GITHUB_SHA" "https://github.com/$GITHUB_REPOSITORY"
-          python3 scripts/known-problems-gate.py --record unit --command go test -race -count=1 ./...
+          node --test scripts/verify-release.test.mjs scripts/runtime-notices.test.mjs scripts/runtime-contract.test.mjs
+          echo 'TestStage3C03ActualHistoricalWriterRefusesV8: WAIVED_BY_OWNER / ARCHIVAL_INPUT_UNAVAILABLE for current acceptance. Separate archival check (pluto_archival_reader) has no result.'
+          python3 scripts/known-problems-gate.py --record unit --command \
+            env "STAGE3_PLUTO_BINARY=$GITHUB_WORKSPACE/dist/pluto-linux-amd64" bash scripts/run-go-ci.sh
           python3 scripts/known-problems-gate.py --record release-assets --command node scripts/verify-release.mjs dist dist/release-public.pem "${GITHUB_REF_NAME#pluto-v}" "$GITHUB_SHA" "https://github.com/$GITHUB_REPOSITORY"
           # Native lifecycle, integration and Kernel receipts are required from
           # qualification in this run. Missing evidence blocks publication.
           python3 scripts/known-problems-gate.py --phase pre-signing
+      - name: Qualify actual notice distribution in an isolated bootstrap
+        run: >-
+          docker run --rm --cpus 1 --memory 768m --network none
+          --env PLUTO_BOOTSTRAP_FIXTURE=1 --env PLUTO_RELEASE_FIXTURE_DIR=/assets
+          -v "$PWD:/source:ro" -v "$PWD/dist:/assets:ro" -w /source
+          node:24-bookworm node --test scripts/bootstrap-distribution.test.mjs
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: signed-pluto-release-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
@@ -153,7 +170,7 @@ jobs:
             gh release create "$GITHUB_REF_NAME" \
               dist/pluto-linux-amd64 dist/pluto-linux-arm64 \
               dist/pluto-release.json dist/pluto-release.json.sig.json \
-              dist/release-public.pem dist/bootstrap.sh \
+              dist/release-public.pem dist/bootstrap.sh dist/pluto-runtime-notices.tar \
               --verify-tag --prerelease --latest=false \
               --title "Pluto ${GITHUB_REF_NAME#pluto-v}" --generate-notes
           fi

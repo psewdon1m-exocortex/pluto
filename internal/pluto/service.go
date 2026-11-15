@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"pluto/internal/pluto/syncstate"
 	"slices"
 	"strconv"
 	"strings"
@@ -17,23 +18,26 @@ import (
 )
 
 type Observation struct {
-	Enabled         bool   `json:"enabled"`
-	IntervalSeconds int    `json:"intervalSeconds"`
-	UploadedFiles   int    `json:"uploadedFiles"`
-	LastAttemptAt   string `json:"lastAttemptAt,omitempty"`
-	LastSuccessAt   string `json:"lastSuccessAt,omitempty"`
-	NextRunAt       string `json:"nextRunAt,omitempty"`
-	Error           string `json:"error,omitempty"`
+	Enabled         bool               `json:"enabled"`
+	IntervalSeconds int                `json:"intervalSeconds"`
+	UploadedFiles   int                `json:"uploadedFiles"`
+	LastAttemptAt   string             `json:"lastAttemptAt,omitempty"`
+	LastSuccessAt   string             `json:"lastSuccessAt,omitempty"`
+	NextRunAt       string             `json:"nextRunAt,omitempty"`
+	Error           string             `json:"error,omitempty"`
+	NetworkState    string             `json:"networkState,omitempty"`
+	Engine          *EngineObservation `json:"engine,omitempty"`
 }
 type Status struct {
-	Version        string      `json:"version"`
-	KernelURL      string      `json:"kernelURL"`
-	Connected      bool        `json:"connected"`
-	ConnectionName string      `json:"connectionName"`
-	Sources        []string    `json:"sources"`
-	Repository     string      `json:"repository"`
-	Running        bool        `json:"running"`
-	Observation    Observation `json:"observation"`
+	Version        string       `json:"version"`
+	KernelURL      string       `json:"kernelURL"`
+	Connected      bool         `json:"connected"`
+	ConnectionName string       `json:"connectionName"`
+	Sources        []string     `json:"sources"`
+	Repository     string       `json:"repository"`
+	Running        bool         `json:"running"`
+	Observation    Observation  `json:"observation"`
+	Progress       *RunProgress `json:"progress,omitempty"`
 }
 type Control struct {
 	Action          string   `json:"action"`
@@ -52,7 +56,14 @@ type Service struct {
 	ConfigPath, StateDir, Version string
 	HTTP                          *http.Client
 	running, updating             bool
+	resumeAfterStop               bool
+	networkWaiting                bool
+	networkNotBefore              time.Time
 	cancel                        context.CancelFunc
+	jobs                          sync.WaitGroup
+	runProgress                   *runProgress
+	progressMetrics               func() int64
+	progressPhase                 string
 }
 
 func NewService(configPath, stateDir, version string) (*Service, error) {
@@ -63,7 +74,11 @@ func NewService(configPath, stateDir, version string) (*Service, error) {
 	if c.IntervalSeconds < 60 || c.IntervalSeconds > 31536000 {
 		return nil, errors.New("configured interval is invalid")
 	}
-	s := &Service{Config: c, ConfigPath: configPath, StateDir: stateDir, Version: version, HTTP: NewHTTPClient()}
+	httpClient, err := NewHTTPClientWithProxy(c.Proxy)
+	if err != nil {
+		return nil, err
+	}
+	s := &Service{Config: c, ConfigPath: configPath, StateDir: stateDir, Version: version, HTTP: httpClient}
 	raw, _ := os.ReadFile(filepath.Join(stateDir, "status.json"))
 	_ = json.Unmarshal(raw, &s.Observation)
 	return s, nil
@@ -75,7 +90,7 @@ func (s *Service) statusLocked() Status {
 	if !s.Config.Enabled {
 		o.NextRunAt = ""
 	}
-	return Status{s.Version, s.Config.KernelURL, s.Config.AccessToken != "", s.Config.ConnectionName, append([]string{}, s.Config.Sources...), s.Config.ReleaseRepository, s.running, o}
+	return Status{s.Version, s.Config.KernelURL, s.Config.AccessToken != "", s.Config.ConnectionName, append([]string{}, s.Config.Sources...), s.Config.ReleaseRepository, s.running, o, s.progressLocked(time.Now())}
 }
 func (s *Service) Status() Status { s.mu.Lock(); defer s.mu.Unlock(); return s.statusLocked() }
 func (s *Service) Apply(ctx context.Context, c Control) error {
@@ -133,7 +148,13 @@ func (s *Service) Apply(ctx context.Context, c Control) error {
 			return errors.New("interval must be between 60 and 31536000 seconds")
 		}
 		candidate.IntervalSeconds = c.IntervalSeconds
+		if candidate.Indexed != nil && candidate.Indexed.Activated && s.cancel != nil {
+			s.cancel()
+		}
 	case "enroll":
+		if candidate.Indexed != nil && candidate.Indexed.Activated {
+			return errors.New("activated indexed binding must be migrated before re-enrollment")
+		}
 		if candidate.KernelURL == "" || candidate.OutdoorToken == "" {
 			return errors.New("configure Kernel discovery first")
 		}
@@ -169,6 +190,7 @@ func (s *Service) Apply(ctx context.Context, c Control) error {
 		if s.running {
 			return errors.New("copying is already running")
 		}
+		s.runProgress = nil // An explicit Copy now is a new logical run, including a NOOP.
 		s.startLocked(ctx)
 		return nil
 	case "disconnect":
@@ -190,7 +212,17 @@ func (s *Service) Apply(ctx context.Context, c Control) error {
 	if err := SaveJSON(s.ConfigPath, candidate); err != nil {
 		return err
 	}
+	resumed := c.Action == "enabled" && candidate.Enabled && !s.Config.Enabled
+	if resumed {
+		// Resume schedules the next ordinary cycle immediately. A paused run
+		// may still be joining; its finalizer must not restore the old delay.
+		s.Observation.NextRunAt = ""
+		s.resumeAfterStop = s.running
+	}
 	s.Config = candidate
+	if !candidate.Enabled && !s.running {
+		s.runProgress.finish(time.Now(), "paused")
+	}
 	if sourcesChanged {
 		// The old source failure describes a different list. Keep unrelated
 		// operational failures and historical timestamps until a new run.
@@ -206,6 +238,8 @@ func (s *Service) Apply(ctx context.Context, c Control) error {
 			}
 			s.Observation.NextRunAt = next.UTC().Format(time.RFC3339Nano)
 		}
+	}
+	if c.Action == "interval" || sourcesChanged || resumed {
 		if err := SaveJSON(filepath.Join(s.StateDir, "status.json"), s.statusLocked().Observation); err != nil {
 			if !strings.Contains(s.Observation.Error, "status persistence failed") {
 				s.Observation.Error = strings.TrimPrefix(s.Observation.Error+"; status persistence failed", "; ")
@@ -241,45 +275,79 @@ func withoutSourceFailure(message string) string {
 	}
 }
 func (s *Service) startLocked(parent context.Context) {
+	s.resumeAfterStop = false
 	c := s.Config
 	c.Sources = append([]string{}, c.Sources...)
 	ctx, cancel := context.WithCancel(parent)
+	now := time.Now()
+	if s.runProgress == nil || s.runProgress.terminal() {
+		s.runProgress = newRunProgress(now)
+	} else {
+		s.runProgress.beginAttempt(now)
+	}
+	ctx = context.WithValue(ctx, progressKey{}, s.runProgress)
+	s.progressPhase = ""
 	s.cancel = cancel
 	s.running = true
 	s.Observation.LastAttemptAt = time.Now().UTC().Format(time.RFC3339Nano)
 	s.Observation.NextRunAt = ""
 	s.Observation.Error = ""
+	s.jobs.Add(1)
 	go func() {
+		defer s.jobs.Done()
 		defer cancel()
-		remote := Remote{s.HTTP, c.SaturnURL, c.AccessToken}
-		count, err := Copy(ctx, remote, c.Sources, filepath.Join(s.StateDir, "spool"))
+		count, err := s.runBackup(ctx, c)
 		s.mu.Lock()
 		defer s.mu.Unlock()
 		s.running = false
 		s.cancel = nil
+		if s.Observation.Engine != nil {
+			engine := *s.Observation.Engine
+			engine.Phase = "stopped"
+			if err != nil && !errors.Is(err, context.Canceled) {
+				engine.Phase = "reconciliation_required"
+			}
+			s.Observation.Engine = &engine
+		}
 		s.Observation.UploadedFiles = count
 		if err != nil {
+			state := "failed"
+			if errors.Is(err, context.Canceled) {
+				state = "paused"
+			} else if networkWaitState(err) != "" {
+				state = "waiting"
+			}
+			s.runProgress.finish(time.Now(), state)
 			s.Observation.Error = err.Error()
-			var denied *HTTPError
-			if errors.As(err, &denied) && (denied.Status == 401 || denied.Status == 403) {
-				s.Config.Enabled = false
-				s.Config.AccessToken = ""
-				s.persistConfigLocked()
+			if state := networkWaitState(err); state != "" {
+				if until := time.Now().Add(networkRetryAfter(err)); until.After(s.networkNotBefore) {
+					s.networkNotBefore = until
+				}
+				s.networkWaiting = true
+				s.Observation.NetworkState = state
 			}
 		} else {
+			s.runProgress.finish(time.Now(), "completed")
+			s.Observation.NetworkState = "ONLINE"
 			s.Observation.LastSuccessAt = time.Now().UTC().Format(time.RFC3339Nano)
 		}
 		s.Observation.NextRunAt = time.Now().Add(time.Duration(s.Config.IntervalSeconds) * time.Second).UTC().Format(time.RFC3339Nano)
 		if err != nil && s.Config.IntervalSeconds > 60 {
 			s.Observation.NextRunAt = time.Now().Add(time.Minute).UTC().Format(time.RFC3339Nano)
 		}
+		if s.resumeAfterStop && s.Config.Enabled {
+			s.Observation.NextRunAt = ""
+		}
+		s.resumeAfterStop = false
 		if saveErr := SaveJSON(filepath.Join(s.StateDir, "status.json"), s.statusLocked().Observation); saveErr != nil {
 			s.Observation.Error += "; status persistence failed"
 		}
-		s.auditLocked("copy.completed", map[string]any{"uploadedFiles": count, "success": err == nil})
+		s.auditLocked("copy.completed", copyCompletionFields(count, err))
 	}()
 }
 func (s *Service) Loop(ctx context.Context) {
+	heartbeats := newHeartbeatWorker(ctx, 10*time.Second, s.heartbeat)
+	defer func() { <-heartbeats.done }()
 	ticker := time.NewTicker(time.Second)
 	defer ticker.Stop()
 	lastHeartbeat := time.Time{}
@@ -291,13 +359,14 @@ func (s *Service) Loop(ctx context.Context) {
 				s.cancel()
 			}
 			s.mu.Unlock()
+			s.jobs.Wait()
 			return
 		case now := <-ticker.C:
 			s.mu.Lock()
 			if s.persistDirty {
 				s.persistConfigLocked()
 			}
-			due := s.Config.Enabled && !s.running && !s.updating && s.Config.AccessToken != ""
+			due := s.Config.Enabled && !s.running && !s.updating && !s.networkWaiting && s.Config.AccessToken != ""
 			if next, err := time.Parse(time.RFC3339Nano, s.Observation.NextRunAt); err == nil && now.Before(next) {
 				due = false
 			}
@@ -306,24 +375,12 @@ func (s *Service) Loop(ctx context.Context) {
 			}
 			c := s.Config
 			observation := s.statusLocked().Observation
+			probeNotBefore := s.networkNotBefore
+			// K3 C20 server extension accepts the bounded engine projection.
 			s.mu.Unlock()
-			if c.AccessToken != "" && now.Sub(lastHeartbeat) >= 20*time.Second {
+			if c.AccessToken != "" && now.Sub(lastHeartbeat) >= 20*time.Second && !now.Before(probeNotBefore) {
 				lastHeartbeat = now
-				err := (Remote{s.HTTP, c.SaturnURL, c.AccessToken}).json(ctx, "POST", "/api/v1/pluto/check-in", map[string]any{"version": s.Version, "status": observation}, nil)
-				if err != nil {
-					var denied *HTTPError
-					if errors.As(err, &denied) && (denied.Status == 401 || denied.Status == 403) {
-						s.mu.Lock()
-						s.Config.Enabled = false
-						s.Config.AccessToken = ""
-						s.Observation.Error = "Saturn access was revoked; obtain a new setup code"
-						if s.cancel != nil {
-							s.cancel()
-						}
-						s.persistConfigLocked()
-						s.mu.Unlock()
-					}
-				}
+				heartbeats.offer(heartbeatUpdate{config: c, observation: observation})
 			}
 		}
 	}
@@ -350,6 +407,13 @@ func (s *Service) auditLocked(event string, fields map[string]any) {
 	}
 }
 func (s *Service) Serve(ctx context.Context, socket string) error {
+	releaseLifecycle, err := lifecycleLock(s.StateDir)
+	if err != nil {
+		return err
+	}
+	defer releaseLifecycle()
+	ctx, cancelService := context.WithCancel(ctx)
+	defer cancelService()
 	if err := os.MkdirAll(filepath.Dir(socket), 0700); err != nil {
 		return err
 	}
@@ -380,6 +444,10 @@ func (s *Service) Serve(ctx context.Context, socket string) error {
 		return readErr
 	}
 	for _, entry := range entries {
+		_, activated := os.Lstat(filepath.Join(s.StateDir, "indexed-activation.json"))
+		if s.Config.Indexed != nil && s.Config.Indexed.Activated || activated == nil {
+			break
+		}
 		if !entry.IsDir() && strings.HasPrefix(entry.Name(), "copy-") {
 			if err := os.Remove(filepath.Join(spool, entry.Name())); err != nil {
 				listener.Close()
@@ -388,6 +456,49 @@ func (s *Service) Serve(ctx context.Context, socket string) error {
 		}
 	}
 	mux := http.NewServeMux()
+	mux.HandleFunc("POST /maintenance/{action}", func(w http.ResponseWriter, r *http.Request) {
+		s.mu.Lock()
+		defer s.mu.Unlock()
+		if s.running || s.Config.Enabled || s.updating {
+			http.Error(w, "pause and drain before maintenance", 409)
+			return
+		}
+		action := r.PathValue("action")
+		if action != "checkpoint" && action != "backup" {
+			http.Error(w, "unknown maintenance action", 400)
+			return
+		}
+		if s.Config.Indexed == nil || !s.Config.Indexed.Activated {
+			http.Error(w, "no activated indexed profile", 409)
+			return
+		}
+		if _, e := os.Stat(filepath.Join(s.StateDir, "indexed", "sync-state.sqlite")); e != nil {
+			http.Error(w, "state is unavailable", 409)
+			return
+		}
+		store, e := syncstate.Open(r.Context(), filepath.Join(s.StateDir, "indexed"))
+		if e != nil {
+			http.Error(w, "state is unavailable", 409)
+			return
+		}
+		defer store.Close()
+		var result any = map[string]any{"schema": "pluto.checkpoint.v1", "complete": true}
+		if action == "checkpoint" {
+			e = store.Checkpoint(r.Context())
+		} else {
+			result, e = store.Backup(r.Context())
+		}
+		if e != nil {
+			http.Error(w, "maintenance requires reconciliation", 409)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(result)
+	})
+	mux.HandleFunc("GET /diagnostics", func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(map[string]any{"schema": "pluto.diagnostics.v1", "status": s.Status(), "transport": syncstate.TransportMetrics()})
+	})
 	mux.HandleFunc("GET /status", func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(s.Status())
@@ -408,7 +519,8 @@ func (s *Service) Serve(ctx context.Context, socket string) error {
 		json.NewEncoder(w).Encode(s.Status())
 	})
 	server := &http.Server{Handler: mux, ReadHeaderTimeout: 5 * time.Second}
-	go s.Loop(ctx)
+	loopDone := make(chan struct{})
+	go func() { defer close(loopDone); s.Loop(ctx) }()
 	go func() {
 		<-ctx.Done()
 		shutdown, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -416,6 +528,8 @@ func (s *Service) Serve(ctx context.Context, socket string) error {
 		server.Shutdown(shutdown)
 	}()
 	err = server.Serve(listener)
+	cancelService()
+	<-loopDone
 	if errors.Is(err, http.ErrServerClosed) {
 		return nil
 	}

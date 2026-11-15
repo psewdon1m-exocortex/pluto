@@ -5,6 +5,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {execFileSync,spawnSync} from 'node:child_process';
 import {constants,createHash,generateKeyPairSync,sign} from 'node:crypto';
+import {buildNotices,noticeAsset,noticeFormat,pinnedNotices} from './runtime-notices.mjs';
 
 // Fixed installation paths are exercised only in a disposable Linux container.
 test('bootstrap bounds downloads, proves health and removes a failed partial install',async()=>{
@@ -15,12 +16,15 @@ test('bootstrap bounds downloads, proves health and removes a failed partial ins
   const binary=Buffer.from('#!/bin/sh\ncase "$1" in --version) echo 0.1.1;; status) [ "$FIXTURE_BAD_HEALTH" != 1 ] && echo \'{"version":"0.1.1"}\';; esac\n');
   const sha=b=>createHash('sha256').update(b).digest('hex');
   await fs.mkdir(path.join(directory,'commands'));await fs.mkdir(path.join(directory,'assets'));
-  const manifest=Buffer.from(JSON.stringify({schema:1,version,sourceRevision:'a'.repeat(40),toolchain:'go1.26.9',artifacts:Object.fromEntries(['amd64','arm64'].map(arch=>['linux-'+arch,{url:repository+'/releases/download/pluto-v'+version+'/pluto-linux-'+arch,size:binary.length,sha256:sha(binary)}]))}));
+  const modules=Object.fromEntries(['linux-amd64','linux-arm64'].map(arch=>[arch,[{path:'modernc.org/sqlite',version:'v1.60.1',sum:'h1:fixture'},{path:'modernc.org/libc',version:'v1.77.1',sum:'h1:fixture'}]]));
+  const notices=buildNotices(process.cwd(),modules);
+  const manifest=Buffer.from(JSON.stringify({schema:2,version,sourceRevision:'a'.repeat(40),toolchain:'go1.26.10',artifacts:Object.fromEntries(['amd64','arm64'].map(arch=>['linux-'+arch,{url:repository+'/releases/download/pluto-v'+version+'/pluto-linux-'+arch,size:binary.length,sha256:sha(binary)}])),runtimeNotices:{format:noticeFormat,artifact:{url:repository+'/releases/download/pluto-v'+version+'/'+noticeAsset,size:notices.length,sha256:sha(notices)}}}));
   const envelope=Buffer.from(JSON.stringify({schema:'exocortex.release-signature.v1',algorithm:'RSA-PSS-SHA256',key_id:sha(keys.publicKey.export({type:'spki',format:'der'})),signature:sign('sha256',manifest,{key:keys.privateKey,padding:constants.RSA_PKCS1_PSS_PADDING,saltLength:32}).toString('base64')}));
   const assets=path.join(directory,'assets');await fs.writeFile(path.join(assets,'pluto-release.json'),manifest);await fs.writeFile(path.join(assets,'pluto-release.json.sig.json'),envelope);for(const arch of ['amd64','arm64'])await fs.writeFile(path.join(assets,'pluto-linux-'+arch),binary);
+  await fs.writeFile(path.join(assets,noticeAsset),notices);
   await fs.writeFile(path.join(directory,'commands/curl'),'#!/bin/sh\nfor last do :; done\ncat "$FIXTURE_ASSETS/${last##*/}"\n',{mode:0o755});
   await fs.writeFile(path.join(directory,'commands/systemctl'),'#!/bin/sh\nexit 0\n',{mode:0o755});
-  const bootstrap=(await fs.readFile('packaging/bootstrap.sh','utf8')).replaceAll('@REPOSITORY@',repository).replaceAll('@VERSION@',version).replaceAll('@PUBLIC_KEY@',Buffer.from(key).toString('base64')).replace('@SYSTEMD_UNIT@',await fs.readFile('packaging/pluto.service','utf8'));
+  const bootstrap=(await fs.readFile('packaging/bootstrap.sh','utf8')).replaceAll('@REPOSITORY@',repository).replaceAll('@VERSION@',version).replaceAll('@PUBLIC_KEY@',Buffer.from(key).toString('base64')).replace('@SYSTEMD_UNIT@',await fs.readFile('packaging/pluto.service','utf8')).replace('@NOTICE_VERIFIER@',await fs.readFile('packaging/verify-runtime-notices.py','utf8')).replaceAll('@CONTRACT_VERIFIER@',await fs.readFile('packaging/verify-runtime-contract.py','utf8'));
   const script=path.join(directory,'bootstrap.sh');await fs.writeFile(script,bootstrap);
   const env={...process.env,PATH:path.join(directory,'commands')+':'+process.env.PATH,FIXTURE_ASSETS:assets};
   const installed=['/usr/local/bin/pluto','/etc/systemd/system/pluto.service'];
@@ -28,16 +32,25 @@ test('bootstrap bounds downloads, proves health and removes a failed partial ins
   try {
     execFileSync('sh',[script],{env,stdio:['ignore','pipe','pipe']});
     assert.equal((await fs.readFile('/usr/local/bin/pluto')).toString(),binary.toString());
+    for(const name of Object.keys(pinnedNotices)) assert((await fs.readFile('/usr/local/bin/pluto.notices/'+name)).equals(await fs.readFile('packaging/sqlite-v1.60.1/'+name)));
     const existing=spawnSync('sh',[script],{env,encoding:'utf8'});assert.notEqual(existing.status,0);assert.match(existing.stderr,/already installed/);
     for(const file of installed) await fs.rm(file);
+    await fs.rm('/usr/local/bin/pluto.notices',{recursive:true});
     const unhealthy=spawnSync('sh',[script],{env:{...env,FIXTURE_BAD_HEALTH:'1'},encoding:'utf8',timeout:35000});
     assert.notEqual(unhealthy.status,0);assert.match(unhealthy.stderr,/health\/version check|health\/version/);
     for(const file of installed) await assert.rejects(fs.access(file));
+    await assert.rejects(fs.access('/usr/local/bin/pluto.notices'));
+    await fs.writeFile(path.join(assets,noticeAsset),Buffer.concat([Buffer.from([notices[0]^1]),notices.subarray(1)]));
+    const corruptNotices=spawnSync('sh',[script],{env,encoding:'utf8'});assert.notEqual(corruptNotices.status,0);
+    for(const file of installed) await assert.rejects(fs.access(file));await assert.rejects(fs.access('/usr/local/bin/pluto.notices'));
+    await fs.rm(path.join(assets,noticeAsset));
+    const absentNotices=spawnSync('sh',[script],{env,encoding:'utf8'});assert.notEqual(absentNotices.status,0);
+    for(const file of installed) await assert.rejects(fs.access(file));await fs.writeFile(path.join(assets,noticeAsset),notices);
     await fs.writeFile(path.join(assets,'pluto-release.json'),Buffer.alloc(65537,120));
     const oversized=spawnSync('sh',[script],{env,encoding:'utf8'});assert.notEqual(oversized.status,0);assert.match(oversized.stderr,/exceeds byte limit/);
     for(const file of installed) await assert.rejects(fs.access(file));
     await fs.writeFile(path.join(assets,'pluto-release.json'),manifest);await fs.writeFile(path.join(assets,'pluto-linux-amd64'),'corrupt');
     const corrupt=spawnSync('sh',[script],{env,encoding:'utf8'});assert.notEqual(corrupt.status,0);
     for(const file of installed) await assert.rejects(fs.access(file));
-  }finally{for(const file of installed)await fs.rm(file,{force:true});await fs.rm(directory,{recursive:true,force:true});}
+  }finally{for(const file of installed)await fs.rm(file,{force:true});await fs.rm('/usr/local/bin/pluto.notices',{recursive:true,force:true});await fs.rm(directory,{recursive:true,force:true});}
 });

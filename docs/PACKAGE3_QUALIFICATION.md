@@ -1,0 +1,11 @@
+# Package 3 current-source qualification
+
+The separate `package3-qualification.yml` workflow calls the full ordinary `verify.yml` on `release-qualification/package3-*` branches, with an optional frozen source-input manifest. The verifier checks the complete file set and restores the original qualified worktree bytes before tests; empty optional inputs preserve ordinary CI behavior.
+
+This wrapper does not publish releases, create tags, transfer signing keys, or omit the four mandatory native ordinary-CI scopes. Build admission requires at least 14 GiB free host RAM and 85 GiB free work-filesystem disk. The real bulk scope requires at least 17 GiB free host and Docker VM RAM, with the 8 GiB RAM reserve preserved. The underlying physical Windows disk also needs its own forecast and 32 GiB reserve; a thin-provisioned filesystem's free-space report is not that proof. The real immutable `PLUTO_GO_CI_BULK_INPUTS` manifest is mandatory. Missing prerequisites remain blocking and do not receive PASS.
+
+The qualification caller selects a dedicated ephemeral Linux AMD64 runner with one unique label and no default labels. Empty optional qualification inputs preserve ordinary runner selection; repository-wide runner variables are unchanged. A pre-job hook accepts only the expected repository, branch, commit and run. The runner is not installed as a permanent service.
+
+The immutable 602-file backend cohort is staged read-only. Native bulk state uses the existing `PLUTO_GO_CI_BULK_PRIVATE_BASE` interface outside uploaded evidence, while ordinary host tests retain their usual short temporary paths. All four native scopes, source checks, complete ordinary Go accounting, vet, bootstrap regressions and vulnerability gates remain mandatory. No resource threshold or test exclusion is relaxed.
+
+The historical reader test remains separate from ordinary CI and is waived by the owner only because its archival input is unavailable. It is not faked or silently skipped, and old-reader/new-v8/downgrade compatibility remains unconfirmed. The owner exclusion for unavailable native ARM64 does not waive the required AMD64 ordinary-CI scopes.

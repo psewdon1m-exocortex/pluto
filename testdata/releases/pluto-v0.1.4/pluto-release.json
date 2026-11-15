@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "version": "0.1.4",
+  "sourceRevision": "28b114b26754f43fd2cdd95d71e5cd5fdfa1c1a2",
+  "toolchain": "go1.26.9",
+  "artifacts": {
+    "linux-amd64": {
+      "url": "https://github.com/psewdon1m-exocortex/pluto/releases/download/pluto-v0.1.4/pluto-linux-amd64",
+      "sha256": "59d12873a01aee77cc7bdf36f1166dc008ea8f846c6909fb70fe5e17c037a9b0",
+      "size": 7172258
+    },
+    "linux-arm64": {
+      "url": "https://github.com/psewdon1m-exocortex/pluto/releases/download/pluto-v0.1.4/pluto-linux-arm64",
+      "sha256": "e56bbe0e2e76571ff66a80f1be145ab2dc23640bc0c7df7a7fa4b81b0ef6ad5d",
+      "size": 6684834
+    }
+  }
+}

@@ -167,6 +167,43 @@ func TestUnreadableSourceDoesNotPreventHealthyFiles(t *testing.T) {
 	}
 }
 
+func TestOversizedSourceIsRejectedWithoutBlockingHealthyFilesOrTouchingStoredBytes(t *testing.T) {
+	f := fixture(t)
+	dir := t.TempDir()
+	sources := filepath.Join(dir, "sources")
+	if err := os.Mkdir(sources, 0700); err != nil {
+		t.Fatal(err)
+	}
+	large := filepath.Join(sources, "a-too-large.bin")
+	if err := os.WriteFile(large, nil, 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Truncate(large, MaxFileBytes+1); err != nil {
+		t.Fatal(err)
+	}
+	healthy := filepath.Join(sources, "b-healthy.conf")
+	if err := os.WriteFile(healthy, []byte("healthy"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	remoteLarge := RelativePath(large)
+	f.files[remoteLarge] = []byte("previous-good-version")
+
+	count, err := Copy(context.Background(), Remote{f.server.Client(), f.server.URL, strings.Repeat("t", 43)}, []string{sources}, filepath.Join(dir, "spool"))
+	if count != 1 || err == nil || !strings.Contains(err.Error(), "no larger than 256 MiB") {
+		t.Fatalf("oversize boundary did not remain a partial failure: %d %v", count, err)
+	}
+	if string(f.files[remoteLarge]) != "previous-good-version" {
+		t.Fatal("oversized source replaced or removed the last stored version")
+	}
+	if string(f.files[RelativePath(healthy)]) != "healthy" {
+		t.Fatal("oversized source blocked a healthy peer file")
+	}
+	entries, readErr := os.ReadDir(filepath.Join(dir, "spool"))
+	if readErr != nil || len(entries) != 0 {
+		t.Fatal("oversized source left plaintext spool data", readErr)
+	}
+}
+
 func TestAuditRotationAndPersistenceFailureAreObservable(t *testing.T) {
 	dir := t.TempDir()
 	name := filepath.Join(dir, "audit.jsonl")
@@ -282,8 +319,8 @@ func TestEnrollmentRemainsDisabledAndTokensNeverEnterStatus(t *testing.T) {
 	for service.Status().Running && time.Now().Before(deadline) {
 		time.Sleep(time.Millisecond)
 	}
-	if service.Status().Connected || service.Status().Observation.Enabled || service.Status().Observation.Error == "" {
-		t.Fatal("revoke did not disconnect agent")
+	if !service.Status().Connected || service.Status().Observation.Enabled || service.Status().Observation.NetworkState != "SERVER_AUTH_REQUIRED" || service.Status().Observation.Error == "" {
+		t.Fatal("access failure must pause network work while retaining registration")
 	}
 	if runtime.GOOS == "linux" {
 		info, _ := os.Stat(service.ConfigPath)

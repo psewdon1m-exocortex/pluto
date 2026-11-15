@@ -5,12 +5,10 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
-	"fmt"
 	"io"
 	"io/fs"
 	"net/url"
 	"os"
-	"path"
 	"path/filepath"
 	"strings"
 	"syscall"
@@ -23,159 +21,114 @@ func Copy(ctx context.Context, r Remote, sources []string, spoolDir string) (int
 	if err := os.MkdirAll(spoolDir, 0700); err != nil {
 		return 0, err
 	}
-	files := map[string]bool{}
-	dirs := map[string]bool{}
-	uploaded := 0
-	var failures []error
-	failedCount := 0
-	ensure := func(relative string) error { return nil }
-	ensure = func(relative string) error {
-		if relative == "." || relative == "" || dirs[relative] {
-			return nil
+	return copyPipeline(ctx, r, sources, spoolDir, copyResources)
+}
+
+func copyFile(ctx context.Context, r Remote, filename string, entry fs.DirEntry, spoolDir string, parents *parentEnsurer, budget *copyBudget, stopOnFailure func(error)) (uploaded bool, err error) {
+	if err = budget.acquireWorker(ctx); err != nil {
+		return false, err
+	}
+	defer budget.releaseWorker()
+	// Publish a fatal network/access failure before releasing the admission
+	// slot; otherwise a queued worker can start another upload in this gap.
+	defer func() { stopOnFailure(err) }()
+	relative := RelativePath(filename)
+	if entry.Type()&os.ModeSymlink != 0 {
+		info, err := os.Stat(filename)
+		if err != nil {
+			return false, errors.New("symbolic link target is missing or inaccessible to the Pluto service account")
 		}
-		if err := ensure(path.Dir(relative)); err != nil {
-			return err
+		if !info.Mode().IsRegular() {
+			return false, errors.New("symbolic links must point to regular files; directory links and special files are not followed")
 		}
-		var meta Metadata
-		err := r.request(ctx, "GET", "/api/v1/pluto/files?path="+url.QueryEscape(relative), nil, -1, nil, &meta)
-		if err == nil {
-			if meta.Type != "folder" {
-				return errors.New("destination directory conflicts with a file")
-			}
-			dirs[relative] = true
-			return nil
+	} else if entry.Type() != 0 {
+		return false, errors.New("sources must contain only regular files and directories")
+	}
+	// A link can change between validation and open. Nonblocking open plus
+	// fstat rejects a replacement FIFO/device without waiting for a writer.
+	src, err := os.OpenFile(filename, os.O_RDONLY|syscall.O_NONBLOCK, 0)
+	if err != nil {
+		return false, errors.New("source file cannot be opened by the Pluto service account; check target and parent-directory permissions")
+	}
+	defer src.Close()
+	before, err := src.Stat()
+	if err != nil || !before.Mode().IsRegular() || before.Size() > MaxFileBytes {
+		return false, errors.New("source must be a regular file no larger than 256 MiB")
+	}
+	if err = budget.reserveSpool(ctx, spoolDir, before.Size()); err != nil {
+		return false, err
+	}
+	defer budget.releaseSpool(before.Size())
+	tmp, err := os.CreateTemp(spoolDir, "copy-*")
+	if err != nil {
+		return false, err
+	}
+	defer func() {
+		closeErr := tmp.Close()
+		removeErr := os.Remove(tmp.Name())
+		if closeErr != nil || (removeErr != nil && !errors.Is(removeErr, os.ErrNotExist)) {
+			cleanupErr := errors.Join(errSnapshotCleanup, closeErr, removeErr)
+			budget.blockSpool(cleanupErr)
+			err = errors.Join(err, cleanupErr)
 		}
+	}()
+	if err = budget.acquireReader(ctx); err != nil {
+		return false, err
+	}
+	digest := sha256.New()
+	// Read one extra byte to detect growth, but never write past the reserved
+	// snapshot size. Cancellation is checked between bounded buffer reads.
+	size, err := io.CopyBuffer(&snapshotWriter{writer: io.MultiWriter(tmp, digest), remaining: before.Size()},
+		&copyContextReader{ctx: ctx, reader: io.LimitReader(src, before.Size()+1)}, make([]byte, copyBufferBytes))
+	budget.releaseReader()
+	if err != nil || size != before.Size() || size > MaxFileBytes {
+		if ctx.Err() != nil {
+			return false, context.Cause(ctx)
+		}
+		return false, errors.New("source changed or could not be copied")
+	}
+	after, err := src.Stat()
+	if err != nil || after.Size() != before.Size() || !after.ModTime().Equal(before.ModTime()) {
+		return false, errors.New("source changed during copying")
+	}
+	current, err := os.Stat(filename)
+	if err != nil || !os.SameFile(before, current) {
+		return false, errors.New("source or symbolic link target changed during copying")
+	}
+	sha := hex.EncodeToString(digest.Sum(nil))
+	if err = parents.ensure(ctx, filepath.ToSlash(filepath.Dir(relative))); err != nil {
+		return false, err
+	}
+	var meta Metadata
+	err = r.request(ctx, "GET", "/api/v1/pluto/files?path="+url.QueryEscape(relative), nil, -1, nil, &meta)
+	headers := map[string]string{"Content-Type": "application/octet-stream", "X-Content-Sha256": sha}
+	if err == nil {
+		if meta.Type != "file" {
+			return false, errors.New("destination conflicts with a folder")
+		}
+		if meta.SHA256 == sha {
+			return false, nil
+		}
+		headers["If-Match"] = meta.ETag
+	} else {
 		var remote *HTTPError
 		if !errors.As(err, &remote) || remote.Status != 404 {
-			return err
+			return false, err
 		}
-		err = r.json(ctx, "POST", "/api/v1/pluto/folders", map[string]string{"path": relative}, nil)
-		if err != nil {
-			return err
-		}
-		dirs[relative] = true
-		return nil
+		headers["If-None-Match"] = "*"
 	}
-	for _, source := range sources {
-		process := func(filename string, entry fs.DirEntry, walkErr error) error {
-			if walkErr != nil {
-				return errors.New("source cannot be read by the Pluto service account; check directory traversal and file read permissions")
-			}
-			if err := ctx.Err(); err != nil {
-				return err
-			}
-			relative := RelativePath(filename)
-			if files[relative] {
-				return nil
-			}
-			if entry.IsDir() {
-				return ensure(relative)
-			}
-			if entry.Type()&os.ModeSymlink != 0 {
-				info, err := os.Stat(filename)
-				if err != nil {
-					return errors.New("symbolic link target is missing or inaccessible to the Pluto service account")
-				}
-				if !info.Mode().IsRegular() {
-					return errors.New("symbolic links must point to regular files; directory links and special files are not followed")
-				}
-			} else if entry.Type() != 0 {
-				return errors.New("sources must contain only regular files and directories")
-			}
-			// A link can change between validation and open. Nonblocking open plus
-			// fstat rejects a replacement FIFO/device without waiting for a writer.
-			src, err := os.OpenFile(filename, os.O_RDONLY|syscall.O_NONBLOCK, 0)
-			if err != nil {
-				return errors.New("source file cannot be opened by the Pluto service account; check target and parent-directory permissions")
-			}
-			defer src.Close()
-			before, err := src.Stat()
-			if err != nil || !before.Mode().IsRegular() || before.Size() > MaxFileBytes {
-				return errors.New("source must be a regular file no larger than 256 MiB")
-			}
-			if err = checkSpoolSpace(spoolDir, before.Size()); err != nil {
-				return err
-			}
-			tmp, err := os.CreateTemp(spoolDir, "copy-*")
-			if err != nil {
-				return err
-			}
-			defer os.Remove(tmp.Name())
-			defer tmp.Close()
-			digest := sha256.New()
-			size, err := io.Copy(io.MultiWriter(tmp, digest), io.LimitReader(src, MaxFileBytes+1))
-			if err != nil || size != before.Size() || size > MaxFileBytes {
-				return errors.New("source changed or could not be copied")
-			}
-			after, err := src.Stat()
-			if err != nil || after.Size() != before.Size() || !after.ModTime().Equal(before.ModTime()) {
-				return errors.New("source changed during copying")
-			}
-			current, err := os.Stat(filename)
-			if err != nil || !os.SameFile(before, current) {
-				return errors.New("source or symbolic link target changed during copying")
-			}
-			sha := hex.EncodeToString(digest.Sum(nil))
-			if err = ensure(path.Dir(relative)); err != nil {
-				return err
-			}
-			var meta Metadata
-			err = r.request(ctx, "GET", "/api/v1/pluto/files?path="+url.QueryEscape(relative), nil, -1, nil, &meta)
-			headers := map[string]string{"Content-Type": "application/octet-stream", "X-Content-Sha256": sha}
-			if err == nil {
-				if meta.Type != "file" {
-					return errors.New("destination conflicts with a folder")
-				}
-				if meta.SHA256 == sha {
-					files[relative] = true
-					return nil
-				}
-				headers["If-Match"] = meta.ETag
-			} else {
-				var remote *HTTPError
-				if !errors.As(err, &remote) || remote.Status != 404 {
-					return err
-				}
-				headers["If-None-Match"] = "*"
-			}
-			if _, err = tmp.Seek(0, 0); err != nil {
-				return err
-			}
-			var receipt Metadata
-			if err = r.request(ctx, "PUT", "/api/v1/pluto/files?path="+url.QueryEscape(relative), tmp, size, headers, &receipt); err != nil {
-				return err
-			}
-			if receipt.SHA256 != sha || receipt.SizeBytes != size {
-				return errors.New("Saturn did not confirm the copied file checksum")
-			}
-			files[relative] = true
-			uploaded++
-			return nil
-		}
-		err := filepath.WalkDir(source, func(filename string, entry fs.DirEntry, walkErr error) error {
-			err := process(filename, entry, walkErr)
-			if err == nil {
-				return nil
-			}
-			var denied *HTTPError
-			if ctx.Err() != nil || (errors.As(err, &denied) && (denied.Status == 401 || denied.Status == 403)) {
-				return err
-			}
-			failedCount++
-			if len(failures) < 20 {
-				failures = append(failures, fmt.Errorf("%s: %w", filename, err))
-			}
-			if entry != nil && entry.IsDir() {
-				return fs.SkipDir
-			}
-			return nil
-		})
-		if err != nil {
-			return uploaded, err
-		}
+	if _, err = tmp.Seek(0, 0); err != nil {
+		return false, err
 	}
-	if failedCount > 0 {
-		return uploaded, fmt.Errorf("%d source entries failed: %w", failedCount, errors.Join(failures...))
+	var receipt Metadata
+	if err = r.request(ctx, "PUT", "/api/v1/pluto/files?path="+url.QueryEscape(relative), struct{ io.Reader }{tmp}, size, headers, &receipt); err != nil {
+		if destinationChanged(err) {
+			parents.invalidate()
+		}
+		return false, err
 	}
-	return uploaded, nil
+	if receipt.SHA256 != sha || receipt.SizeBytes != size {
+		return false, errors.New("Saturn did not confirm the copied file checksum")
+	}
+	return true, nil
 }

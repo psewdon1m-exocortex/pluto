@@ -9,7 +9,7 @@ PUBLIC_KEY='@PUBLIC_KEY@'
 case "$(uname -m)" in x86_64) ARCH=amd64;; aarch64|arm64) ARCH=arm64;; *) echo 'Unsupported architecture.' >&2; exit 1;; esac
 case "$REPOSITORY$VERSION$PUBLIC_KEY" in *@*) echo 'Use the generated bootstrap from a signed Pluto release.' >&2; exit 1;; esac
 for command in curl openssl python3 systemctl useradd install timeout; do command -v "$command" >/dev/null || { echo "Required installer command: $command" >&2; exit 1; }; done
-if [ -e /usr/local/bin/pluto ] || [ -e /etc/systemd/system/pluto.service ]; then echo 'Pluto is already installed. Use sudo pluto update.' >&2; exit 1; fi
+if [ -e /usr/local/bin/pluto ] || [ -L /usr/local/bin/pluto ] || [ -e /usr/local/bin/pluto.notices ] || [ -L /usr/local/bin/pluto.notices ] || [ -e /etc/systemd/system/pluto.service ]; then echo 'Pluto is already installed. Use sudo pluto update with the compatible signed release. Do not delete existing configuration/state.' >&2; exit 1; fi
 WORK=$(mktemp -d)
 INSTALLING=0
 cleanup() {
@@ -18,6 +18,7 @@ cleanup() {
   if [ "$INSTALLING" -eq 1 ]; then
     timeout 30 systemctl disable --now pluto.service || true
     rm -f /usr/local/bin/pluto /etc/systemd/system/pluto.service
+    rm -rf -- /usr/local/bin/pluto.notices
     timeout 30 systemctl daemon-reload || true
     echo 'Installation failed; binary/unit removed. Configuration and state retained.' >&2
   fi
@@ -55,9 +56,10 @@ printf '%s' "$PUBLIC_KEY" | openssl base64 -d -A > "$WORK/public.pem"
 openssl pkey -pubin -in "$WORK/public.pem" -outform DER -out "$WORK/public.der"
 python3 - "$WORK" <<'PY'
 import base64, hashlib, json, pathlib, sys
+@CONTRACT_VERIFIER@
 work = pathlib.Path(sys.argv[1])
 assert (work / 'signature.json').stat().st_size <= 4096
-envelope = json.loads((work / 'signature.json').read_text())
+envelope = unique_release_json((work / 'signature.json').read_bytes())
 assert envelope['schema'] == 'exocortex.release-signature.v1' and envelope['algorithm'] == 'RSA-PSS-SHA256'
 assert envelope['key_id'] == hashlib.sha256((work / 'public.der').read_bytes()).hexdigest()
 (work / 'signature.bin').write_bytes(base64.b64decode(envelope['signature'], validate=True))
@@ -65,13 +67,24 @@ PY
 openssl dgst -sha256 -verify "$WORK/public.pem" -signature "$WORK/signature.bin" -sigopt rsa_padding_mode:pss -sigopt rsa_pss_saltlen:32 "$WORK/manifest.json"
 python3 - "$WORK" "$ARCH" "$BASE" "$VERSION" <<'PY'
 import json, pathlib, re, sys
+@CONTRACT_VERIFIER@
 work, arch, base, version = sys.argv[1:]
-manifest = json.loads(pathlib.Path(work, 'manifest.json').read_text())
-assert manifest['schema'] == 1 and manifest['version'] == version
+manifest = unique_release_json(pathlib.Path(work, 'manifest.json').read_bytes())
+assert manifest['schema'] in [1, 2] and manifest['version'] == version
+contract = validate_runtime_contract(manifest)
 item = manifest['artifacts']['linux-' + arch]
 assert item['url'] == base + '/pluto-linux-' + arch
-assert re.fullmatch('[a-f0-9]{64}', item['sha256']) and 0 < item['size'] <= 64 * 1024 * 1024
+assert re.fullmatch('[a-f0-9]{64}', item['sha256']) and type(item['size']) is int and 0 < item['size'] <= 64 * 1024 * 1024
 pathlib.Path(work, 'download.url').write_text(item['url'])
+if manifest['schema'] == 2 or contract:
+    notices = manifest['runtimeNotices']
+    assert notices['format'] == 'pluto-runtime-notices.tar.v1'
+    item = notices['artifact']
+    assert item['url'] == base + '/pluto-runtime-notices.tar'
+    assert re.fullmatch('[a-f0-9]{64}', item['sha256']) and type(item['size']) is int and 0 < item['size'] <= 2 * 1024 * 1024
+    pathlib.Path(work, 'notices.url').write_text(item['url'])
+else:
+    assert 'runtimeNotices' not in manifest
 PY
 download "$(cat "$WORK/download.url")" "$WORK/pluto" 67108864
 python3 - "$WORK" "$ARCH" <<'PY'
@@ -81,8 +94,34 @@ item = json.loads(pathlib.Path(work, 'manifest.json').read_text())['artifacts'][
 binary = pathlib.Path(work, 'pluto').read_bytes()
 assert len(binary) == item['size'] and hashlib.sha256(binary).hexdigest() == item['sha256']
 PY
+if [ -f "$WORK/notices.url" ]; then
+  download "$(cat "$WORK/notices.url")" "$WORK/notices.tar" 2097152
+  python3 - "$WORK" <<'PY'
+@NOTICE_VERIFIER@
+import os, sys
+work = pathlib.Path(sys.argv[1])
+item = json.loads((work / 'manifest.json').read_bytes())['runtimeNotices']['artifact']
+files = verified_notices((work / 'notices.tar').read_bytes(), item)
+directory = work / 'notices'
+directory.mkdir(mode=0o755)
+for name, content in files.items():
+    with (directory / name).open('xb') as target:
+        target.write(content); target.flush(); os.fsync(target.fileno())
+PY
+fi
 chmod 0755 "$WORK/pluto"
-[ "$(timeout 5 "$WORK/pluto" --version)" = "$VERSION" ]
+python3 - "$WORK" <<'PY'
+@CONTRACT_VERIFIER@
+import hashlib, pathlib, sys
+work = pathlib.Path(sys.argv[1])
+manifest = unique_release_json((work / 'manifest.json').read_bytes())
+assert bounded_candidate_command(work / 'pluto', ['--version'], 1024).decode('ascii').strip() == manifest['version']
+if validate_runtime_contract(manifest):
+    raw = bounded_candidate_command(work / 'pluto', ['licenses', '--archive'], 2 * 1024 * 1024)
+    item = manifest['runtimeContract']['embedded']
+    assert len(raw) == item['size'] and hashlib.sha256(raw).hexdigest() == item['sha256']
+    assert raw == (work / 'notices.tar').read_bytes(), 'Embedded and external archives differ'
+PY
 install -d -m 0755 /etc/exocortex/release-trust
 python3 - "$WORK/public.pem" <<'PY'
 import os, pathlib, sys
@@ -105,6 +144,12 @@ id pluto >/dev/null 2>&1 || useradd --system --home-dir /var/lib/pluto --shell /
 install -d -o pluto -g pluto -m 0700 /etc/pluto /var/lib/pluto
 INSTALLING=1
 install -m 0755 "$WORK/pluto" /usr/local/bin/pluto
+if [ -d "$WORK/notices" ]; then
+  install -d -m 0755 /usr/local/bin/pluto.notices
+  for name in LICENSE LICENSE-3RD-PARTY.md LICENSE-SQLITE LICENSE-SQLITE_VEC INVENTORY.json; do
+    install -m 0644 "$WORK/notices/$name" "/usr/local/bin/pluto.notices/$name"
+  done
+fi
 cat > /etc/systemd/system/pluto.service <<'UNIT'
 @SYSTEMD_UNIT@
 UNIT
@@ -115,6 +160,15 @@ for name in ['/usr/local/bin/pluto', '/etc/systemd/system/pluto.service']:
     try: os.fsync(fd)
     finally: os.close(fd)
     fd = os.open(os.path.dirname(name), os.O_RDONLY | os.O_DIRECTORY)
+    try: os.fsync(fd)
+    finally: os.close(fd)
+directory = '/usr/local/bin/pluto.notices'
+if os.path.isdir(directory):
+    for name in os.listdir(directory):
+        fd = os.open(os.path.join(directory, name), os.O_RDONLY | os.O_NOFOLLOW)
+        try: os.fsync(fd)
+        finally: os.close(fd)
+    fd = os.open(directory, os.O_RDONLY | os.O_DIRECTORY)
     try: os.fsync(fd)
     finally: os.close(fd)
 PY

@@ -6,19 +6,22 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"pluto/internal/network"
 	"strings"
 )
 
 type Config struct {
-	KernelURL         string   `json:"kernelURL"`
-	OutdoorToken      string   `json:"outdoorToken"`
-	SaturnURL         string   `json:"saturnURL"`
-	AccessToken       string   `json:"accessToken"`
-	ConnectionName    string   `json:"connectionName"`
-	ReleaseRepository string   `json:"releaseRepository"`
-	Sources           []string `json:"sources"`
-	IntervalSeconds   int      `json:"intervalSeconds"`
-	Enabled           bool     `json:"enabled"`
+	KernelURL         string              `json:"kernelURL"`
+	OutdoorToken      string              `json:"outdoorToken"`
+	SaturnURL         string              `json:"saturnURL"`
+	AccessToken       string              `json:"accessToken"`
+	ConnectionName    string              `json:"connectionName"`
+	ReleaseRepository string              `json:"releaseRepository"`
+	Sources           []string            `json:"sources"`
+	IntervalSeconds   int                 `json:"intervalSeconds"`
+	Enabled           bool                `json:"enabled"`
+	Indexed           *IndexedConfig      `json:"indexed,omitempty"`
+	Proxy             network.ProxyConfig `json:"proxy,omitempty"`
 }
 
 func DefaultConfig() Config { return Config{IntervalSeconds: 86400, Sources: []string{}} }

@@ -1,0 +1,46 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {constants,createHash,generateKeyPairSync,sign} from 'node:crypto';
+import {buildNotices,verifyNotices,pinnedNotices,noticeAsset,noticeFormat} from './runtime-notices.mjs';
+import {verifyManifest,verifyBytes} from './verify-release.mjs';
+import {buildRuntimeContract} from './runtime-contract.mjs';
+const root=fileURLToPath(new URL('../',import.meta.url));
+const modules=Object.fromEntries(['linux-amd64','linux-arm64'].map(arch=>[arch,[{path:'modernc.org/libc',version:'v1.77.1',sum:'h1:fixture'},{path:'modernc.org/sqlite',version:'v1.60.1',sum:'h1:fixture'}]]));
+test('deterministic archive preserves every exact pinned notice and rejects unsafe/truncated bytes',()=>{
+  const first=buildNotices(root,modules),second=buildNotices(root,modules);assert(first.equals(second));
+  const files=verifyNotices(first);assert.equal(files.size,5);
+  for(const name of Object.keys(pinnedNotices)) assert(files.get(name).equals(fs.readFileSync(path.join(root,'packaging/sqlite-v1.60.1',name))));
+  for(const mutate of [b=>b.subarray(0,-512),b=>Buffer.concat([b,Buffer.from('junk')]),b=>{b[512]^=1;return b;},b=>{b.fill(0,0,100);b.write('../escaped',0);return b;},b=>{b[156]=50;return b;}]) assert.throws(()=>verifyNotices(mutate(Buffer.from(first))));
+});
+test('schema 2 and compatible schema 1 bind notices and compiled post-boundary contract',()=>{
+  const keys=generateKeyPairSync('rsa',{modulusLength:3072}),key=keys.publicKey.export({type:'spki',format:'pem'}),sha=b=>createHash('sha256').update(b).digest('hex');
+  const identity={version:'0.1.5',revision:'a'.repeat(40),repository:'https://github.com/example/pluto'},archive=buildNotices(root,modules);
+  const item={url:identity.repository+'/releases/download/pluto-v'+identity.version+'/'+noticeAsset,size:archive.length,sha256:sha(archive)};
+  const base={schema:2,version:identity.version,sourceRevision:identity.revision,toolchain:'go1.26.10',artifacts:Object.fromEntries(['amd64','arm64'].map(arch=>['linux-'+arch,{url:identity.repository+'/releases/download/pluto-v'+identity.version+'/pluto-linux-'+arch,size:1,sha256:'a'.repeat(64)}])),runtimeNotices:{format:noticeFormat,artifact:item}};
+  base.runtimeContract=buildRuntimeContract(item);
+  const verify=manifest=>{const raw=Buffer.from(JSON.stringify(manifest)),envelope=Buffer.from(JSON.stringify({schema:'exocortex.release-signature.v1',algorithm:'RSA-PSS-SHA256',key_id:sha(keys.publicKey.export({type:'spki',format:'der'})),signature:sign('sha256',raw,{key:keys.privateKey,padding:constants.RSA_PKCS1_PSS_PADDING,saltLength:32}).toString('base64')}));return verifyManifest(raw,envelope,key,identity);};
+  assert.equal(verify(base).schema,2);verifyBytes(archive,item);
+  for(const changes of [undefined,{format:'wrong',artifact:item},{format:noticeFormat,artifact:{...item,url:item.url+'?x'}},{format:noticeFormat,artifact:{...item,size:2097153}},{format:noticeFormat,artifact:{...item,sha256:'bad'}}]) assert.throws(()=>verify({...base,runtimeNotices:changes}));
+  const stripped={...base,schema:1};delete stripped.runtimeNotices;delete stripped.runtimeContract;assert.throws(()=>verify(stripped));
+  assert.equal(verify({...base,schema:1}).schema,1);
+});
+test('actual offline signed release assets verify byte for byte when provided',async t=>{
+  if(!process.env.PLUTO_RELEASE_FIXTURE_DIR) return t.skip('actual produced release fixture is qualified in the audit build container');
+  const directory=process.env.PLUTO_RELEASE_FIXTURE_DIR,manifest=JSON.parse(fs.readFileSync(path.join(directory,'pluto-release.json')));
+  const {verifyRelease}=await import('./verify-release.mjs');
+  const repository=manifest.artifacts['linux-amd64'].url.split('/releases/download/')[0];
+  const result=await verifyRelease({directory,keyPath:path.join(directory,'release-public.pem'),version:manifest.version,revision:manifest.sourceRevision,repository});assert.equal(result.status,'PASS');
+  const tag='pluto-v'+manifest.version,base=repository+'/releases/download/'+tag+'/',api='https://api.github.com/repos/'+repository.slice('https://github.com/'.length);
+  const names=['pluto-release.json','pluto-release.json.sig.json','release-public.pem','bootstrap.sh','pluto-linux-amd64','pluto-linux-arm64',noticeAsset];
+  const assets=names.map(name=>({name,state:'uploaded',size:fs.statSync(path.join(directory,name)).size,browser_download_url:base+name}));
+  const responses=new Map([[api+'/releases/tags/'+tag,Buffer.from(JSON.stringify({tag_name:tag,draft:false,prerelease:true,assets}))],[api+'/git/ref/tags/'+tag,Buffer.from(JSON.stringify({object:{type:'commit',sha:manifest.sourceRevision}}))],...names.map(name=>[base+name,fs.readFileSync(path.join(directory,name))])]);
+  const options={directory,keyPath:path.join(directory,'release-public.pem'),version:manifest.version,revision:manifest.sourceRevision,repository,mode:'published',fetchBytes:async(url,maximum)=>{const bytes=responses.get(url);assert(bytes,'unexpected fixture request '+url);if(bytes.length>maximum)throw Error('Release download exceeds limit');return bytes;}};
+  assert.equal((await verifyRelease(options)).status,'PASS');
+  const noticeBytes=responses.get(base+noticeAsset);responses.set(base+noticeAsset,Buffer.concat([Buffer.from([noticeBytes[0]^1]),noticeBytes.subarray(1)]));await assert.rejects(verifyRelease(options),/bytes differ/);responses.set(base+noticeAsset,noticeBytes);
+  assets.pop();responses.set(api+'/releases/tags/'+tag,Buffer.from(JSON.stringify({tag_name:tag,draft:false,prerelease:true,assets})));await assert.rejects(verifyRelease(options),/inventory mismatch/);
+  const files=verifyNotices(fs.readFileSync(path.join(directory,noticeAsset)));
+  const inventory=JSON.parse(files.get('INVENTORY.json'));fs.writeFileSync(path.join(directory,'verified-runtime-inventory.json'),JSON.stringify(inventory,null,2)+'\n');
+});

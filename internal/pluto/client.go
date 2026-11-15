@@ -10,14 +10,29 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"pluto/internal/network"
+	"strconv"
 	"strings"
 	"time"
 )
 
 type HTTPError struct {
-	Status  int
-	Message string
+	Status     int
+	Message    string
+	RetryAfter time.Duration
 }
+type RemoteNetworkError struct {
+	cause   error
+	timeout bool
+}
+
+func (e *RemoteNetworkError) Error() string {
+	if e.timeout {
+		return "remote request timed out; copying will retry"
+	}
+	return "remote service is unreachable"
+}
+func (e *RemoteNetworkError) Unwrap() error { return e.cause }
 
 func (e *HTTPError) Error() string {
 	if e.Message != "" {
@@ -32,10 +47,23 @@ type Remote struct {
 }
 
 func NewHTTPClient() *http.Client {
+	client, _ := NewHTTPClientWithProxy(network.ProxyConfig{})
+	return client
+}
+func NewHTTPClientWithProxy(config network.ProxyConfig) (*http.Client, error) {
+	proxy, err := network.Proxy(config)
+	if err != nil {
+		return nil, err
+	}
 	// Saturn can spend up to a minute waiting for a storage lease, then another
 	// minute performing the operation. Keep response headers within that bounded
 	// window rather than abandoning a valid queued copy after 30 seconds.
-	return &http.Client{Timeout: 5 * time.Minute, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }, Transport: &http.Transport{Proxy: http.ProxyFromEnvironment, ResponseHeaderTimeout: 2 * time.Minute}}
+	return &http.Client{CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }, Transport: &http.Transport{Proxy: proxy, DialContext: (&net.Dialer{Timeout: 10 * time.Second}).DialContext, TLSHandshakeTimeout: 10 * time.Second, IdleConnTimeout: 30 * time.Second, ResponseHeaderTimeout: network.LegacyCopyHeaderTimeout, OnProxyConnectResponse: func(_ context.Context, _ *url.URL, _ *http.Request, response *http.Response) error {
+		if response.StatusCode != http.StatusOK {
+			return &network.ProxyError{Status: response.StatusCode}
+		}
+		return nil
+	}}}, nil
 }
 func (r Remote) request(ctx context.Context, method, path string, body io.Reader, size int64, headers map[string]string, result any) error {
 	req, err := http.NewRequestWithContext(ctx, method, strings.TrimRight(r.Origin, "/")+path, body)
@@ -54,31 +82,57 @@ func (r Remote) request(ctx context.Context, method, path string, body io.Reader
 	for k, v := range headers {
 		req.Header.Set(k, v)
 	}
-	resp, err := r.HTTP.Do(req)
+	deadlines := network.GuardedDeadlines(false)
+	if method == http.MethodPut || strings.HasPrefix(path, "/api/v1/pluto/copy") {
+		deadlines = network.Deadlines{Idle: network.TransferIdleTimeout, Header: network.LegacyCopyHeaderTimeout}
+	}
+	if method == http.MethodPut && strings.HasPrefix(path, "/api/v1/pluto/files?") {
+		progressFrom(ctx).requestData(size)
+	}
+	resp, err := network.Do(r.HTTP, req, deadlines)
 	if err != nil {
 		if ctx.Err() != nil {
 			return ctx.Err()
 		}
+		var proxyError *network.ProxyError
+		if errors.As(err, &proxyError) {
+			return proxyError
+		}
 		var timeout net.Error
 		if errors.As(err, &timeout) && timeout.Timeout() {
-			return errors.New("remote request timed out; copying will retry")
+			return &RemoteNetworkError{cause: err, timeout: true}
 		}
-		return errors.New("remote service is unreachable")
+		return &RemoteNetworkError{cause: err}
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		body, _ := io.ReadAll(io.LimitReader(resp.Body, 4096))
+		if ctx.Err() != nil {
+			return ctx.Err()
+		}
 		message := ""
 		if r.Origin == "http://localhost" {
 			message = strings.TrimSpace(string(body))
 		}
-		return &HTTPError{Status: resp.StatusCode, Message: message}
+		delay := time.Duration(0)
+		if seconds, err := strconv.ParseInt(resp.Header.Get("Retry-After"), 10, 32); err == nil && seconds >= 0 {
+			delay = time.Duration(seconds) * time.Second
+		} else if until, err := http.ParseTime(resp.Header.Get("Retry-After")); err == nil {
+			delay = max(0, time.Until(until))
+		}
+		return &HTTPError{Status: resp.StatusCode, Message: message, RetryAfter: delay}
 	}
 	if result == nil {
 		return nil
 	}
 	raw, err := io.ReadAll(io.LimitReader(resp.Body, 65537))
-	if err != nil || len(raw) > 65536 {
+	if ctx.Err() != nil {
+		return ctx.Err()
+	}
+	if err != nil {
+		return &RemoteNetworkError{cause: err, timeout: errors.Is(err, context.DeadlineExceeded)}
+	}
+	if len(raw) > 65536 {
 		return errors.New("remote response exceeds limit")
 	}
 	if json.Unmarshal(raw, result) != nil {
