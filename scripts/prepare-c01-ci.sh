@@ -9,7 +9,7 @@ bulk_inputs="${PLUTO_GO_CI_BULK_INPUTS:?absolute immutable backend-inputs manife
 [[ "$bulk_inputs" = /* && -f "$bulk_inputs" && ! -L "$bulk_inputs" ]]
 [[ "$artifacts" = /* && ! -e "$artifacts" ]]
 mkdir -m 700 -- "$artifacts"
-[[ "$(go env GOVERSION)" = go1.26.10 ]]
+[[ "$(go env GOVERSION)" = go1.26.11 ]]
 python3 -I -B - "$project" "$artifacts" <<'C01_BUILD_ADMISSION'
 import importlib.util,json,shutil,sys
 from pathlib import Path

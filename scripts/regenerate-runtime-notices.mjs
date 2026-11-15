@@ -8,7 +8,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import {buildNotices} from './runtime-notices.mjs';
 import {inspectLinkedModules} from './runtime-contract.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url)),go=process.env.GO_BINARY??'go';
-if(execFileSync(go,['env','GOVERSION'],{cwd:root,encoding:'utf8'}).trim()!=='go1.26.10')throw Error('Use qualified Go 1.26.10.');
+if(execFileSync(go,['env','GOVERSION'],{cwd:root,encoding:'utf8'}).trim()!=='go1.26.11')throw Error('Use qualified Go 1.26.11.');
 const temporaryParent=path.resolve(os.tmpdir());
 const temporary=path.resolve(fs.mkdtempSync(path.join(temporaryParent,'pluto-notice-source-')));
 if(path.dirname(temporary)!==temporaryParent||!path.basename(temporary).startsWith('pluto-notice-source-'))throw Error('Temporary notice build target is outside its explicitly owned directory.');

@@ -58,7 +58,7 @@ existing updater for the compatible bridge and retain configuration/state.
 
 Release builds refuse stale embedded bytes or inventory. After an explicitly
 reviewed dependency/notice update, run `node scripts/regenerate-runtime-notices.mjs`
-with qualified Go 1.26.10 to regenerate only the source archive from actual CGO0
+with qualified Go 1.26.11 to regenerate only the source archive from actual CGO0
 amd64/arm64 builds. Review its diff and dependency license coverage before signing;
 normal release builds never silently regenerate it. All four upstream notice
 files remain complete and byte-identical, including entries beyond current runtime.

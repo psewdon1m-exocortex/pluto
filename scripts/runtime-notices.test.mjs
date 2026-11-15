@@ -19,7 +19,7 @@ test('schema 2 and compatible schema 1 bind notices and compiled post-boundary c
   const keys=generateKeyPairSync('rsa',{modulusLength:3072}),key=keys.publicKey.export({type:'spki',format:'pem'}),sha=b=>createHash('sha256').update(b).digest('hex');
   const identity={version:'0.1.5',revision:'a'.repeat(40),repository:'https://github.com/example/pluto'},archive=buildNotices(root,modules);
   const item={url:identity.repository+'/releases/download/pluto-v'+identity.version+'/'+noticeAsset,size:archive.length,sha256:sha(archive)};
-  const base={schema:2,version:identity.version,sourceRevision:identity.revision,toolchain:'go1.26.10',artifacts:Object.fromEntries(['amd64','arm64'].map(arch=>['linux-'+arch,{url:identity.repository+'/releases/download/pluto-v'+identity.version+'/pluto-linux-'+arch,size:1,sha256:'a'.repeat(64)}])),runtimeNotices:{format:noticeFormat,artifact:item}};
+  const base={schema:2,version:identity.version,sourceRevision:identity.revision,toolchain:'go1.26.11',artifacts:Object.fromEntries(['amd64','arm64'].map(arch=>['linux-'+arch,{url:identity.repository+'/releases/download/pluto-v'+identity.version+'/pluto-linux-'+arch,size:1,sha256:'a'.repeat(64)}])),runtimeNotices:{format:noticeFormat,artifact:item}};
   base.runtimeContract=buildRuntimeContract(item);
   const verify=manifest=>{const raw=Buffer.from(JSON.stringify(manifest)),envelope=Buffer.from(JSON.stringify({schema:'exocortex.release-signature.v1',algorithm:'RSA-PSS-SHA256',key_id:sha(keys.publicKey.export({type:'spki',format:'der'})),signature:sign('sha256',raw,{key:keys.privateKey,padding:constants.RSA_PKCS1_PSS_PADDING,saltLength:32}).toString('base64')}));return verifyManifest(raw,envelope,key,identity);};
   assert.equal(verify(base).schema,2);verifyBytes(archive,item);

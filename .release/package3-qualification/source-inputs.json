@@ -2,9 +2,9 @@
   "schema": "exocortex.package3.frozen-source.v1",
   "component": "pluto",
   "version": "0.1.5",
-  "baseGitCommit": "995db785784966c344b7cdc2e2819ef8e701545c",
-  "scope": "§8 qualified kernel lifecycle reaper/consumer CI integration and documentation; two original canaries/model7 negatives, fullCI pending",
-  "sourceSetSHA256": "701e3317a8c7bc6905a47ca5df07f43d88b196484bae9a9e8c0dc48f49d92d53",
+  "baseGitCommit": "28b114b26754f43fd2cdd95d71e5cd5fdfa1c1a2",
+  "scope": "Package3 current Go1.26.11 security toolchain correction before genuine notices regeneration; not signed/qualified yet",
+  "sourceSetSHA256": "b73e6bfa8600e5b80232bc47a2cd701bb261fdeea4dbbf64465599731879f914",
   "files": [
     {
       "path": ".github/workflows/package3-qualification.yml",
@@ -16,15 +16,15 @@
     {
       "path": ".github/workflows/release.yml",
       "bytes": 10804,
-      "sha256": "9616913e11384fb1286f17fecefc6b4525dcd8b38c6bcedbe9f69c372e648a84",
-      "canonical_sha256": "9616913e11384fb1286f17fecefc6b4525dcd8b38c6bcedbe9f69c372e648a84",
+      "sha256": "d76475fc175a9cf035d2759ec8de439196affe6354894f0fae1cffec9649d525",
+      "canonical_sha256": "d76475fc175a9cf035d2759ec8de439196affe6354894f0fae1cffec9649d525",
       "line_endings": "LF"
     },
     {
       "path": ".github/workflows/verify.yml",
       "bytes": 3774,
-      "sha256": "be8a7218a6b035cecb34857963a39b66e6837873a0ab09d6ab5a70c063adc84c",
-      "canonical_sha256": "be8a7218a6b035cecb34857963a39b66e6837873a0ab09d6ab5a70c063adc84c",
+      "sha256": "8f708f651295d32985379cf1fec64ab139cf5e61c5bb9b223dea8969c8e67e4b",
+      "canonical_sha256": "8f708f651295d32985379cf1fec64ab139cf5e61c5bb9b223dea8969c8e67e4b",
       "line_endings": "LF"
     },
     {
@@ -198,8 +198,8 @@
     {
       "path": "README.md",
       "bytes": 23511,
-      "sha256": "4b20e3a9ef7137dfb1a3323bb71d8294a180e9cca7b67dbe18b428cb663b1531",
-      "canonical_sha256": "d971202f09cb4e349f4130547a3453abf397c4d38b7109d0bd7826aa2ccef35b",
+      "sha256": "b6f93411696467d353b28b324570385e4959aebdab71fd5b10873e7279029ff1",
+      "canonical_sha256": "064ab3e4e36ed47e3c8948f94ec21613721220d0773aa790ab3bbaeee0d7e4a3",
       "line_endings": "MIXED",
       "crlf_indices": [
         0,
@@ -334,8 +334,8 @@
     {
       "path": "go.mod",
       "bytes": 558,
-      "sha256": "92409a5cd667968e97e6895b1f8d2f28f14cf9653d8c1740eeeea513f4aff67d",
-      "canonical_sha256": "92409a5cd667968e97e6895b1f8d2f28f14cf9653d8c1740eeeea513f4aff67d",
+      "sha256": "030b07fb990b04b93de8e17219ae5571ad67f55a2df217119ac68da38fc8defc",
+      "canonical_sha256": "030b07fb990b04b93de8e17219ae5571ad67f55a2df217119ac68da38fc8defc",
       "line_endings": "LF"
     },
     {
@@ -747,8 +747,8 @@
     {
       "path": "internal/pluto/runtime_contract.go",
       "bytes": 9961,
-      "sha256": "1b5d106889bf02ad1a4d61fbbd22243d5e34facac48d21e51d6a78b91b21c306",
-      "canonical_sha256": "1b5d106889bf02ad1a4d61fbbd22243d5e34facac48d21e51d6a78b91b21c306",
+      "sha256": "3ff8857655764ddef84b5bb993044e93227cff235d920930c2df6b3c59672c52",
+      "canonical_sha256": "3ff8857655764ddef84b5bb993044e93227cff235d920930c2df6b3c59672c52",
       "line_endings": "LF"
     },
     {
@@ -2364,8 +2364,8 @@
     {
       "path": "packaging/sqlite-v1.60.1/README.md",
       "bytes": 4066,
-      "sha256": "0ce23cd55473be9190e7033f42bb7feec755cadfc751efccb24f32638bd1d748",
-      "canonical_sha256": "0ce23cd55473be9190e7033f42bb7feec755cadfc751efccb24f32638bd1d748",
+      "sha256": "cef75b955d04b312dbd36762329052dd55ca8e422ba58deb819b015aecb1f209",
+      "canonical_sha256": "cef75b955d04b312dbd36762329052dd55ca8e422ba58deb819b015aecb1f209",
       "line_endings": "LF"
     },
     {
@@ -2392,8 +2392,8 @@
     {
       "path": "scripts/bootstrap-contract.test.mjs",
       "bytes": 5173,
-      "sha256": "a7fcc4f24697863512b241b2dd9a75d4af14cb18c8cc1586bc81e2f40f074bc7",
-      "canonical_sha256": "a7fcc4f24697863512b241b2dd9a75d4af14cb18c8cc1586bc81e2f40f074bc7",
+      "sha256": "d777f1eb756b82fd0bb89f7b1af80177f97ae910cac1e80139bf8ce485579a3a",
+      "canonical_sha256": "d777f1eb756b82fd0bb89f7b1af80177f97ae910cac1e80139bf8ce485579a3a",
       "line_endings": "LF"
     },
     {
@@ -2406,15 +2406,15 @@
     {
       "path": "scripts/bootstrap.test.mjs",
       "bytes": 6169,
-      "sha256": "ea31b10ff9055e6dcdaeb4eaafc17ebd8f9bacd1ec0ee8bea1841b79201e4b73",
-      "canonical_sha256": "ea31b10ff9055e6dcdaeb4eaafc17ebd8f9bacd1ec0ee8bea1841b79201e4b73",
+      "sha256": "7790bfc486969788283564455efc482a6bad0488059295461379ac3c6b3cccf4",
+      "canonical_sha256": "7790bfc486969788283564455efc482a6bad0488059295461379ac3c6b3cccf4",
       "line_endings": "LF"
     },
     {
       "path": "scripts/build-release.mjs",
       "bytes": 5444,
-      "sha256": "734f0f435c50d417c8f06fb0079389fafcb1a2d0e1321e49fe9c001511991631",
-      "canonical_sha256": "734f0f435c50d417c8f06fb0079389fafcb1a2d0e1321e49fe9c001511991631",
+      "sha256": "84aa4b55dd1af91ce96406956cd05361689cd80c03eb33339cfbb2bd00ebf570",
+      "canonical_sha256": "84aa4b55dd1af91ce96406956cd05361689cd80c03eb33339cfbb2bd00ebf570",
       "line_endings": "LF"
     },
     {
@@ -2455,8 +2455,8 @@
     {
       "path": "scripts/native-fixture/Dockerfile.ci",
       "bytes": 274,
-      "sha256": "15745dd53d92f6838de1181d66edb99229f357efe213d2708458b21a97a44ca7",
-      "canonical_sha256": "15745dd53d92f6838de1181d66edb99229f357efe213d2708458b21a97a44ca7",
+      "sha256": "69b40bf7e78eecbf164ab3b38e9da786b8cd9230afdb9cb39335dca15ed4f65b",
+      "canonical_sha256": "69b40bf7e78eecbf164ab3b38e9da786b8cd9230afdb9cb39335dca15ed4f65b",
       "line_endings": "LF"
     },
     {
@@ -3406,8 +3406,8 @@
     {
       "path": "scripts/prepare-c01-ci.sh",
       "bytes": 4410,
-      "sha256": "5266dc37d3a882bf16d6108af138a9c27e94b5052b46d8e69e9c1e45ef74f885",
-      "canonical_sha256": "5266dc37d3a882bf16d6108af138a9c27e94b5052b46d8e69e9c1e45ef74f885",
+      "sha256": "b715aa16d776e4f7338923de7928dc160c9ae1a49f2b7a688423f3a71dd6da94",
+      "canonical_sha256": "b715aa16d776e4f7338923de7928dc160c9ae1a49f2b7a688423f3a71dd6da94",
       "line_endings": "LF"
     },
     {
@@ -3434,8 +3434,8 @@
     {
       "path": "scripts/regenerate-runtime-notices.mjs",
       "bytes": 1933,
-      "sha256": "954cfc38fbe1e92bf49792d81c4e3598aeae9a62b7eb62addd05b053875d715c",
-      "canonical_sha256": "954cfc38fbe1e92bf49792d81c4e3598aeae9a62b7eb62addd05b053875d715c",
+      "sha256": "0f658ec94d81c0ca2254a321905df40b575dcde6b8cf693b98976cb42d44d1cc",
+      "canonical_sha256": "0f658ec94d81c0ca2254a321905df40b575dcde6b8cf693b98976cb42d44d1cc",
       "line_endings": "LF"
     },
     {
@@ -3497,15 +3497,15 @@
     {
       "path": "scripts/runtime-contract.mjs",
       "bytes": 4563,
-      "sha256": "0491094b58a67641e2b37a3986628bd432c4405c58ab7388e1c00645274cdbbd",
-      "canonical_sha256": "0491094b58a67641e2b37a3986628bd432c4405c58ab7388e1c00645274cdbbd",
+      "sha256": "fa799b559f8ff67121c991a5a7d727019700d17f430dfdb204918776ff48993f",
+      "canonical_sha256": "fa799b559f8ff67121c991a5a7d727019700d17f430dfdb204918776ff48993f",
       "line_endings": "LF"
     },
     {
       "path": "scripts/runtime-contract.test.mjs",
-      "bytes": 7650,
-      "sha256": "20d8e266fc6b4277456bbc15f0f45afd3d746cf786b328d2293a40abf0e9984a",
-      "canonical_sha256": "20d8e266fc6b4277456bbc15f0f45afd3d746cf786b328d2293a40abf0e9984a",
+      "bytes": 7677,
+      "sha256": "00ee2d080677166b0c3272ea58525d102ba1c7fb6d870693866d8304238d3b85",
+      "canonical_sha256": "00ee2d080677166b0c3272ea58525d102ba1c7fb6d870693866d8304238d3b85",
       "line_endings": "LF"
     },
     {
@@ -3518,8 +3518,8 @@
     {
       "path": "scripts/runtime-notices.test.mjs",
       "bytes": 5989,
-      "sha256": "a841097c47dbb4b718672b1e2112760bfb95f3b1969b87cb601a5a0fe1190bec",
-      "canonical_sha256": "a841097c47dbb4b718672b1e2112760bfb95f3b1969b87cb601a5a0fe1190bec",
+      "sha256": "8a1d6a82410b773d64c5e5ba82098fe47c4fc4c5749564239a9a32d084ed4d51",
+      "canonical_sha256": "8a1d6a82410b773d64c5e5ba82098fe47c4fc4c5749564239a9a32d084ed4d51",
       "line_endings": "LF"
     },
     {
@@ -3574,8 +3574,8 @@
     {
       "path": "scripts/verify-release.test.mjs",
       "bytes": 10254,
-      "sha256": "69430d6cdb074d9f1f5b4f2a3001df95ca8add97482c05ae4fa14f1771b14ca8",
-      "canonical_sha256": "69430d6cdb074d9f1f5b4f2a3001df95ca8add97482c05ae4fa14f1771b14ca8",
+      "sha256": "e0d676c30b76bb87becfc8c2178b1ce1b1e880245b8ac68895f2ceb0a530b8fb",
+      "canonical_sha256": "e0d676c30b76bb87becfc8c2178b1ce1b1e880245b8ac68895f2ceb0a530b8fb",
       "line_endings": "LF"
     },
     {

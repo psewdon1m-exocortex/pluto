@@ -4,7 +4,7 @@ import {noticeFormat,noticeMaximum} from './runtime-notices.mjs';
 
 // First new SQLite-bearing release. Published 0.1.4 is a stdlib-only legacy CLI.
 export const contractRequiredSince='0.1.5';
-export const qualifiedToolchain='go1.26.10';
+export const qualifiedToolchain='go1.26.11';
 export const contractSchema='pluto-runtime-contract.v1';
 export const contractPolicy='sqlite-runtime-notices.v1';
 export const canonicalVersion=/^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/;

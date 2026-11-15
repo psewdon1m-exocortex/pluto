@@ -31,7 +31,7 @@ test('new bootstrap rejects stripped contract and bounded invalid probes before 
       if(variant==='oversized-archive')archiveCommand='head -c 2097153 /dev/zero';
       if(variant==='archive-deadline')archiveCommand='sleep 30';
       const binary=Buffer.from('#!/bin/sh\ncase "$1" in --version) '+versionCommand+';; licenses) '+archiveCommand+';; esac\n');
-      const manifest={schema:1,version,sourceRevision:'a'.repeat(40),toolchain:'go1.26.10',artifacts:Object.fromEntries(['amd64','arm64'].map(arch=>['linux-'+arch,{url:repository+'/releases/download/pluto-v'+version+'/pluto-linux-'+arch,size:binary.length,sha256:sha(binary)}])),runtimeNotices:{format:noticeFormat,artifact:noticeItem},runtimeContract:buildRuntimeContract(noticeItem)};
+      const manifest={schema:1,version,sourceRevision:'a'.repeat(40),toolchain:'go1.26.11',artifacts:Object.fromEntries(['amd64','arm64'].map(arch=>['linux-'+arch,{url:repository+'/releases/download/pluto-v'+version+'/pluto-linux-'+arch,size:binary.length,sha256:sha(binary)}])),runtimeNotices:{format:noticeFormat,artifact:noticeItem},runtimeContract:buildRuntimeContract(noticeItem)};
       if(variant==='missing-contract'){delete manifest.runtimeContract;delete manifest.runtimeNotices;}
       if(variant==='altered-policy')manifest.runtimeContract.policy='optional';
       let raw=Buffer.from(JSON.stringify(manifest));if(variant==='duplicate-key')raw=Buffer.from('{"version":"0.1.3",'+raw.toString().slice(1));

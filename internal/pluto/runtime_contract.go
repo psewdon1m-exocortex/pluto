@@ -193,7 +193,7 @@ func verifyCandidateRuntime(binary []byte, r Release, files map[string][]byte, a
 		}
 		return nil
 	}
-	if !linkedSQLite || info.GoVersion != "go1.26.10" || files == nil {
+	if !linkedSQLite || info.GoVersion != "go1.26.11" || files == nil {
 		return errors.New("release runtime build or notice inventory is missing")
 	}
 	settings := map[string]string{}
