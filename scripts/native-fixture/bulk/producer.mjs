@@ -39,7 +39,7 @@ const labels=['--label','exocortex.ci.scope='+spec.id,'--label','exocortex.ci.ca
 const common=['--pids-limit','128','--security-opt','no-new-privileges','--cap-drop','ALL'];
 const bind=(file,target,mode='ro')=>file+':'+target+':'+mode;
 const state=(n)=>owner.checked('container',n).observed;
-const report={schema_version:1,at:new Date().toISOString(),scope:'§3.1.6/§6.4–5 original native bulk32/Tier8 lostACK16 with genuine full current PG/SFTP/profile/authority backuprestore and exact original native wait/readback',status:'FAIL',owner:owner.manifestPath};
+const report={schema_version:1,at:new Date().toISOString(),scope:'Â§3.1.6/Â§6.4â€“5 original native bulk32/Tier8 lostACK16 with genuine full current PG/SFTP/profile/authority backuprestore and exact original native wait/readback',status:'FAIL',owner:owner.manifestPath};
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 let readyMarker, apiStop, started=false, testStarted=false, testFinished=false, goLog, apiLog;
 async function until(limit,probe,interval=200){
@@ -206,7 +206,7 @@ try{
     '-v',bind(spec.pins.sharedBackend.path,'/workspace/apps/api/src/completion-shared-backend.fixture.ts'),'-v',bind(spec.pins.adoptionFixture.path,'/workspace/apps/api/src/completion-adoption.fixture.ts'),'-v',bind(spec.pins.resumeFixture.path,'/workspace/apps/api/src/completion-resume.fixture.ts'),
     '-e','QUALITY_PG_ID='+pc.Id,'-e','QUALITY_INSPECT_NONCE='+nonce,'-e','PLUTO_BULK_API_SHA='+spec.pins.controlOverlay.sha256,
     '-e','STAGE3_CHAT_A_FIXTURE=/run/saturn-pg.private.json','-e','STAGE3_CHAT_A_EVIDENCE=/fixture-out/stage3',
-    '-e','COMPLETION_EVIDENCE=/completion','-e','ENDURANCE_SERVER_TIMEOUT_MS=4500000','-e','BULK_CURRENT_MIGRATION_CUTOFF=126','-e','BULK_CHECKPOINT_TOKEN_FILE=/run/checkpoint-token','-v',bind(checkpointToken,'/run/checkpoint-token'),'-v',bind(spec.pins.checkpointTS.path,'/workspace/apps/api/src/completion-bulk-checkpoint.fixture.ts'),'-e','ENDURANCE_TIER=8','-v',bind(shim,'/input'),
+    '-e','COMPLETION_EVIDENCE=/completion','-e','ENDURANCE_SERVER_TIMEOUT_MS=4500000','-e','BULK_CURRENT_MIGRATION_CUTOFF=131','-e','BULK_CHECKPOINT_TOKEN_FILE=/run/checkpoint-token','-v',bind(checkpointToken,'/run/checkpoint-token'),'-v',bind(spec.pins.checkpointTS.path,'/workspace/apps/api/src/completion-bulk-checkpoint.fixture.ts'),'-e','ENDURANCE_TIER=8','-v',bind(shim,'/input'),
     '-v',bind(inspection,'/inspection','rw'),'-v',bind(controls,'/completion','rw'),'-v',bind(fixtures,'/fixture-out','rw'),
     '-v',bind(fixture,'/run/saturn-pg.private.json'),'-v',bind(spec.loopbackOverlay[0].path,'/workspace/apps/api/src/stage3-chat-a.fixture.ts'),
     '-v',bind(spec.loopbackOverlay[1].path,'/workspace/apps/api/src/docker-container.fixture.ts'),
@@ -255,7 +255,7 @@ try{
   const authorityProvenance=[];
   async function copyInput(source,target){const info=await fs.lstat(source);assert(!info.isSymbolicLink());if(info.isDirectory()){await fs.mkdir(target,{mode:0o700});for(const leaf of (await fs.readdir(source)).sort())await copyInput(path.join(source,leaf),path.join(target,leaf));}else{assert(info.isFile()&&info.size<=1048576);const raw=await fs.readFile(source);await save(target,raw);assert.equal(sha(await fs.readFile(source)),sha(raw));authorityProvenance.push({source,target,bytes:raw.length,sha256:sha(raw)});}}
   await copyInput(ssh,path.join(authorityInput,'ssh'));await copyInput(secrets,path.join(authorityInput,'sftp-secrets'));await copyInput(secret,path.join(authorityInput,'postgres-password'));await copyInput(fixture,path.join(authorityInput,'pg.private.json'));await copyInput(config,path.join(authorityInput,'clients.private.json'));await copyInput(checkpointToken,path.join(authorityInput,'checkpoint-token'));
-  const migrations=await read(spec.pins.migrations.path);assert.equal(migrations.upMigrations,117);assert.equal(migrations.cutoff,126);const migrationNames=migrations.files.filter(x=>x.name.endsWith('.up.sql')).map(x=>x.name.replace(/\.up\.sql$/,'')).sort();
+  const migrations=await read(spec.pins.migrations.path);assert.equal(migrations.upMigrations,122);assert.equal(migrations.cutoff,131);const migrationNames=migrations.files.filter(x=>x.name.endsWith('.up.sql')).map(x=>x.name.replace(/\.up\.sql$/,'')).sort();
   let bridge,handled=false,stopped;const end=Date.now()+3900000;
   for(;;){
     if(!handled&&await fs.stat(path.join(controls,'bulk-checkpoint-request.json')).then(i=>i.isFile(),()=>false)){

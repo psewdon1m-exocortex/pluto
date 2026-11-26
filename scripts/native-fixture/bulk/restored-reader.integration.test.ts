@@ -23,7 +23,7 @@ it("native bulk checkpoint reads genuine restored profile SQL and SFTP",async()=
  assert(/^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(spec.requestID));
  const endpoint=new URL(spec.databaseUrl);assert.equal(endpoint.hostname,"127.0.0.1");assert.equal(endpoint.port,"5432");
  assert.equal(spec.clients.length,2);assert.deepEqual(spec.clients.map(c=>c.kind),["windows","pluto"]);
- assert.equal(new Set(spec.clients.map(c=>c.databaseName)).size,2);assert.equal(spec.migrationNames.length,117);
+ assert.equal(new Set(spec.clients.map(c=>c.databaseName)).size,2);assert.equal(spec.migrationNames.length,122);
  assert(spec.nativeBackupDirectory.startsWith("/checkpoint/native/")&&path.posix.normalize(spec.nativeBackupDirectory)===spec.nativeBackupDirectory);
  const beforeFile=path.posix.join(spec.nativeBackupDirectory,"native-before.json"),beforeRaw=await fs.readFile(beforeFile);
  assert.equal(hash(beforeRaw),spec.nativeBeforeSHA256);

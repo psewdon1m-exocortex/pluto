@@ -523,14 +523,14 @@ class OrdinaryCIReportTests(unittest.TestCase):
                        versions=['old'+str(i),'new0'] if i==0 else [f['Version']]) for i,f in enumerate(final)]
         product=dict(status='PASS_FINAL_SQL_IDS_VERSIONS_AND_ALL_SFTP_BYTES',requestID=request,
                      canaryRead=True,clonedBackendWriterStarted=False,files=observed,
-                     databases=[dict(kind=k,migrations=117,backendState='STOPPED') for k in ('windows','pluto')])
+                     databases=[dict(kind=k,migrations=122,backendState='STOPPED') for k in ('windows','pluto')])
         records={
             'backend-inputs.json':dict(schema='pluto.bulk-ci-backend-inputs.v1',policySHA256=digest(policy_raw),
                                       files=cohort,images={k:images[k] for k in ('saturn','postgres','sftp')},
                                       sourceCohortSHA256=cohort_sha),
             'ci-source-inputs.json':dict(schema='pluto.bulk-ci-script-source.v1',inputs=reporter.bulk_ci_script_inputs(project)),
-            'backend-image.json':dict(schema='pluto.bulk-ci-backend-image.v1',status='PASS_EXACT_602_IMAGE_FILES',
-                                      files=602,image=images['saturn'],sourceCohortSHA256=cohort_sha,policySHA256=digest(policy_raw)),
+            'backend-image.json':dict(schema='pluto.bulk-ci-backend-image.v1',status='PASS_EXACT_612_IMAGE_FILES',
+                                      files=612,image=images['saturn'],sourceCohortSHA256=cohort_sha,policySHA256=digest(policy_raw)),
             'checkpoint-graph.json':graph,
             'checkpoint-complete.json':dict(schema='pluto.native-bulk-checkpoint-proof.v1',status='PASS_GENUINE_FULL_GRAPH_RESTORE',
                                            requestID=request,graphSHA256=digest(encode(graph)),nativeArchiveSHA256='f'*64,canaryBytes=1,
@@ -576,7 +576,8 @@ class OrdinaryCIReportTests(unittest.TestCase):
 
     def test_bulk_rejects_semantic_restore_fault_and_final_state_contradictions(self):
         mutations=[
-            ('backend-image.json',lambda v:v.update(files=601)),
+            ('backend-image.json',lambda v:v.update(files=602,status='PASS_EXACT_602_IMAGE_FILES')),
+            ('backend-image.json',lambda v:v.update(files=611)),
             ('checkpoint-complete.json',lambda v:v.update(originalBackendResumed=False)),
             ('checkpoint-graph.json',lambda v:v['components']['pg']['restore'].update(independentInodes=False)),
             ('native-final.json',lambda v:v.update(reviewedCrashWaits=[])),
@@ -593,6 +594,17 @@ class OrdinaryCIReportTests(unittest.TestCase):
                 project,shard,_=self.native_receipt_fixture(directory,reporter.BULK_TEST)
                 self.mutate_bulk_record(shard,name,mutate)
                 with self.assertRaises(ValueError):reporter.native_shard(shard,project,reporter.BULK_TEST)
+
+    def test_bulk_rejects_legacy_or_incomplete_final_migration_set(self):
+        for migrations in (117,121,123):
+            with self.subTest(migrations=migrations),tempfile.TemporaryDirectory() as directory:
+                project,shard,_=self.native_receipt_fixture(directory,reporter.BULK_TEST)
+                self.mutate_bulk_record(shard,'final-product.json',
+                    lambda value: [row.update(migrations=migrations) for row in value['databases']])
+                product=json.loads((shard/'final-product.json').read_bytes())
+                self.mutate_bulk_record(shard,'final-graph.json',lambda value:value.update(product=product))
+                with self.assertRaisesRegex(ValueError,'STOPPED on122migrations'):
+                    reporter.native_shard(shard,project,reporter.BULK_TEST)
 
     def test_bulk_rejects_current_helper_change_and_full_green_claim(self):
         for mutation in ('helper','green','container'):

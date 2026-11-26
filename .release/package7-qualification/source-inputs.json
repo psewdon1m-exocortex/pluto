@@ -2,10 +2,10 @@
   "schema": "exocortex.package3.frozen-source.v1",
   "component": "Pluto",
   "version": "0.1.5",
-  "baseGitCommit": "ec54915b7485f3ef6f70bcd9d9a07ac559958d56",
-  "scope": "Package7 exact shared-cohort admission for CI observer model; no Go runtime, dependencies, protocol or native receipt change",
-  "sourceSetSHA256": "c70acf4b88f7210ce6956edc6033512772e39fb214fed8d8ef84961be9fbfbb8",
-  "sourceSetHashEncoding": "UTF-8 sorted path NUL rawSHA256 NUL decimalBytes LF",
+  "baseGitCommit": "aa6097f8cecd2290f8350dd76d6ec2f446567096",
+  "scope": "Package7 exact current Saturn612-files/122-migrations/cutoff131 CI producer AND strict receipt consumers; no Go runtime changes",
+  "sourceSetSHA256": "8fceb6189ce40ad34e8b26610cfbf9bd190e13f6d4c4b8c5219334fd76805ff7",
+  "sourceSetHashEncoding": "SHA256 of UTF8 JSON.stringify(files) in sorted path order",
   "files": [
     {
       "path": ".github/workflows/package3-qualification.yml",
@@ -2442,8 +2442,8 @@
     {
       "path": "scripts/check-go-ci.py",
       "bytes": 56136,
-      "sha256": "b0117436a56ed317db87fec980376841887e747071db01dba147b7f0ad361b5c",
-      "canonical_sha256": "b0117436a56ed317db87fec980376841887e747071db01dba147b7f0ad361b5c",
+      "sha256": "ad776dd716d7a6790d58f6682830d8225f65187a8bde0554ba83f14c66570f1e",
+      "canonical_sha256": "ad776dd716d7a6790d58f6682830d8225f65187a8bde0554ba83f14c66570f1e",
       "line_endings": "LF"
     },
     {
@@ -2491,15 +2491,15 @@
     {
       "path": "scripts/native-fixture/api/finish.mjs",
       "bytes": 5014,
-      "sha256": "f1f7913423ce2552ef0f2ba0dff44add643a6a4bc6fdec38a3c1864d9e8fe489",
-      "canonical_sha256": "f1f7913423ce2552ef0f2ba0dff44add643a6a4bc6fdec38a3c1864d9e8fe489",
+      "sha256": "cc2ce3a1014d4a9849c1a044f181ade382fdb7a94aa1e66a268d1c240826bafe",
+      "canonical_sha256": "cc2ce3a1014d4a9849c1a044f181ade382fdb7a94aa1e66a268d1c240826bafe",
       "line_endings": "LF"
     },
     {
       "path": "scripts/native-fixture/api/producer.mjs",
       "bytes": 24630,
-      "sha256": "f3aa4756ef2970db0f2840d16cb899823f39269eb6966b7778c7d55ddcbac86c",
-      "canonical_sha256": "f3aa4756ef2970db0f2840d16cb899823f39269eb6966b7778c7d55ddcbac86c",
+      "sha256": "4ba66785542acba0e110e9151dc91aca4842172308e72bde0950c9310822393b",
+      "canonical_sha256": "4ba66785542acba0e110e9151dc91aca4842172308e72bde0950c9310822393b",
       "line_endings": "LF"
     },
     {
@@ -2518,63 +2518,10 @@
     },
     {
       "path": "scripts/native-fixture/bulk/adoption.fixture.ts",
-      "bytes": 7513,
-      "sha256": "4ffbd37eebb23dad4ea36d2ffa33990cad4ff3858e0968557e5433aeb950412a",
+      "bytes": 7462,
+      "sha256": "bda1edc30d33309bae331b3cef0a90ecd1df9284cc78d1826a597af225127922",
       "canonical_sha256": "bda1edc30d33309bae331b3cef0a90ecd1df9284cc78d1826a597af225127922",
-      "line_endings": "MIXED",
-      "crlf_indices": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        19,
-        21,
-        22,
-        23,
-        24,
-        25,
-        26,
-        27,
-        28,
-        29,
-        30,
-        31,
-        32,
-        33,
-        34,
-        35,
-        36,
-        37,
-        38,
-        39,
-        40,
-        41,
-        42,
-        43,
-        44,
-        45,
-        46,
-        47,
-        49,
-        50,
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59
-      ]
+      "line_endings": "LF"
     },
     {
       "path": "scripts/native-fixture/bulk/api.integration.test.ts",
@@ -2860,9 +2807,9 @@
     },
     {
       "path": "scripts/native-fixture/bulk/backend-policy.json",
-      "bytes": 33959,
-      "sha256": "bfa96fe64b09592197eda7098f0908c956816492f5d429a32ad274c9f6eb96c8",
-      "canonical_sha256": "bfa96fe64b09592197eda7098f0908c956816492f5d429a32ad274c9f6eb96c8",
+      "bytes": 34747,
+      "sha256": "98cdd0a29009cf1bf400561038dd918e89e7de4491c7714d429007712c626c21",
+      "canonical_sha256": "98cdd0a29009cf1bf400561038dd918e89e7de4491c7714d429007712c626c21",
       "line_endings": "LF"
     },
     {
@@ -2875,8 +2822,8 @@
     {
       "path": "scripts/native-fixture/bulk/checkpoint-bridge.mjs",
       "bytes": 19269,
-      "sha256": "12fc4f3dd63d8040a81cd57c2a4da341f9cc52e281ce4323d34a2e7b57d196d5",
-      "canonical_sha256": "12fc4f3dd63d8040a81cd57c2a4da341f9cc52e281ce4323d34a2e7b57d196d5",
+      "sha256": "a0dd3836024cee4861a9d394fb7f85ecf12cef663ca0a592e6f82740d93265ca",
+      "canonical_sha256": "a0dd3836024cee4861a9d394fb7f85ecf12cef663ca0a592e6f82740d93265ca",
       "line_endings": "LF"
     },
     {
@@ -2924,8 +2871,8 @@
     {
       "path": "scripts/native-fixture/bulk/final-cold.mjs",
       "bytes": 14691,
-      "sha256": "b52d449c7b17416b504c902c8e3f98f26ebb7c34a3f68889d7f8850916147202",
-      "canonical_sha256": "b52d449c7b17416b504c902c8e3f98f26ebb7c34a3f68889d7f8850916147202",
+      "sha256": "ac543ad21e3dc343e960ae2d2736bbcb686871d9952ab9c2e0b8df3f38033a56",
+      "canonical_sha256": "ac543ad21e3dc343e960ae2d2736bbcb686871d9952ab9c2e0b8df3f38033a56",
       "line_endings": "LF"
     },
     {
@@ -2938,8 +2885,8 @@
     {
       "path": "scripts/native-fixture/bulk/final-reader.integration.test.ts",
       "bytes": 12077,
-      "sha256": "b8639dc599104bafc864f339baf188810745adfde52479dcbb4b9ed6755a70cd",
-      "canonical_sha256": "b8639dc599104bafc864f339baf188810745adfde52479dcbb4b9ed6755a70cd",
+      "sha256": "336f284bfccb00e94547660fc10eba13d8929577be1ca38c935410e5f09a0516",
+      "canonical_sha256": "336f284bfccb00e94547660fc10eba13d8929577be1ca38c935410e5f09a0516",
       "line_endings": "LF"
     },
     {
@@ -2993,24 +2940,24 @@
     },
     {
       "path": "scripts/native-fixture/bulk/producer.mjs",
-      "bytes": 26177,
-      "sha256": "76f718d4a7d760c43a2b7d1a27e7692e91ff8e5fab20044c8999ee929953f46c",
-      "canonical_sha256": "76f718d4a7d760c43a2b7d1a27e7692e91ff8e5fab20044c8999ee929953f46c",
+      "bytes": 26186,
+      "sha256": "719e105c6dfdbb6d5e3c93200ace2d3aee8e3f149c3baf75ea6032cefb622d63",
+      "canonical_sha256": "719e105c6dfdbb6d5e3c93200ace2d3aee8e3f149c3baf75ea6032cefb622d63",
       "line_endings": "LF"
     },
     {
       "path": "scripts/native-fixture/bulk/restored-reader.integration.test.ts",
       "bytes": 9078,
-      "sha256": "3bc7e6687421e564bfdee0fd65dc8c50d16b048622b8171c76ea229357807e15",
-      "canonical_sha256": "3bc7e6687421e564bfdee0fd65dc8c50d16b048622b8171c76ea229357807e15",
+      "sha256": "4e9453818f77450512a4beaa41855182c1e98d8ac8041f1ea4d40da8fcbb55e0",
+      "canonical_sha256": "4e9453818f77450512a4beaa41855182c1e98d8ac8041f1ea4d40da8fcbb55e0",
       "line_endings": "LF"
     },
     {
       "path": "scripts/native-fixture/bulk/resume.fixture.ts",
-      "bytes": 12901,
-      "sha256": "7c9d81e87f3e7b3a6695dac0e2bba8072359380c7d82078280658ba9439810bc",
+      "bytes": 12785,
+      "sha256": "e900a4ed671ac8fdfb7d47ac1adb6dd41abd9ddd894b9337f53474894c34ed47",
       "canonical_sha256": "e900a4ed671ac8fdfb7d47ac1adb6dd41abd9ddd894b9337f53474894c34ed47",
-      "line_endings": "CRLF"
+      "line_endings": "LF"
     },
     {
       "path": "scripts/native-fixture/bulk/root-control.py",
@@ -3260,8 +3207,8 @@
     {
       "path": "scripts/native-fixture/bulk/verify-backend.mjs",
       "bytes": 2334,
-      "sha256": "91c4667cfb11c739f9a0643049d8d02f40d6104c9e6aa67439649fa2cad36b9a",
-      "canonical_sha256": "91c4667cfb11c739f9a0643049d8d02f40d6104c9e6aa67439649fa2cad36b9a",
+      "sha256": "a1bdc3b3a5be3eeb73b19113a5db8f71a798578484bf66b86b2648cc8e3558d6",
+      "canonical_sha256": "a1bdc3b3a5be3eeb73b19113a5db8f71a798578484bf66b86b2648cc8e3558d6",
       "line_endings": "LF"
     },
     {
@@ -3463,15 +3410,15 @@
     {
       "path": "scripts/run-api-ci.mjs",
       "bytes": 14139,
-      "sha256": "a0e69c222973760371657688e11963321ff548b3789dc3c47b6b5f319ce00ae4",
-      "canonical_sha256": "a0e69c222973760371657688e11963321ff548b3789dc3c47b6b5f319ce00ae4",
+      "sha256": "97aa0ff9b9f73f50b528bce296e4db2240303ba4bb28c1564998a21faa2f99af",
+      "canonical_sha256": "97aa0ff9b9f73f50b528bce296e4db2240303ba4bb28c1564998a21faa2f99af",
       "line_endings": "LF"
     },
     {
       "path": "scripts/run-bulk-ci.mjs",
       "bytes": 13811,
-      "sha256": "0009952b07b8c8cd9e556b1f18149074718f133dc9a98fa1d7eb27297f041f6c",
-      "canonical_sha256": "0009952b07b8c8cd9e556b1f18149074718f133dc9a98fa1d7eb27297f041f6c",
+      "sha256": "dd9726ababe3385884252e226ab4ab32d14d9debe39034579711ab9b47e95c6d",
+      "canonical_sha256": "dd9726ababe3385884252e226ab4ab32d14d9debe39034579711ab9b47e95c6d",
       "line_endings": "LF"
     },
     {
@@ -3560,9 +3507,9 @@
     },
     {
       "path": "scripts/test-go-ci-report.py",
-      "bytes": 45078,
-      "sha256": "5d57eea6fe9559b1003fe1b3ab424939b00b2cf64ad839961c280e75f74dcb7b",
-      "canonical_sha256": "5d57eea6fe9559b1003fe1b3ab424939b00b2cf64ad839961c280e75f74dcb7b",
+      "bytes": 45997,
+      "sha256": "2a38162ff840c4409d7459fb73f64583c1ff2bc97c9ef99f28db878288a685b0",
+      "canonical_sha256": "2a38162ff840c4409d7459fb73f64583c1ff2bc97c9ef99f28db878288a685b0",
       "line_endings": "LF"
     },
     {

@@ -304,13 +304,13 @@ def bulk_ci_evidence(directory,project,actual,elf):
     backend=records['backend-inputs.json'];policyRaw=bounded_bytes(project/'scripts/native-fixture/bulk/backend-policy.json');policy=json.loads(policyRaw)
     cohort=backend.get('files',[])
     if (backend.get('schema')!='pluto.bulk-ci-backend-inputs.v1' or backend.get('policySHA256')!=hashlib.sha256(policyRaw).hexdigest() or
-        [f.get('path') for f in cohort]!=policy.get('files') or len(cohort)!=602 or backend.get('sourceCohortSHA256')!=proof.get('sourceCohortSHA256') or
+        [f.get('path') for f in cohort]!=policy.get('files') or len(cohort)!=612 or backend.get('sourceCohortSHA256')!=proof.get('sourceCohortSHA256') or
         hashlib.sha256(json.dumps(cohort,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()!=backend.get('sourceCohortSHA256')):
         raise ValueError('complete approved backend source cohort required')
     image=records['backend-image.json'];images=proof.get('images',{})
     if (set(images)!={'native','saturn','postgres','sftp'} or not all(isinstance(v,str) and re.fullmatch('sha256:[a-f0-9]{64}',v) for v in images.values()) or
         backend.get('images')!={k:images[k] for k in ('saturn','postgres','sftp')} or image.get('schema')!='pluto.bulk-ci-backend-image.v1' or
-        image.get('status')!='PASS_EXACT_602_IMAGE_FILES' or image.get('files')!=602 or image.get('image')!=images['saturn'] or
+        image.get('status')!='PASS_EXACT_612_IMAGE_FILES' or image.get('files')!=612 or image.get('image')!=images['saturn'] or
         image.get('sourceCohortSHA256')!=backend.get('sourceCohortSHA256') or image.get('policySHA256')!=backend.get('policySHA256')):
         raise ValueError('actual immutable backend image byte check required')
     containers=proof.get('containers',[])
@@ -376,8 +376,8 @@ def bulk_ci_evidence(directory,project,actual,elf):
             raise ValueError('exact final IDs/versions/physical SHA/bytes differ')
         if f['Path']!='example.md' and f!=old:raise ValueError('unchanged bulk file acquired a new version')
     dbs=product.get('databases',[])
-    if len(dbs)!=2 or {d.get('kind') for d in dbs}!={'windows','pluto'} or any(d.get('migrations')!=117 or d.get('backendState')!='STOPPED' for d in dbs):
-        raise ValueError('final original backend identities must be actually STOPPED on117migrations')
+    if len(dbs)!=2 or {d.get('kind') for d in dbs}!={'windows','pluto'} or any(d.get('migrations')!=122 or d.get('backendState')!='STOPPED' for d in dbs):
+        raise ValueError('final original backend identities must be actually STOPPED on122migrations')
     return dict(schema='pluto.bulk-ci-evidence.v1',requestID=checkpoint['requestID'],sourceFiles=32,plutoVersions=33,actualSIGKILL=crashes[0],fullOrdinaryCiGreen=False,sourceCohortSHA256=backend['sourceCohortSHA256'])
 
 
@@ -397,13 +397,13 @@ def api_ci_evidence(directory,project,case,actual,elf):
         proof.get('testBinarySHA256')!=elf or proof.get('actualGoWait')!=actual or proof.get('fullOrdinaryCiGreen') is not False or
         proof.get('containerClosure',{}).get('status')!='STOPPED_RETAINED' or proof.get('processCrashFaults')!=0 or proof.get('independentFullGraphRestoreClaimed') is not False):raise ValueError('actual closed same-case genuine API proof required')
     backend=bounded_json(directory/'backend-inputs.json');policyRaw=bounded_bytes(Path(project)/'scripts/native-fixture/bulk/backend-policy.json');policy=json.loads(policyRaw);cohort=backend.get('files',[])
-    if (backend.get('schema')!='pluto.bulk-ci-backend-inputs.v1' or len(cohort)!=602 or [row.get('path') for row in cohort]!=policy.get('files') or
+    if (backend.get('schema')!='pluto.bulk-ci-backend-inputs.v1' or len(cohort)!=612 or [row.get('path') for row in cohort]!=policy.get('files') or
         backend.get('policySHA256')!=hashlib.sha256(policyRaw).hexdigest() or backend.get('sourceCohortSHA256')!=proof.get('sourceCohortSHA256') or
-        hashlib.sha256(json.dumps(cohort,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()!=proof.get('sourceCohortSHA256')):raise ValueError('complete exact602 genuine backend input cohort required')
+        hashlib.sha256(json.dumps(cohort,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()!=proof.get('sourceCohortSHA256')):raise ValueError('complete exact612 genuine backend input cohort required')
     imageRaw=bounded_bytes(directory/'api-backend-image.json');image=json.loads(imageRaw);images=proof.get('images',{})
     if (set(images)!={'native','saturn','postgres','sftp'} or not all(re.fullmatch('sha256:[a-f0-9]{64}',v) for v in images.values()) or
         backend.get('images')!={k:images[k] for k in ('saturn','postgres','sftp')} or
-        image.get('schema')!='pluto.bulk-ci-backend-image.v1' or image.get('status')!='PASS_EXACT_602_IMAGE_FILES' or image.get('files')!=602 or image.get('image')!=images['saturn'] or
+        image.get('schema')!='pluto.bulk-ci-backend-image.v1' or image.get('status')!='PASS_EXACT_612_IMAGE_FILES' or image.get('files')!=612 or image.get('image')!=images['saturn'] or
         image.get('sourceCohortSHA256')!=proof.get('sourceCohortSHA256') or image.get('policySHA256')!=backend.get('policySHA256') or
         hashlib.sha256(imageRaw).hexdigest()!=proof.get('backendImageSHA256')):raise ValueError('actual backend image bytes do not match genuine API cohort')
     scripts=bounded_json(directory/'ci-source-inputs.json')
