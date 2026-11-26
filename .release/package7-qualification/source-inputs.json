@@ -2,9 +2,9 @@
   "schema": "exocortex.package3.frozen-source.v1",
   "component": "Pluto",
   "version": "0.1.5",
-  "baseGitCommit": "8484b95b1693a376da49e90ba01468db727d7def",
-  "scope": "Package7 real native streaming metadata completion; preserve frozen G11 source and receipt/source/CAS guards",
-  "sourceSetSHA256": "8e5fd1771f8fa4f35b57e473c611a4a046df29e18fd3bdfc842ec17e3722e79a",
+  "baseGitCommit": "ec54915b7485f3ef6f70bcd9d9a07ac559958d56",
+  "scope": "Package7 exact shared-cohort admission for CI observer model; no Go runtime, dependencies, protocol or native receipt change",
+  "sourceSetSHA256": "c70acf4b88f7210ce6956edc6033512772e39fb214fed8d8ef84961be9fbfbb8",
   "sourceSetHashEncoding": "UTF-8 sorted path NUL rawSHA256 NUL decimalBytes LF",
   "files": [
     {
@@ -3553,9 +3553,9 @@
     },
     {
       "path": "scripts/test-go-ci-dispatch.py",
-      "bytes": 13818,
-      "sha256": "84fc2bb2905c6f3fc1823ad239ec2c5cc9b2660b2428f3d869e4f90c24656ad2",
-      "canonical_sha256": "84fc2bb2905c6f3fc1823ad239ec2c5cc9b2660b2428f3d869e4f90c24656ad2",
+      "bytes": 15283,
+      "sha256": "bdaaa4723d25b19a22996cbfff1cfc80181f6fd11ea6b30c473176eba7a1ead4",
+      "canonical_sha256": "bdaaa4723d25b19a22996cbfff1cfc80181f6fd11ea6b30c473176eba7a1ead4",
       "line_endings": "LF"
     },
     {
@@ -3574,9 +3574,9 @@
     },
     {
       "path": "scripts/test-ordinary-process-ci.py",
-      "bytes": 7990,
-      "sha256": "da08001535cae256d78f37df9ab961c83816f2ceab59f2b0ee6ee6a5cced7a7e",
-      "canonical_sha256": "da08001535cae256d78f37df9ab961c83816f2ceab59f2b0ee6ee6a5cced7a7e",
+      "bytes": 8909,
+      "sha256": "740784316d9a647eb2e68ac90f356320687ec0b2e55d5cf45633b4be7e4291d7",
+      "canonical_sha256": "740784316d9a647eb2e68ac90f356320687ec0b2e55d5cf45633b4be7e4291d7",
       "line_endings": "LF"
     },
     {

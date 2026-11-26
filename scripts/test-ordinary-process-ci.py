@@ -64,6 +64,23 @@ print(json.dumps(dict(status='PASS_SCOPED_KERNEL_OBSERVER_MODEL_ONLY',cases=resu
 '''
 
 
+def declared_running_ids(raw):
+    try:
+        value = json.loads(raw)
+    except (TypeError, ValueError) as error:
+        raise ValueError('Explicit running container inventory must be JSON') from error
+    if not isinstance(value, list) or any(not isinstance(item, str) or not re.fullmatch(r'[a-f0-9]{64}', item) for item in value):
+        raise ValueError('Explicit running container inventory requires full lowercase Docker IDs')
+    if len(value) != len(set(value)):
+        raise ValueError('Explicit running container inventory contains duplicate IDs')
+    return sorted(value)
+
+
+def require_running_inventory(observed, declared):
+    if sorted(observed) != declared:
+        raise ValueError('Running workload differs from the explicit admission inventory')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--image', required=True)
@@ -71,6 +88,7 @@ def main():
     parser.add_argument('--docker', default=os.environ.get('PLUTO_GO_CI_DOCKER', 'docker'))
     parser.add_argument('--docker-host', default=os.environ.get('PLUTO_GO_CI_DOCKER_HOST') or os.environ.get('DOCKER_HOST') or 'unix:///var/run/docker.sock')
     args = parser.parse_args()
+    allowed = declared_running_ids(os.environ.get('PLUTO_GO_CI_C01_ALLOWED_RUNNING_IDS', '[]'))
     assert re.fullmatch('sha256:[a-f0-9]{64}', args.image)
     output = Path(args.output).resolve()
     output.mkdir(mode=0o700, parents=True, exist_ok=False)
@@ -90,7 +108,7 @@ def main():
         return process.stdout.decode().strip()
 
     running = sorted(docker('ps', '--no-trunc', '--format', '{{.ID}}').splitlines())
-    assert not running
+    require_running_inventory(running, allowed)
     image = json.loads(docker('image', 'inspect', args.image))[0]
     assert image['Id'] == args.image and image['Os'] == 'linux' and image['Architecture'] == 'amd64'
     name = 'pluto-observer-model-' + secrets.token_hex(8)
@@ -138,7 +156,7 @@ def main():
             raise AssertionError('receipt consumer accepted negative case: ' + name)
     result['consumerNegativeCasesRejected'] = rejected
     assert sorted(docker('ps', '--no-trunc', '--format', '{{.ID}}').splitlines()) == running
-    result.update(containerId=cid, actualContainerExit=wait, actualAttachExit=actual.returncode,
+    result.update(allowedRunningIds=allowed, containerId=cid, actualContainerExit=wait, actualAttachExit=actual.returncode,
                   workerSHA256=hashlib.sha256(worker.read_bytes()).hexdigest())
     (output / 'result.json').write_text(json.dumps(result, indent=2))
     print(json.dumps(dict(status=result['status'], productTestsExecuted=0, actualContainerExit=wait)))

@@ -218,4 +218,30 @@ class DispatchTests(unittest.TestCase):
         self.assertEqual(driver[driver.index('--docker-host')+1],env['PLUTO_GO_CI_DOCKER_HOST'])
 
 
+class OrdinaryObserverAdmissionTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        spec = importlib.util.spec_from_file_location('ordinary_observer_admission', Path(__file__).with_name('test-ordinary-process-ci.py'))
+        cls.observer = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.observer)
+
+    def test_default_exclusive_engine_contract(self):
+        self.assertEqual(self.observer.declared_running_ids('[]'), [])
+        self.observer.require_running_inventory([], [])
+        with self.assertRaises(ValueError):
+            self.observer.require_running_inventory(['a' * 64], [])
+
+    def test_explicit_full_ids_allow_only_the_exact_inventory(self):
+        expected = self.observer.declared_running_ids(json.dumps(['b' * 64, 'a' * 64]))
+        self.observer.require_running_inventory(['b' * 64, 'a' * 64], expected)
+        for observed in (['a' * 64], ['a' * 64, 'b' * 64, 'c' * 64], ['a' * 64, 'c' * 64]):
+            with self.subTest(observed=observed), self.assertRaises(ValueError):
+                self.observer.require_running_inventory(observed, expected)
+
+    def test_invalid_or_duplicate_inventory_is_refused(self):
+        for raw in ('broken', 'false', '{}', '[7]', '[null]', '[true]', '["short"]', json.dumps(['A' * 64]), json.dumps(['a' * 64, 'a' * 64])):
+            with self.subTest(raw=raw), self.assertRaises(ValueError):
+                self.observer.declared_running_ids(raw)
+
+
 if __name__=='__main__':unittest.main()
