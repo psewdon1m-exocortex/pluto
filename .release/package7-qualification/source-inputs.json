@@ -1,0 +1,3639 @@
+{
+  "schema": "exocortex.package3.frozen-source.v1",
+  "component": "Pluto",
+  "version": "0.1.5",
+  "baseGitCommit": "8484b95b1693a376da49e90ba01468db727d7def",
+  "scope": "Package7 real native streaming metadata completion; preserve frozen G11 source and receipt/source/CAS guards",
+  "sourceSetSHA256": "8e5fd1771f8fa4f35b57e473c611a4a046df29e18fd3bdfc842ec17e3722e79a",
+  "sourceSetHashEncoding": "UTF-8 sorted path NUL rawSHA256 NUL decimalBytes LF",
+  "files": [
+    {
+      "path": ".github/workflows/package3-qualification.yml",
+      "bytes": 692,
+      "sha256": "aa0b4045b6d49dfae9617266346280340b1965774e3b6d4c13c211db04fcf359",
+      "canonical_sha256": "aa0b4045b6d49dfae9617266346280340b1965774e3b6d4c13c211db04fcf359",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".github/workflows/package7-qualification.yml",
+      "bytes": 580,
+      "sha256": "08e146c92474125837dbf1eb459a861a41804bf8577240f64df118000a62c1b6",
+      "canonical_sha256": "08e146c92474125837dbf1eb459a861a41804bf8577240f64df118000a62c1b6",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "bytes": 10804,
+      "sha256": "d76475fc175a9cf035d2759ec8de439196affe6354894f0fae1cffec9649d525",
+      "canonical_sha256": "d76475fc175a9cf035d2759ec8de439196affe6354894f0fae1cffec9649d525",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".github/workflows/verify.yml",
+      "bytes": 3774,
+      "sha256": "8f708f651295d32985379cf1fec64ab139cf5e61c5bb9b223dea8969c8e67e4b",
+      "canonical_sha256": "8f708f651295d32985379cf1fec64ab139cf5e61c5bb9b223dea8969c8e67e4b",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 155,
+      "sha256": "74f130e44f7a1b244891de56245c6efcdbdbf0f22bf40bc9e952157cdb35907b",
+      "canonical_sha256": "74f130e44f7a1b244891de56245c6efcdbdbf0f22bf40bc9e952157cdb35907b",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_00_SYSTEM_UNIFICATION_SPECIFICATION.md",
+      "bytes": 28515,
+      "sha256": "8732e5aa53b8ecff08aff8fce52b0936d48e18d83d3518fb974b86339378131f",
+      "canonical_sha256": "8732e5aa53b8ecff08aff8fce52b0936d48e18d83d3518fb974b86339378131f",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_03_BACKUP_AND_RECOVERY.md",
+      "bytes": 24621,
+      "sha256": "d7a091731922b0b3b57869e0474c1a064666ffd2f02c83488fc519192bc07e2d",
+      "canonical_sha256": "d7a091731922b0b3b57869e0474c1a064666ffd2f02c83488fc519192bc07e2d",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_04_BOOTSTRAP_AND_DEPLOYMENT.md",
+      "bytes": 18429,
+      "sha256": "304495b64c75eec24dc255eb50bd2b952771dd1e2440bbae759231d13289fb4d",
+      "canonical_sha256": "304495b64c75eec24dc255eb50bd2b952771dd1e2440bbae759231d13289fb4d",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_05_CI_RELEASES_AND_LOCAL_UPDATES.md",
+      "bytes": 48604,
+      "sha256": "8003893bb4af8c185c63dd3be3fb65c51ce4b81b2ba6f5ad5632232ab82de3f2",
+      "canonical_sha256": "8003893bb4af8c185c63dd3be3fb65c51ce4b81b2ba6f5ad5632232ab82de3f2",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_06_UNIFIED_ACCEPTANCE_CHECKLIST.md",
+      "bytes": 42231,
+      "sha256": "bedbd841d926d090bae75bb6e372cd42bbd35bb1d4bdff2990af37eba449d70c",
+      "canonical_sha256": "bedbd841d926d090bae75bb6e372cd42bbd35bb1d4bdff2990af37eba449d70c",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_07_SECURITY_AND_EXPOSURE_CONTROL.md",
+      "bytes": 38763,
+      "sha256": "8fa2b2d881caa066a393eef6e85fe2f4a83925c0bdd6862a3f44db16e03a5e9f",
+      "canonical_sha256": "8fa2b2d881caa066a393eef6e85fe2f4a83925c0bdd6862a3f44db16e03a5e9f",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_09_SERVICE_AGENTS_DEPLOYMENT_AND_LIFECYCLE.md",
+      "bytes": 38180,
+      "sha256": "a9595fb0f227391917fb6396b0bc95b41f8b5bc74202110fcbd920a364f611f9",
+      "canonical_sha256": "a9595fb0f227391917fb6396b0bc95b41f8b5bc74202110fcbd920a364f611f9",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_11_INITIAL_MULTI_SERVICE_DEPLOYMENT.md",
+      "bytes": 11124,
+      "sha256": "c805b8bd7485d8d4d3390284f9b3ad3a5df4b51ea9e5c2bb845a4a2b155880a3",
+      "canonical_sha256": "c805b8bd7485d8d4d3390284f9b3ad3a5df4b51ea9e5c2bb845a4a2b155880a3",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_13_HOST_DEPENDENCIES_AND_EXTENSION_GUIDE.md",
+      "bytes": 12293,
+      "sha256": "35a5add2d68e39953092e6fcfcfb0f27b2c8b71ddc174e2d5479e445cbdf4d22",
+      "canonical_sha256": "35a5add2d68e39953092e6fcfcfb0f27b2c8b71ddc174e2d5479e445cbdf4d22",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/catalog.md",
+      "bytes": 85355,
+      "sha256": "413cd04e0a7c082a9d1cd3b33236230f4047338321e5f5f44230e8f356c45d65",
+      "canonical_sha256": "413cd04e0a7c082a9d1cd3b33236230f4047338321e5f5f44230e8f356c45d65",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release-evidence/remediation-plan.json",
+      "bytes": 60093,
+      "sha256": "c97f0f0486442e3c203d25cdcfc2c8b0ae233b9d211c34d23bc2ed9ee1701403",
+      "canonical_sha256": "c97f0f0486442e3c203d25cdcfc2c8b0ae233b9d211c34d23bc2ed9ee1701403",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release/kernel.sha256",
+      "bytes": 65,
+      "sha256": "da54afe79ed9414d3838064956f6d529b6cdcc03a9ebd6e6d054c6746233c7e6",
+      "canonical_sha256": "da54afe79ed9414d3838064956f6d529b6cdcc03a9ebd6e6d054c6746233c7e6",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release/kernel.source-sha",
+      "bytes": 41,
+      "sha256": "830674b9a430b759ec4bf4b9933e82c5285af1ab882319630699f0d224dd636d",
+      "canonical_sha256": "830674b9a430b759ec4bf4b9933e82c5285af1ab882319630699f0d224dd636d",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release/kernel.tag",
+      "bytes": 15,
+      "sha256": "ce1e709b696d631ba3cda7d22083fbffad2073d2f6a74fd69c6579b72c55456f",
+      "canonical_sha256": "ce1e709b696d631ba3cda7d22083fbffad2073d2f6a74fd69c6579b72c55456f",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release/kernel.version",
+      "bytes": 7,
+      "sha256": "19754aefd27e92de8c47211fbc5bb30d95e85a61128529c448e75c47e7c0db8d",
+      "canonical_sha256": "19754aefd27e92de8c47211fbc5bb30d95e85a61128529c448e75c47e7c0db8d",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release/known-problems-policy.json",
+      "bytes": 1220,
+      "sha256": "fd5fae60078afbb2fcf09bb7b92efe2eabdc1a5d9c00c08a799773b39fbd5a65",
+      "canonical_sha256": "fd5fae60078afbb2fcf09bb7b92efe2eabdc1a5d9c00c08a799773b39fbd5a65",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release/known-problems-supplement.json",
+      "bytes": 1790,
+      "sha256": "8e749f7b58c8a052de934850f1fb2f2e427dbe996b40d44539e2a265b64fb796",
+      "canonical_sha256": "8e749f7b58c8a052de934850f1fb2f2e427dbe996b40d44539e2a265b64fb796",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release/package3-qualification/request.json",
+      "bytes": 1703,
+      "sha256": "830f83e26332739c69fcc910c14898659aa7e07a854b3ad0fdccf7b9388b28fb",
+      "canonical_sha256": "830f83e26332739c69fcc910c14898659aa7e07a854b3ad0fdccf7b9388b28fb",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release/package3-qualification/source-inputs.json",
+      "bytes": 136333,
+      "sha256": "6bae4f2ab17f3adc5fc38f081a122558ed74fc333dcc2f0b7559a096c62444ed",
+      "canonical_sha256": "6bae4f2ab17f3adc5fc38f081a122558ed74fc333dcc2f0b7559a096c62444ed",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release/pluto.version",
+      "bytes": 6,
+      "sha256": "8a3dad16d348c163566a456fcf650d85d7aeeda5e53d01ee1fa8dc15212915a7",
+      "canonical_sha256": "8a3dad16d348c163566a456fcf650d85d7aeeda5e53d01ee1fa8dc15212915a7",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release/saturn.sha256",
+      "bytes": 65,
+      "sha256": "58b5914371164f4b34015a29ab43a208a766b37adf62d61cabf5b10eec97eef7",
+      "canonical_sha256": "58b5914371164f4b34015a29ab43a208a766b37adf62d61cabf5b10eec97eef7",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release/saturn.source-sha",
+      "bytes": 41,
+      "sha256": "4707d0d3aac4409e0d7ec7f0823b4167a9b3e55743eee549696405281ec7ffd3",
+      "canonical_sha256": "4707d0d3aac4409e0d7ec7f0823b4167a9b3e55743eee549696405281ec7ffd3",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release/saturn.tag",
+      "bytes": 15,
+      "sha256": "dea0d395bea319138053d164eda7ac6fbb8f433e03f7ceacbadb91203d620c47",
+      "canonical_sha256": "dea0d395bea319138053d164eda7ac6fbb8f433e03f7ceacbadb91203d620c47",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".release/saturn.version",
+      "bytes": 7,
+      "sha256": "011cfdb24c667a75861adfffaabe68e66358d982f437b47270ef09d86c6c6cd7",
+      "canonical_sha256": "011cfdb24c667a75861adfffaabe68e66358d982f437b47270ef09d86c6c6cd7",
+      "line_endings": "LF"
+    },
+    {
+      "path": "README.md",
+      "bytes": 23511,
+      "sha256": "b6f93411696467d353b28b324570385e4959aebdab71fd5b10873e7279029ff1",
+      "canonical_sha256": "064ab3e4e36ed47e3c8948f94ec21613721220d0773aa790ab3bbaeee0d7e4a3",
+      "line_endings": "MIXED",
+      "crlf_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108
+      ]
+    },
+    {
+      "path": "cmd/pluto/main.go",
+      "bytes": 4298,
+      "sha256": "40e803f8c05d787edf0cd6bfdd0a1edff8797e7d97744112ebac91dcb7c9ae99",
+      "canonical_sha256": "40e803f8c05d787edf0cd6bfdd0a1edff8797e7d97744112ebac91dcb7c9ae99",
+      "line_endings": "LF"
+    },
+    {
+      "path": "docs/PACKAGE3_QUALIFICATION.md",
+      "bytes": 6755,
+      "sha256": "f71a54ee6b53bd4339766da728ee2794a96f32e62d93780e9d13b0b68754173f",
+      "canonical_sha256": "f71a54ee6b53bd4339766da728ee2794a96f32e62d93780e9d13b0b68754173f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "docs/QUALIFICATION_STATUS_2026-10-16.md",
+      "bytes": 9623,
+      "sha256": "4746fa1eb5b56c19022e283c8a1ea2c5cbc128ec6d5bc8f3e803848e287e78e0",
+      "canonical_sha256": "4746fa1eb5b56c19022e283c8a1ea2c5cbc128ec6d5bc8f3e803848e287e78e0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "docs/indexed-daemon.md",
+      "bytes": 16455,
+      "sha256": "aa3d32ae85ab0a4ab32d9a309c942f0c859ba0b9ec68c8964342c16458c31c4f",
+      "canonical_sha256": "13f0f4ca61c082750c6478dfedfbbd47b70ee422cd8d00a4cb1deb8cd96292e0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "go.mod",
+      "bytes": 558,
+      "sha256": "030b07fb990b04b93de8e17219ae5571ad67f55a2df217119ac68da38fc8defc",
+      "canonical_sha256": "030b07fb990b04b93de8e17219ae5571ad67f55a2df217119ac68da38fc8defc",
+      "line_endings": "LF"
+    },
+    {
+      "path": "go.sum",
+      "bytes": 4290,
+      "sha256": "48803bf5852252943bf87c08474f07d10698bbcb4eaf8a2dcb5dd36bd0891af1",
+      "canonical_sha256": "48803bf5852252943bf87c08474f07d10698bbcb4eaf8a2dcb5dd36bd0891af1",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/network/deadline.go",
+      "bytes": 3840,
+      "sha256": "448daa59d8c6a9d9ae0e829da7c723c407b0ea018348a612a9ed5c06deef4975",
+      "canonical_sha256": "448daa59d8c6a9d9ae0e829da7c723c407b0ea018348a612a9ed5c06deef4975",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/network/deadline_test.go",
+      "bytes": 5830,
+      "sha256": "c256e8e6a15bb6abe67e724c9b9d16e7632ccc8399560b81c04074c9170b855f",
+      "canonical_sha256": "c256e8e6a15bb6abe67e724c9b9d16e7632ccc8399560b81c04074c9170b855f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/network/proxy.go",
+      "bytes": 1326,
+      "sha256": "ee4e4069fee6cc23d46a7cca3bd85279e49e1a8ba1f59674a0d05f834e9c6037",
+      "canonical_sha256": "ee4e4069fee6cc23d46a7cca3bd85279e49e1a8ba1f59674a0d05f834e9c6037",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/network/proxy_test.go",
+      "bytes": 2291,
+      "sha256": "609052c6eb88c608f88577ea3ed4050be3f00ac771c805c297fc3d5ffc3a4ec5",
+      "canonical_sha256": "609052c6eb88c608f88577ea3ed4050be3f00ac771c805c297fc3d5ffc3a4ec5",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/admission_restart_backup_test.go",
+      "bytes": 18228,
+      "sha256": "97d0b9b192ef992bfcbe3a97f4b082a92ca4035c8a277bf94a4571146b093219",
+      "canonical_sha256": "97d0b9b192ef992bfcbe3a97f4b082a92ca4035c8a277bf94a4571146b093219",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/artifact_admission.go",
+      "bytes": 8568,
+      "sha256": "03abcc5d2e4ee49293a5827d422a52c4f48b6ff0ef84b0b6bd4452642269d684",
+      "canonical_sha256": "03abcc5d2e4ee49293a5827d422a52c4f48b6ff0ef84b0b6bd4452642269d684",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/artifact_admission_test.go",
+      "bytes": 13738,
+      "sha256": "71089eb2469a134d8dab919681b7be95f84b000a0204d700a902fccebc60261e",
+      "canonical_sha256": "71089eb2469a134d8dab919681b7be95f84b000a0204d700a902fccebc60261e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/artifact_interrupted_admission_test.go",
+      "bytes": 2941,
+      "sha256": "88bc8b375633b771b313c50e84883b213d89d3cdbbb1965cd1521a603e527198",
+      "canonical_sha256": "88bc8b375633b771b313c50e84883b213d89d3cdbbb1965cd1521a603e527198",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/artifact_reopen_test.go",
+      "bytes": 3605,
+      "sha256": "a23e5647dd992c91358c9e211f8e0022409023b42ca42514dbe591695de289b1",
+      "canonical_sha256": "a23e5647dd992c91358c9e211f8e0022409023b42ca42514dbe591695de289b1",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/artifact_spool_wait_test.go",
+      "bytes": 3654,
+      "sha256": "b00d2bca10bc84f0ebfd71a4b7e8a653e5060f1c7efa6b742d004ba5aa27ab48",
+      "canonical_sha256": "b00d2bca10bc84f0ebfd71a4b7e8a653e5060f1c7efa6b742d004ba5aa27ab48",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/audit.go",
+      "bytes": 2470,
+      "sha256": "3ca8d9ef04d79471cae167b09ad47596f83f881e9182446d4ff6505a4269a509",
+      "canonical_sha256": "3ca8d9ef04d79471cae167b09ad47596f83f881e9182446d4ff6505a4269a509",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/audit_classification_test.go",
+      "bytes": 1605,
+      "sha256": "da4a102c2dc54cd0ef3ab6152293a3902f010a63d7d4a26c68deefdc1fd08598",
+      "canonical_sha256": "da4a102c2dc54cd0ef3ab6152293a3902f010a63d7d4a26c68deefdc1fd08598",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/audit_failure_test.go",
+      "bytes": 605,
+      "sha256": "05a10d551b67bb402361f781fc814fd4e5cfc26d750cef7b1deefdefd9b48a67",
+      "canonical_sha256": "05a10d551b67bb402361f781fc814fd4e5cfc26d750cef7b1deefdefd9b48a67",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/c01_daemon_checkpoint_test.go",
+      "bytes": 9769,
+      "sha256": "0982784452cc5722fdbae995309fad511cd136a91f4d5133181d94dd4a8c423e",
+      "canonical_sha256": "0982784452cc5722fdbae995309fad511cd136a91f4d5133181d94dd4a8c423e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/client.go",
+      "bytes": 6780,
+      "sha256": "841d1231d216228207955154155904105180d4c5549af9babd360efc3a5c3c4e",
+      "canonical_sha256": "841d1231d216228207955154155904105180d4c5549af9babd360efc3a5c3c4e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/client_test.go",
+      "bytes": 1086,
+      "sha256": "5a76fb3db4591ab428c16d9615931f8061194c4f18619a999118167c735f130e",
+      "canonical_sha256": "5a76fb3db4591ab428c16d9615931f8061194c4f18619a999118167c735f130e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/completion_adoption_test.go",
+      "bytes": 4844,
+      "sha256": "bff4364ece2f712ab83f70d01809706ca0256a33bed0c55f48e0e2486b5a9d44",
+      "canonical_sha256": "bff4364ece2f712ab83f70d01809706ca0256a33bed0c55f48e0e2486b5a9d44",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/completion_backup_test.go",
+      "bytes": 10768,
+      "sha256": "7926326c0f46a4261a7342d301d0095bd4daa2df0a6a89f90f5ca2197c5112db",
+      "canonical_sha256": "7926326c0f46a4261a7342d301d0095bd4daa2df0a6a89f90f5ca2197c5112db",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/completion_bulk_checkpoint_test.go",
+      "bytes": 18555,
+      "sha256": "9d7d92d4abf9f1ddb5c9d6bf76656b7a47e6b3a731e78da71e8093d821a974f8",
+      "canonical_sha256": "9d7d92d4abf9f1ddb5c9d6bf76656b7a47e6b3a731e78da71e8093d821a974f8",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/completion_bulk_test.go",
+      "bytes": 17686,
+      "sha256": "c603efcd68e5fe34cd19fbf3e66335628db96b72360b1d28105f26a4e6f7867d",
+      "canonical_sha256": "c603efcd68e5fe34cd19fbf3e66335628db96b72360b1d28105f26a4e6f7867d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/completion_network_test.go",
+      "bytes": 7545,
+      "sha256": "502beb3e845dbc5fe03a3faa9c40f8d3ab8b5d735720ddf5afc2bfd2a204c16c",
+      "canonical_sha256": "502beb3e845dbc5fe03a3faa9c40f8d3ab8b5d735720ddf5afc2bfd2a204c16c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/completion_reopen_test.go",
+      "bytes": 2616,
+      "sha256": "84c00b13103211f737896ab40bca6138ff67036fb0139cf26e227a70a8fe726c",
+      "canonical_sha256": "84c00b13103211f737896ab40bca6138ff67036fb0139cf26e227a70a8fe726c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/completion_scope_test.go",
+      "bytes": 6751,
+      "sha256": "14f6cd44b0fc76a52235a895793e7fafc4b15576ce71c19ba823c8aae217e555",
+      "canonical_sha256": "14f6cd44b0fc76a52235a895793e7fafc4b15576ce71c19ba823c8aae217e555",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/config.go",
+      "bytes": 4652,
+      "sha256": "58d733c38896d86dc1b48564af6d4edc0c25992947f5ee93919bab3fe8269175",
+      "canonical_sha256": "58d733c38896d86dc1b48564af6d4edc0c25992947f5ee93919bab3fe8269175",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/copy.go",
+      "bytes": 4906,
+      "sha256": "af7363755dcdce846e5e9d2b904d5a4d9612547e8299d90b6b1490bb22926d72",
+      "canonical_sha256": "af7363755dcdce846e5e9d2b904d5a4d9612547e8299d90b6b1490bb22926d72",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/copy_enumeration.go",
+      "bytes": 4778,
+      "sha256": "20f70f4e9f5d77a6d9648d19a2f1df93e649d44e9f2df31c4cee92b36e8f21ae",
+      "canonical_sha256": "20f70f4e9f5d77a6d9648d19a2f1df93e649d44e9f2df31c4cee92b36e8f21ae",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/copy_enumeration_state.go",
+      "bytes": 8465,
+      "sha256": "2b353c8e1783bd3eab6496e823ce48b3d417e2599e7da87b3885e8a5d44867de",
+      "canonical_sha256": "2b353c8e1783bd3eab6496e823ce48b3d417e2599e7da87b3885e8a5d44867de",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/copy_enumeration_test.go",
+      "bytes": 23000,
+      "sha256": "ca55bbdcc75d228c6ef7dfd2017ab7cc9fc659f2c11a4242b6d7ff9033b64f2d",
+      "canonical_sha256": "ca55bbdcc75d228c6ef7dfd2017ab7cc9fc659f2c11a4242b6d7ff9033b64f2d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/copy_indexed.go",
+      "bytes": 4818,
+      "sha256": "4e8915da42459c120d722bec908d96154ada34955a5d8b882e194d9dc61b9c8d",
+      "canonical_sha256": "4e8915da42459c120d722bec908d96154ada34955a5d8b882e194d9dc61b9c8d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/copy_indexed_test.go",
+      "bytes": 3931,
+      "sha256": "903570931903ffa2318e5e2a53e1b92c35afdd8b94fe3f573522416cf5dd832f",
+      "canonical_sha256": "903570931903ffa2318e5e2a53e1b92c35afdd8b94fe3f573522416cf5dd832f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/copy_links_test.go",
+      "bytes": 5120,
+      "sha256": "f1d064635a809f519a82b183a5765a89d6a0d93867489f4fad648ebe3c316655",
+      "canonical_sha256": "f1d064635a809f519a82b183a5765a89d6a0d93867489f4fad648ebe3c316655",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/copy_pipeline.go",
+      "bytes": 18404,
+      "sha256": "f2aaf7a640025eb9f7cb16d58b80aeef4392b4065c8b03050a6e576c32cd18dc",
+      "canonical_sha256": "f2aaf7a640025eb9f7cb16d58b80aeef4392b4065c8b03050a6e576c32cd18dc",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/copy_pipeline_test.go",
+      "bytes": 19007,
+      "sha256": "f09cafd02fbe8b60b14bf9d5ab7443db3fa1c1e06fdf315a13d4303a059adbc3",
+      "canonical_sha256": "f09cafd02fbe8b60b14bf9d5ab7443db3fa1c1e06fdf315a13d4303a059adbc3",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/daemon_indexed.go",
+      "bytes": 14784,
+      "sha256": "d6e75983b6ba3fc8002b1eae2be8ea8693e764bea879b07b8c29ffe171dc3e0c",
+      "canonical_sha256": "d6e75983b6ba3fc8002b1eae2be8ea8693e764bea879b07b8c29ffe171dc3e0c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/empty_reservation_fixture_test.go",
+      "bytes": 20904,
+      "sha256": "a33b125ad08baa965d88615ded243402e5e0360a2bca68283ae10961c572b769",
+      "canonical_sha256": "a33b125ad08baa965d88615ded243402e5e0360a2bca68283ae10961c572b769",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/endurance_retained_reservation_test.go",
+      "bytes": 3737,
+      "sha256": "2f6446926ebc06894a1fd36ac530cfc450b0d43a26a5a8f1dbeff6b733c4a949",
+      "canonical_sha256": "2f6446926ebc06894a1fd36ac530cfc450b0d43a26a5a8f1dbeff6b733c4a949",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/heartbeat.go",
+      "bytes": 3436,
+      "sha256": "0037905dc73fc654d80049639d0b193a5e11e06d4801ff515ab7fd4ecefa3183",
+      "canonical_sha256": "0037905dc73fc654d80049639d0b193a5e11e06d4801ff515ab7fd4ecefa3183",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/heartbeat_test.go",
+      "bytes": 3505,
+      "sha256": "6d2ae627ff42dc4939e6d43d2ea17b6a74009cbf058824adfd8c4ffbd521a5ea",
+      "canonical_sha256": "6d2ae627ff42dc4939e6d43d2ea17b6a74009cbf058824adfd8c4ffbd521a5ea",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/indexed_command.go",
+      "bytes": 5524,
+      "sha256": "aaf2af2b3c80f45bf7b299a40d7bfe9cd284cad7d9ba1d7ad183b0bec48606c3",
+      "canonical_sha256": "aaf2af2b3c80f45bf7b299a40d7bfe9cd284cad7d9ba1d7ad183b0bec48606c3",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/indexed_command_test.go",
+      "bytes": 2365,
+      "sha256": "d4d5df052344e6f72e2b7ce63412c4a13958d087b92e266f861f5ee9a53f7580",
+      "canonical_sha256": "d4d5df052344e6f72e2b7ce63412c4a13958d087b92e266f861f5ee9a53f7580",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/indexed_session.go",
+      "bytes": 7711,
+      "sha256": "ce556a29109f3900ae6d16a6eaeb1b6b7393819d6f1eb094febfc16b62bbef1d",
+      "canonical_sha256": "ce556a29109f3900ae6d16a6eaeb1b6b7393819d6f1eb094febfc16b62bbef1d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/lifecycle_command.go",
+      "bytes": 9594,
+      "sha256": "73a9c0f99d66f3457f72db15f8b0d9fe9abaa58354450d8489f9025c6359107c",
+      "canonical_sha256": "73a9c0f99d66f3457f72db15f8b0d9fe9abaa58354450d8489f9025c6359107c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/metadata_followup_native_test.go",
+      "bytes": 4570,
+      "sha256": "e6e355325083d36fdb6456fc2f8ba3756da10f8c9ffb205b57edc3f6b8c9523a",
+      "canonical_sha256": "e6e355325083d36fdb6456fc2f8ba3756da10f8c9ffb205b57edc3f6b8c9523a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/native_disposable_fixture_test.go",
+      "bytes": 3005,
+      "sha256": "b4fe91fc7256714df90c0f9db25d0fc20b91ac6ea2933cb04cfb40fde259d1ca",
+      "canonical_sha256": "b4fe91fc7256714df90c0f9db25d0fc20b91ac6ea2933cb04cfb40fde259d1ca",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/native_process_bridge_linux_test.go",
+      "bytes": 4878,
+      "sha256": "a7583cced64c9457029ee025cd634a1d041bf0a12daaabd54ca071aef41cb4ef",
+      "canonical_sha256": "a7583cced64c9457029ee025cd634a1d041bf0a12daaabd54ca071aef41cb4ef",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/native_rollback_backup_test.go",
+      "bytes": 10026,
+      "sha256": "1038a8d853bc5a80c466aaecda4316928945a9a715326c653dce84f655beae68",
+      "canonical_sha256": "1038a8d853bc5a80c466aaecda4316928945a9a715326c653dce84f655beae68",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/network_acceptance_test.go",
+      "bytes": 5299,
+      "sha256": "b23a15a4b4bc85d8cec979eacd7f03a7a1904d246dfc316b78e53add4c9be60b",
+      "canonical_sha256": "b23a15a4b4bc85d8cec979eacd7f03a7a1904d246dfc316b78e53add4c9be60b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/network_daemon_checkpoint_test.go",
+      "bytes": 12094,
+      "sha256": "4830c2f1080a5e67bdf87003dedfd04140ae681944ef52b611d4700a574d93a6",
+      "canonical_sha256": "4830c2f1080a5e67bdf87003dedfd04140ae681944ef52b611d4700a574d93a6",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/pluto_test.go",
+      "bytes": 17407,
+      "sha256": "3e0e00ef81ccb22c48b6d418af83a3abc10bf141295b1cc6e6d2e8f13ad73ff2",
+      "canonical_sha256": "3e0e00ef81ccb22c48b6d418af83a3abc10bf141295b1cc6e6d2e8f13ad73ff2",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/policy_command.go",
+      "bytes": 6767,
+      "sha256": "9bec33aa75b75c36536f1a4786e625938d1ae4aa5eb1dae5105506ccca8b3cfc",
+      "canonical_sha256": "9bec33aa75b75c36536f1a4786e625938d1ae4aa5eb1dae5105506ccca8b3cfc",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/prepared_adoption_test.go",
+      "bytes": 9294,
+      "sha256": "c6a8357a6dcf75c8f7ae86d87cc6397da72b65e320204a50980c1fcdb6147410",
+      "canonical_sha256": "c6a8357a6dcf75c8f7ae86d87cc6397da72b65e320204a50980c1fcdb6147410",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/prepared_checkpoint_test.go",
+      "bytes": 8635,
+      "sha256": "28804d03b8ef8a1fbc6859f2466451e9f779128bf735377517cc28304feeb46b",
+      "canonical_sha256": "28804d03b8ef8a1fbc6859f2466451e9f779128bf735377517cc28304feeb46b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/progress.go",
+      "bytes": 7163,
+      "sha256": "4fa374f08485a1473c9506a815113505a010c70589d2394323e90d17d71462b0",
+      "canonical_sha256": "4fa374f08485a1473c9506a815113505a010c70589d2394323e90d17d71462b0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/progress_test.go",
+      "bytes": 10532,
+      "sha256": "14b5dcd85a9813c12762b7d9323533ba98e617a523b3ae1d67a3b0a74abc2890",
+      "canonical_sha256": "14b5dcd85a9813c12762b7d9323533ba98e617a523b3ae1d67a3b0a74abc2890",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/published_legacy_test.go",
+      "bytes": 4171,
+      "sha256": "8443f2e76004d785ca9dd67414e99fb0c1f31bcf12bfaf89f09e1fcc2e85a8c4",
+      "canonical_sha256": "8443f2e76004d785ca9dd67414e99fb0c1f31bcf12bfaf89f09e1fcc2e85a8c4",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/restore_command.go",
+      "bytes": 2687,
+      "sha256": "20f9459f8739ca7194c58c0ccd83ba84bd9e318f729959ca56defa47bc47b9c9",
+      "canonical_sha256": "20f9459f8739ca7194c58c0ccd83ba84bd9e318f729959ca56defa47bc47b9c9",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/runtime-notices.tar",
+      "bytes": 86528,
+      "sha256": "7323edf3d80be66f5f6b98a861476736daa2116f7883f74a0b95c0c95cd8cec0",
+      "canonical_sha256": "7323edf3d80be66f5f6b98a861476736daa2116f7883f74a0b95c0c95cd8cec0",
+      "line_endings": "BINARY"
+    },
+    {
+      "path": "internal/pluto/runtime_contract.go",
+      "bytes": 9961,
+      "sha256": "3ff8857655764ddef84b5bb993044e93227cff235d920930c2df6b3c59672c52",
+      "canonical_sha256": "3ff8857655764ddef84b5bb993044e93227cff235d920930c2df6b3c59672c52",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/runtime_contract_test.go",
+      "bytes": 8382,
+      "sha256": "9c55a7b1541cfb6d53f7e6154cd48c78a1245320cad7a030ed073f117818a60d",
+      "canonical_sha256": "9c55a7b1541cfb6d53f7e6154cd48c78a1245320cad7a030ed073f117818a60d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/service.go",
+      "bytes": 17888,
+      "sha256": "da42b7461182da5d015ed15826ad48abf72f8e1cb5bf5dd02698b504213d6278",
+      "canonical_sha256": "da42b7461182da5d015ed15826ad48abf72f8e1cb5bf5dd02698b504213d6278",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/service_resume_p02_test.go",
+      "bytes": 5954,
+      "sha256": "a7f09287130744a8f6fa28f309077ec73bb83c88e783fe6f50f7fbe23b8fcd84",
+      "canonical_sha256": "a7f09287130744a8f6fa28f309077ec73bb83c88e783fe6f50f7fbe23b8fcd84",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/small_batch_admission.go",
+      "bytes": 3599,
+      "sha256": "e966e4b18ca436dae983ecfefd3490e87065abe3f68c017f14652af78e468d4a",
+      "canonical_sha256": "e966e4b18ca436dae983ecfefd3490e87065abe3f68c017f14652af78e468d4a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/small_batch_admission_test.go",
+      "bytes": 4383,
+      "sha256": "c5284699f5026fa9eb59929c6e339eabf5e9d1892bb35889f6cab79833a34477",
+      "canonical_sha256": "c5284699f5026fa9eb59929c6e339eabf5e9d1892bb35889f6cab79833a34477",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/source_capture.go",
+      "bytes": 4010,
+      "sha256": "881a8cab2a9eaff717a7cb883765c8d983a7f92eda211708f8336d0a2aa90227",
+      "canonical_sha256": "881a8cab2a9eaff717a7cb883765c8d983a7f92eda211708f8336d0a2aa90227",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/source_capture_test.go",
+      "bytes": 6906,
+      "sha256": "6bd818f4ec4f66ae257009e4d72eff4829cf1f67e60ce898b2bc253d15bc2d78",
+      "canonical_sha256": "6bd818f4ec4f66ae257009e4d72eff4829cf1f67e60ce898b2bc253d15bc2d78",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/source_orphan_backup_test.go",
+      "bytes": 14528,
+      "sha256": "1842c2bc7aaf9fd4c540cbceb7bc25647c79f90653deecc637d18adaf88aea0d",
+      "canonical_sha256": "1842c2bc7aaf9fd4c540cbceb7bc25647c79f90653deecc637d18adaf88aea0d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/sources_test.go",
+      "bytes": 9039,
+      "sha256": "f5f5dbf119d9a79c3370c6569122c45e971a9ffec7e8e221e316291d885cb9bc",
+      "canonical_sha256": "f5f5dbf119d9a79c3370c6569122c45e971a9ffec7e8e221e316291d885cb9bc",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/space_linux.go",
+      "bytes": 370,
+      "sha256": "a0e960cddf12f5ebed9c4d1ef2995ea0c2a7787290cc31b256924d458edafbf0",
+      "canonical_sha256": "a0e960cddf12f5ebed9c4d1ef2995ea0c2a7787290cc31b256924d458edafbf0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/stage3_chat_c_test.go",
+      "bytes": 35675,
+      "sha256": "62d6896a475b2aa44642d4e4c834808740e3dcd8bf9dde90668436aa2fbb62c2",
+      "canonical_sha256": "62d6896a475b2aa44642d4e4c834808740e3dcd8bf9dde90668436aa2fbb62c2",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/README.md",
+      "bytes": 8216,
+      "sha256": "aa073f5d7753b260c47440ac4ab077644aeed299a0a5361ad12119196ffe2e91",
+      "canonical_sha256": "aa073f5d7753b260c47440ac4ab077644aeed299a0a5361ad12119196ffe2e91",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/adoption.go",
+      "bytes": 4203,
+      "sha256": "1a9639df02d49465b78fd91c654431c4b351d604261c9ccd889c6e76d29c2619",
+      "canonical_sha256": "1a9639df02d49465b78fd91c654431c4b351d604261c9ccd889c6e76d29c2619",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_abandoned_capture.go",
+      "bytes": 2425,
+      "sha256": "8e836ad4959d8378c4b0d308bed5ab8cdaf5ac3d8e1abbf6956a848a9d0c88fd",
+      "canonical_sha256": "8e836ad4959d8378c4b0d308bed5ab8cdaf5ac3d8e1abbf6956a848a9d0c88fd",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_abandoned_capture_test.go",
+      "bytes": 1631,
+      "sha256": "5c162e4301862f5b2d2e1ef4acff8dfde276e98942f179ed2ecdb8238d919090",
+      "canonical_sha256": "5c162e4301862f5b2d2e1ef4acff8dfde276e98942f179ed2ecdb8238d919090",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_cancel_create_test.go",
+      "bytes": 2872,
+      "sha256": "d9e49295d3b29f9bb9efc29066036d5ed8b7e0b75ff0c23b42234d9b3cc99874",
+      "canonical_sha256": "d9e49295d3b29f9bb9efc29066036d5ed8b7e0b75ff0c23b42234d9b3cc99874",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_compacted_original.go",
+      "bytes": 2256,
+      "sha256": "f3817f989bb9eb18a8e43976daa73cce684ee3f78fc08727bcba4e522c06b52d",
+      "canonical_sha256": "f3817f989bb9eb18a8e43976daa73cce684ee3f78fc08727bcba4e522c06b52d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_compacted_original_test.go",
+      "bytes": 3649,
+      "sha256": "a23fe558cca45288b68ec44672c93806d76e1f2621cf34dc3c714911a83cb293",
+      "canonical_sha256": "a23fe558cca45288b68ec44672c93806d76e1f2621cf34dc3c714911a83cb293",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_crash_test.go",
+      "bytes": 4468,
+      "sha256": "50029d03b8c56c28f2b070b2fc8a303309c5e4509a08a7ff1fa88090c7c57647",
+      "canonical_sha256": "50029d03b8c56c28f2b070b2fc8a303309c5e4509a08a7ff1fa88090c7c57647",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_empty_reservation.go",
+      "bytes": 7451,
+      "sha256": "59c1dd2de36ddad8cfa8820f8ff8dfbc8c638b33fbdcad7b1a105ea72104f15d",
+      "canonical_sha256": "59c1dd2de36ddad8cfa8820f8ff8dfbc8c638b33fbdcad7b1a105ea72104f15d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_empty_reservation_test.go",
+      "bytes": 7426,
+      "sha256": "e308b67e136ae27580faded7782825778333c856fe59857db56f6cb4bb5379cb",
+      "canonical_sha256": "e308b67e136ae27580faded7782825778333c856fe59857db56f6cb4bb5379cb",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_model.go",
+      "bytes": 1471,
+      "sha256": "b8ed9491fc87e61bcb35b3c9d629477b27eb63e8dabc34c4c41bc20f29681c5b",
+      "canonical_sha256": "b8ed9491fc87e61bcb35b3c9d629477b27eb63e8dabc34c4c41bc20f29681c5b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_module_test.go",
+      "bytes": 6251,
+      "sha256": "8adcd51191e5f5c0c2f59bf46e093a9ac7cbd331654b54fe0a4a844ee564660b",
+      "canonical_sha256": "8adcd51191e5f5c0c2f59bf46e093a9ac7cbd331654b54fe0a4a844ee564660b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_operation_test.go",
+      "bytes": 8198,
+      "sha256": "60d5012638d99473416d44095fbff426803d797f6c4185f6f10f4a0fc814f782",
+      "canonical_sha256": "60d5012638d99473416d44095fbff426803d797f6c4185f6f10f4a0fc814f782",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_prune.go",
+      "bytes": 1982,
+      "sha256": "d23bbde1677919e932a0e7b5f7fea410523a102b7c908a5049cdf3adfcf2ae77",
+      "canonical_sha256": "d23bbde1677919e932a0e7b5f7fea410523a102b7c908a5049cdf3adfcf2ae77",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_races_test.go",
+      "bytes": 3609,
+      "sha256": "1b885473e65d89a03986e860f38d11f0530853f91790880d3addc8436a59465e",
+      "canonical_sha256": "1b885473e65d89a03986e860f38d11f0530853f91790880d3addc8436a59465e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_reconcile.go",
+      "bytes": 25051,
+      "sha256": "c878ef182fe76f91ef1c6ae735a4883cba13792523c5a449c7839e37930fc1eb",
+      "canonical_sha256": "c878ef182fe76f91ef1c6ae735a4883cba13792523c5a449c7839e37930fc1eb",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_resource_test.go",
+      "bytes": 4169,
+      "sha256": "8bc1f7939b1c806348d9fe5067905c25c316c8a55517c14415ea7937f12b42c8",
+      "canonical_sha256": "8bc1f7939b1c806348d9fe5067905c25c316c8a55517c14415ea7937f12b42c8",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_restore.go",
+      "bytes": 6933,
+      "sha256": "b0326e23b3a1813aaaa4a92ed024d4cc27c57898aaeec773e2cbf3e13fe466b0",
+      "canonical_sha256": "b0326e23b3a1813aaaa4a92ed024d4cc27c57898aaeec773e2cbf3e13fe466b0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_store.go",
+      "bytes": 17129,
+      "sha256": "6e7c7809429f2790d27b221be1646785186eaee71a2f45978052bc663ca4cea6",
+      "canonical_sha256": "6e7c7809429f2790d27b221be1646785186eaee71a2f45978052bc663ca4cea6",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_store_test.go",
+      "bytes": 10527,
+      "sha256": "155e0cc50c1b3f33c017dfd8fbecceddbb1a1b89f5cbf50f2cc641c9ba22ea45",
+      "canonical_sha256": "155e0cc50c1b3f33c017dfd8fbecceddbb1a1b89f5cbf50f2cc641c9ba22ea45",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/binding_transition.go",
+      "bytes": 6055,
+      "sha256": "ee760be4ef04a7986ff0d358895d81f392226c02c1b859c711d8ff313bed9789",
+      "canonical_sha256": "ee760be4ef04a7986ff0d358895d81f392226c02c1b859c711d8ff313bed9789",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/capture_metrics.go",
+      "bytes": 1668,
+      "sha256": "05d06f5e605e413227eab5a6b45d61635e5d3dba54b3bbd23371f17561f302e8",
+      "canonical_sha256": "05d06f5e605e413227eab5a6b45d61635e5d3dba54b3bbd23371f17561f302e8",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/capture_scope_pipeline_test.go",
+      "bytes": 6829,
+      "sha256": "98a1538593415d6d3d2554e9bb1c451fcd35b77c67d0e48c878127006da57133",
+      "canonical_sha256": "98a1538593415d6d3d2554e9bb1c451fcd35b77c67d0e48c878127006da57133",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/capture_validation.go",
+      "bytes": 3087,
+      "sha256": "ba54608b771ea67024bf81b764eda1d81cc4f9205963826c60bef3b0bbb601bf",
+      "canonical_sha256": "ba54608b771ea67024bf81b764eda1d81cc4f9205963826c60bef3b0bbb601bf",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/capture_validation_test.go",
+      "bytes": 3458,
+      "sha256": "dc789b83a242b3cfd8cc7ae303f868034e79273479f02edcdaf562b88e42f1d3",
+      "canonical_sha256": "dc789b83a242b3cfd8cc7ae303f868034e79273479f02edcdaf562b88e42f1d3",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_decision.go",
+      "bytes": 23583,
+      "sha256": "bdfdef4522199f134662ac8ea40630e71084a7238cfdbd21cef8cb218fd7f326",
+      "canonical_sha256": "bdfdef4522199f134662ac8ea40630e71084a7238cfdbd21cef8cb218fd7f326",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_executor.go",
+      "bytes": 6267,
+      "sha256": "0e676e0e6d13316249a6c319b0419441ced31808e658fe586336113125ca3ca5",
+      "canonical_sha256": "0e676e0e6d13316249a6c319b0419441ced31808e658fe586336113125ca3ca5",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_generation_pending_test.go",
+      "bytes": 2799,
+      "sha256": "52a5f15c138dc8f7605c3b19aae782ce3dbb04fffb7f345c856ee5560d753abd",
+      "canonical_sha256": "52a5f15c138dc8f7605c3b19aae782ce3dbb04fffb7f345c856ee5560d753abd",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_generation_test.go",
+      "bytes": 3530,
+      "sha256": "645a4fbd1980623831cbd9f6f6d568e5623ef82d3b8dea3a6acffb5a69a34c30",
+      "canonical_sha256": "645a4fbd1980623831cbd9f6f6d568e5623ef82d3b8dea3a6acffb5a69a34c30",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_operation.go",
+      "bytes": 20468,
+      "sha256": "a7ded5594a9a20cbc2a7faab1c54030925ccc48b575ce1066d8973edf95ed359",
+      "canonical_sha256": "a7ded5594a9a20cbc2a7faab1c54030925ccc48b575ce1066d8973edf95ed359",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_operation_test.go",
+      "bytes": 6859,
+      "sha256": "9e3618a60b50c13604a25ccdcaa918403c7b6a7cd14cc69b731c8666788e993b",
+      "canonical_sha256": "9e3618a60b50c13604a25ccdcaa918403c7b6a7cd14cc69b731c8666788e993b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_projection.go",
+      "bytes": 4020,
+      "sha256": "d567bea96944f9532c5cd38fe5899c3c21b9e583f3de703d8253529cae3ecb33",
+      "canonical_sha256": "d567bea96944f9532c5cd38fe5899c3c21b9e583f3de703d8253529cae3ecb33",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_publication_cut_test.go",
+      "bytes": 3272,
+      "sha256": "7221080fef06b07f71017e61361e4db712b06deeb5925f22181cc1c626f96014",
+      "canonical_sha256": "7221080fef06b07f71017e61361e4db712b06deeb5925f22181cc1c626f96014",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_registry_test.go",
+      "bytes": 4006,
+      "sha256": "4c88ac72bc0a7b73a8042885a7ddbd7c0ee4cec7d42ecbe270400ea592b44201",
+      "canonical_sha256": "4c88ac72bc0a7b73a8042885a7ddbd7c0ee4cec7d42ecbe270400ea592b44201",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_resource_test.go",
+      "bytes": 5536,
+      "sha256": "75eaee21495e5369a89e174b151e9aa62a6e8275141e6e5b6e3ae44c27fcdc74",
+      "canonical_sha256": "75eaee21495e5369a89e174b151e9aa62a6e8275141e6e5b6e3ae44c27fcdc74",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_scan.go",
+      "bytes": 18562,
+      "sha256": "a5560f57d34c2b1fab1836dcbcdaf97eee62fb64e61c65a4c3c738512869e295",
+      "canonical_sha256": "a5560f57d34c2b1fab1836dcbcdaf97eee62fb64e61c65a4c3c738512869e295",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_scan_test.go",
+      "bytes": 12857,
+      "sha256": "5fae25ec53629800526b23bcd2da6022f5faa744f7dfddbbfc7b4cca285437c0",
+      "canonical_sha256": "5fae25ec53629800526b23bcd2da6022f5faa744f7dfddbbfc7b4cca285437c0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_server_fixture_test.go",
+      "bytes": 4353,
+      "sha256": "1185176fe705a084d7587661d6c0a2724aaf0d9d2c758008b4ebeaf7e2ea6db3",
+      "canonical_sha256": "1185176fe705a084d7587661d6c0a2724aaf0d9d2c758008b4ebeaf7e2ea6db3",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_stream.go",
+      "bytes": 1939,
+      "sha256": "8e6a6644873cc4dfa968ce70b1ea5678c71e40e7f79850da06c5a8112eb08380",
+      "canonical_sha256": "8e6a6644873cc4dfa968ce70b1ea5678c71e40e7f79850da06c5a8112eb08380",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_topology_test.go",
+      "bytes": 7561,
+      "sha256": "ec835e21178fca571092cb6aad89d048e4ca7d7851a1e44a8c230a6feb52c42e",
+      "canonical_sha256": "ec835e21178fca571092cb6aad89d048e4ca7d7851a1e44a8c230a6feb52c42e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_transport_test.go",
+      "bytes": 4503,
+      "sha256": "c0a6d04a61ec394190c752b51a2b5aa937a57a1d92b3a86a0b89ecdacc0aa066",
+      "canonical_sha256": "c0a6d04a61ec394190c752b51a2b5aa937a57a1d92b3a86a0b89ecdacc0aa066",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/changes_retry.go",
+      "bytes": 1818,
+      "sha256": "262f1ddd00e9080c3422574f592d005d26776b09db9ecff575e6e7fbf0a02369",
+      "canonical_sha256": "262f1ddd00e9080c3422574f592d005d26776b09db9ecff575e6e7fbf0a02369",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/changes_retry_test.go",
+      "bytes": 4043,
+      "sha256": "b203bcce42a84d2765de3f6549b467398ec7eedcb41e31b3e5a33fca693648bd",
+      "canonical_sha256": "b203bcce42a84d2765de3f6549b467398ec7eedcb41e31b3e5a33fca693648bd",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/closed_fixture_backup_test.go",
+      "bytes": 8839,
+      "sha256": "335ee0a63fe5f0f755cbceb7d9eb7550c14c7521f16f67f20a26c04351b2f2be",
+      "canonical_sha256": "335ee0a63fe5f0f755cbceb7d9eb7550c14c7521f16f67f20a26c04351b2f2be",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/completion_api_test.go",
+      "bytes": 11514,
+      "sha256": "5266c394d00b922907702cacbc91ce5706340e07540e8d0cfea2abb1964f1bb4",
+      "canonical_sha256": "5266c394d00b922907702cacbc91ce5706340e07540e8d0cfea2abb1964f1bb4",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/completion_dns_test.go",
+      "bytes": 4146,
+      "sha256": "60883dc0dfd976df96448e98e9b276869e71b7397fef79132692122b6847c4aa",
+      "canonical_sha256": "60883dc0dfd976df96448e98e9b276869e71b7397fef79132692122b6847c4aa",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/completion_mixed_batch_test.go",
+      "bytes": 6684,
+      "sha256": "8bdf94b2bbfad64fa189993d211f627483b3b2f08e719d040b42877eabb42eb1",
+      "canonical_sha256": "8bdf94b2bbfad64fa189993d211f627483b3b2f08e719d040b42877eabb42eb1",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/completion_network_test.go",
+      "bytes": 5047,
+      "sha256": "c86b817be1db1dbf70c1d0aadd8145d898520d63dbdc7e4cfe8d9ee52e98dd5e",
+      "canonical_sha256": "c86b817be1db1dbf70c1d0aadd8145d898520d63dbdc7e4cfe8d9ee52e98dd5e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/daemon_capabilities_p02_test.go",
+      "bytes": 3282,
+      "sha256": "d970a2f335aa2c29a22a4ac38901c272f15777fea869aa34a96d189b0fd8d8ed",
+      "canonical_sha256": "d970a2f335aa2c29a22a4ac38901c272f15777fea869aa34a96d189b0fd8d8ed",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/daemon_http.go",
+      "bytes": 5576,
+      "sha256": "4b70e087e99551d1d2d80b298dfc65f72c10d43f5cc7d50e7dd4e5fb11daef23",
+      "canonical_sha256": "4b70e087e99551d1d2d80b298dfc65f72c10d43f5cc7d50e7dd4e5fb11daef23",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/daemon_recovery.go",
+      "bytes": 3669,
+      "sha256": "874d706106b12693f1b508c7f435bd25b0ef3f7f6614340c70c0589d1b4d0ae0",
+      "canonical_sha256": "874d706106b12693f1b508c7f435bd25b0ef3f7f6614340c70c0589d1b4d0ae0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/daemon_state.go",
+      "bytes": 12963,
+      "sha256": "6f57e1dcb521858eb49da573fec5d1035310e2b29ccfec8fe3775f3240ee4820",
+      "canonical_sha256": "6f57e1dcb521858eb49da573fec5d1035310e2b29ccfec8fe3775f3240ee4820",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/endurance_expired_import_test.go",
+      "bytes": 6965,
+      "sha256": "bb5be0a13163daf0c06f721e211b109ffbb9099df4c698626209a6a3c58cc430",
+      "canonical_sha256": "bb5be0a13163daf0c06f721e211b109ffbb9099df4c698626209a6a3c58cc430",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/endurance_initial_import_test.go",
+      "bytes": 4490,
+      "sha256": "9ee82c68830d689cd00500f9c18fc796b2411b391f9aeffce6f22e9280873c3b",
+      "canonical_sha256": "9ee82c68830d689cd00500f9c18fc796b2411b391f9aeffce6f22e9280873c3b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/endurance_initial_snapshot_test.go",
+      "bytes": 2759,
+      "sha256": "215e62e73b3fa2b3c37cc174c6881ec3320615a3667b56355cf2c41db538782c",
+      "canonical_sha256": "215e62e73b3fa2b3c37cc174c6881ec3320615a3667b56355cf2c41db538782c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/endurance_rebootstrap_expiry_test.go",
+      "bytes": 4412,
+      "sha256": "cd9f0740ecf9a722dd5e261a21f205070477cc0302835319f1ded973ac47842f",
+      "canonical_sha256": "cd9f0740ecf9a722dd5e261a21f205070477cc0302835319f1ded973ac47842f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/engine_cli_backup_test.go",
+      "bytes": 18204,
+      "sha256": "1c9f99b3af6b14b9e316428bc4a566a319db5ba326f10240db306ece9396eb19",
+      "canonical_sha256": "1c9f99b3af6b14b9e316428bc4a566a319db5ba326f10240db306ece9396eb19",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_dial.go",
+      "bytes": 4814,
+      "sha256": "166ea0195c8901a26c79a83143c8e19f211901b616013555f944c540d10be1b3",
+      "canonical_sha256": "166ea0195c8901a26c79a83143c8e19f211901b616013555f944c540d10be1b3",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http.go",
+      "bytes": 20792,
+      "sha256": "5c75533f4bf67a22261f8b865dff65e4fe3f66aca49a4051230fde4cdb84f65c",
+      "canonical_sha256": "5c75533f4bf67a22261f8b865dff65e4fe3f66aca49a4051230fde4cdb84f65c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_boundaries_test.go",
+      "bytes": 4748,
+      "sha256": "3b455253b88942a7d36a6d5f7acbd462a11817f31b71d68ed774ab206cf79f0c",
+      "canonical_sha256": "3b455253b88942a7d36a6d5f7acbd462a11817f31b71d68ed774ab206cf79f0c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_expired_import.go",
+      "bytes": 5334,
+      "sha256": "00d856700975ca1cc790ac0a9899df6a2f2b25d8241b0b429886c72360a9d7c1",
+      "canonical_sha256": "00d856700975ca1cc790ac0a9899df6a2f2b25d8241b0b429886c72360a9d7c1",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_folders.go",
+      "bytes": 14001,
+      "sha256": "d45b7a33a0600455fb1806e1d168fca2c9212c1679e01a13f005e5276cda55d3",
+      "canonical_sha256": "d45b7a33a0600455fb1806e1d168fca2c9212c1679e01a13f005e5276cda55d3",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_initial_import.go",
+      "bytes": 6270,
+      "sha256": "3abc3f8165b7324ef964085092d4875690df9cba5702127adb5ccc62e2183e7c",
+      "canonical_sha256": "3abc3f8165b7324ef964085092d4875690df9cba5702127adb5ccc62e2183e7c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_rebootstrap.go",
+      "bytes": 19237,
+      "sha256": "f17c7e8eb917aac98134dfccab35d9ad981436ccb1724869b424b2d5e0e942b5",
+      "canonical_sha256": "f17c7e8eb917aac98134dfccab35d9ad981436ccb1724869b424b2d5e0e942b5",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_rebootstrap_rollback_test.go",
+      "bytes": 7061,
+      "sha256": "4fd8a2e313c99ffc189e3a03a2035c56b3f9c6d14c1c287fed5c13bb99c06d4a",
+      "canonical_sha256": "4fd8a2e313c99ffc189e3a03a2035c56b3f9c6d14c1c287fed5c13bb99c06d4a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_rebootstrap_test.go",
+      "bytes": 20417,
+      "sha256": "3f11d71cfcde004b6aac834bf97667859e33bdbfa8853987263de27ee447a0f7",
+      "canonical_sha256": "3f11d71cfcde004b6aac834bf97667859e33bdbfa8853987263de27ee447a0f7",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_recovery.go",
+      "bytes": 1286,
+      "sha256": "648639a9d8ab906b7373359ebb2539e854c90623270f61c7181cbb3d3a69ebbe",
+      "canonical_sha256": "648639a9d8ab906b7373359ebb2539e854c90623270f61c7181cbb3d3a69ebbe",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_snapshot.go",
+      "bytes": 6092,
+      "sha256": "86a56e35187357a62e87c184d5b8229b49c4ec0e3ca60913b8ffab9d8ed4bccb",
+      "canonical_sha256": "86a56e35187357a62e87c184d5b8229b49c4ec0e3ca60913b8ffab9d8ed4bccb",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_test.go",
+      "bytes": 18853,
+      "sha256": "31684699989edaa21882b45733af6eba8fd15f2565f8c084557703f4089be3d2",
+      "canonical_sha256": "31684699989edaa21882b45733af6eba8fd15f2565f8c084557703f4089be3d2",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_wire.go",
+      "bytes": 12654,
+      "sha256": "1bd2e047a7bad1b7b627a0eca02860e577afc57b50a146fe994c168a668bd9db",
+      "canonical_sha256": "1bd2e047a7bad1b7b627a0eca02860e577afc57b50a146fe994c168a668bd9db",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_network_test.go",
+      "bytes": 5540,
+      "sha256": "509fc4d3479d573c1084edbff2985af873af66b23d41d7b3c980dfc439655430",
+      "canonical_sha256": "509fc4d3479d573c1084edbff2985af873af66b23d41d7b3c980dfc439655430",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_binding.go",
+      "bytes": 5601,
+      "sha256": "1b850a0312c4f5c2f6c93c56e4c95cd9619f4a31d9c297cb574dde3fc1e934b0",
+      "canonical_sha256": "1b850a0312c4f5c2f6c93c56e4c95cd9619f4a31d9c297cb574dde3fc1e934b0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_binding_module.go",
+      "bytes": 2358,
+      "sha256": "9d50baf8c3231884cdc998563c5e57ab164051196262cf427e3017e648c40eb7",
+      "canonical_sha256": "9d50baf8c3231884cdc998563c5e57ab164051196262cf427e3017e648c40eb7",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_binding_resource_test.go",
+      "bytes": 5510,
+      "sha256": "d742fa41c2aaaadf2b70182764b8371c027698982ef03f4d5565f7bce57d5009",
+      "canonical_sha256": "d742fa41c2aaaadf2b70182764b8371c027698982ef03f4d5565f7bce57d5009",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_binding_scan.go",
+      "bytes": 1014,
+      "sha256": "24552ef9edb8d54c377dfcb4bbd94ff7361723a49548c98c0a5dbfd4282b8fd4",
+      "canonical_sha256": "24552ef9edb8d54c377dfcb4bbd94ff7361723a49548c98c0a5dbfd4282b8fd4",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_binding_test.go",
+      "bytes": 17662,
+      "sha256": "c547e1234eea956dbb64bfd3b95e5ba0f8107914efae9c50e9f57140a05d36a1",
+      "canonical_sha256": "380af3dc7720d23420196e7f0a50abf4a6a1b778dab2b22038b62f444f8eb024",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_error_body.go",
+      "bytes": 825,
+      "sha256": "f8c59b17430f01e90e5cbdcd2df4b75a3d7d499f81df042210e3a798f74ed640",
+      "canonical_sha256": "f8c59b17430f01e90e5cbdcd2df4b75a3d7d499f81df042210e3a798f74ed640",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_metrics.go",
+      "bytes": 184,
+      "sha256": "24b4c7b7f0f1084d02867454557f2aaa8dcec3c82a0f5c8c205416945778b1c3",
+      "canonical_sha256": "24b4c7b7f0f1084d02867454557f2aaa8dcec3c82a0f5c8c205416945778b1c3",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_rebootstrap_capacity_boundary_test.go",
+      "bytes": 2879,
+      "sha256": "75a4041a228f813089efded12b755e968a25045c986097d7072a1d9c3bdc327a",
+      "canonical_sha256": "75a4041a228f813089efded12b755e968a25045c986097d7072a1d9c3bdc327a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/maintenance.go",
+      "bytes": 4726,
+      "sha256": "4998c995eb2d2f1e6ab3176f20f9b9d3c4623e863b98a1b3b829c3d6b9fceb89",
+      "canonical_sha256": "4998c995eb2d2f1e6ab3176f20f9b9d3c4623e863b98a1b3b829c3d6b9fceb89",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/metadata_encoding.go",
+      "bytes": 786,
+      "sha256": "ad77c72fefeda259d27ce0ebc9ac8eeaf6209052017dbee652e974f1a27458ef",
+      "canonical_sha256": "ad77c72fefeda259d27ce0ebc9ac8eeaf6209052017dbee652e974f1a27458ef",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/metadata_followup.go",
+      "bytes": 3334,
+      "sha256": "457de1b949c290988154c0b6f7fe2ce029f41d06130c9c5aea14288bcf948794",
+      "canonical_sha256": "457de1b949c290988154c0b6f7fe2ce029f41d06130c9c5aea14288bcf948794",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/metadata_followup_test.go",
+      "bytes": 12545,
+      "sha256": "cf29460d436fbe628b8ac17f4ba4b8586939b2e20a80a654c45bec70915b04d7",
+      "canonical_sha256": "cf29460d436fbe628b8ac17f4ba4b8586939b2e20a80a654c45bec70915b04d7",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/metadata_mutation.go",
+      "bytes": 8467,
+      "sha256": "ccc7db59285a6100d4e7f9b0c8c00a006db16c774636cf39a273723c41ceff75",
+      "canonical_sha256": "ccc7db59285a6100d4e7f9b0c8c00a006db16c774636cf39a273723c41ceff75",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/migration.go",
+      "bytes": 6233,
+      "sha256": "b32003d5381a5b2996a919e95474c0bf9afa340dfd8c6cec6fdb589aa44d456a",
+      "canonical_sha256": "b32003d5381a5b2996a919e95474c0bf9afa340dfd8c6cec6fdb589aa44d456a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/migration_test.go",
+      "bytes": 7310,
+      "sha256": "c731e862ae291e4a694426da82f34ded7af490d9a893bd5fc6b7995423df1ee5",
+      "canonical_sha256": "c731e862ae291e4a694426da82f34ded7af490d9a893bd5fc6b7995423df1ee5",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/model.go",
+      "bytes": 8463,
+      "sha256": "0b4f379291ef450676cc7cc3c06a55fa23e4d9abe33279f109a5087c57142e69",
+      "canonical_sha256": "0b4f379291ef450676cc7cc3c06a55fa23e4d9abe33279f109a5087c57142e69",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/mutation_transport.go",
+      "bytes": 4978,
+      "sha256": "2233c4fd614f7dd24ebd1a844f901a86832b397ca5510a06b632c38b98ea105f",
+      "canonical_sha256": "2233c4fd614f7dd24ebd1a844f901a86832b397ca5510a06b632c38b98ea105f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/network_acceptance_test.go",
+      "bytes": 8945,
+      "sha256": "a7b8856691763461a6332940d3827bfa04d70c396f1cb99ee5c62d371f19e630",
+      "canonical_sha256": "a7b8856691763461a6332940d3827bfa04d70c396f1cb99ee5c62d371f19e630",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/observations.go",
+      "bytes": 10797,
+      "sha256": "9f508f449c7fadab3a0c49ca4d36b9fdd5afe879529ed8cdea3e02fa4a25e537",
+      "canonical_sha256": "9f508f449c7fadab3a0c49ca4d36b9fdd5afe879529ed8cdea3e02fa4a25e537",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/observer_linux.go",
+      "bytes": 7063,
+      "sha256": "7936e770ec55d516f70003d70547f1f104cd65fa7ea48bd0abe01c3bb0e23076",
+      "canonical_sha256": "7936e770ec55d516f70003d70547f1f104cd65fa7ea48bd0abe01c3bb0e23076",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/operation_retry.go",
+      "bytes": 4198,
+      "sha256": "10fbb504d2e24271578212bf892355809b5ad16c3b479c67c1cea5856901f7d0",
+      "canonical_sha256": "10fbb504d2e24271578212bf892355809b5ad16c3b479c67c1cea5856901f7d0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/operations.go",
+      "bytes": 17357,
+      "sha256": "ca5858a95657bdbaa16c4cefaa53ac2f2261b72e1261f39b317eea006b55ad36",
+      "canonical_sha256": "ca5858a95657bdbaa16c4cefaa53ac2f2261b72e1261f39b317eea006b55ad36",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/parent_transport.go",
+      "bytes": 9108,
+      "sha256": "ea0baac31ae86749880bd259a7945c54d554908701da1ff1fa237a71ac1561df",
+      "canonical_sha256": "ea0baac31ae86749880bd259a7945c54d554908701da1ff1fa237a71ac1561df",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/planner.go",
+      "bytes": 32997,
+      "sha256": "83477ead0e309ade16a94e1818d30bb8f41f7b0012fdbbc71d29d4711b9313d5",
+      "canonical_sha256": "83477ead0e309ade16a94e1818d30bb8f41f7b0012fdbbc71d29d4711b9313d5",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/planner_guards_test.go",
+      "bytes": 13238,
+      "sha256": "6f554e58a56e6884ac26e58051831fb65bf76ec72f52939d04ae88f4ddcfe2da",
+      "canonical_sha256": "6f554e58a56e6884ac26e58051831fb65bf76ec72f52939d04ae88f4ddcfe2da",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/planner_resource_test.go",
+      "bytes": 8172,
+      "sha256": "42550f6a3278bcaa9fbf81640d8f9b2ff1662df1391131d87ab4f340e6a9af2b",
+      "canonical_sha256": "42550f6a3278bcaa9fbf81640d8f9b2ff1662df1391131d87ab4f340e6a9af2b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/planner_test.go",
+      "bytes": 25649,
+      "sha256": "57dd77c6fec84d3ce70010ba2a478974795a88085b1a4f24ed5af29b23b8b022",
+      "canonical_sha256": "57dd77c6fec84d3ce70010ba2a478974795a88085b1a4f24ed5af29b23b8b022",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/prepared_adoption.go",
+      "bytes": 2398,
+      "sha256": "28e0031638c1d29553ad851cb85e2454976ebe191fbe84dad3b73d8899e889f2",
+      "canonical_sha256": "28e0031638c1d29553ad851cb85e2454976ebe191fbe84dad3b73d8899e889f2",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/prepared_adoption_test.go",
+      "bytes": 3384,
+      "sha256": "87e4f954d4e0484d43782e3b5d651f61740c55e259320be30342da9eeb8d957e",
+      "canonical_sha256": "87e4f954d4e0484d43782e3b5d651f61740c55e259320be30342da9eeb8d957e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/profile_policy.go",
+      "bytes": 8773,
+      "sha256": "7fc4d89cf2583be9ae6e45a965029dd92a4d39b181bd17955db24c15df17c870",
+      "canonical_sha256": "7fc4d89cf2583be9ae6e45a965029dd92a4d39b181bd17955db24c15df17c870",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_feed.go",
+      "bytes": 8420,
+      "sha256": "b6653d103fe8a1201f368f77da9b77fcfb643efa6c05ce10d14f900457bae5ed",
+      "canonical_sha256": "b6653d103fe8a1201f368f77da9b77fcfb643efa6c05ce10d14f900457bae5ed",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_import_test.go",
+      "bytes": 20449,
+      "sha256": "7ea1421387242aaf591aca5f9a377fb2782ee5767293dfecc93d32be28a56d02",
+      "canonical_sha256": "7ea1421387242aaf591aca5f9a377fb2782ee5767293dfecc93d32be28a56d02",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_legacy_operations_test.go",
+      "bytes": 2593,
+      "sha256": "5bbc1acca1646cde4d3c6f6f89479dc79d31f12bdb2adcf8570fa1dac7ad4475",
+      "canonical_sha256": "5bbc1acca1646cde4d3c6f6f89479dc79d31f12bdb2adcf8570fa1dac7ad4475",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_migration_compat_test.go",
+      "bytes": 2456,
+      "sha256": "32c53dbfea93eecced0f1e9e83e47a3bf6e1e63f712a589567ab39714c3e6092",
+      "canonical_sha256": "32c53dbfea93eecced0f1e9e83e47a3bf6e1e63f712a589567ab39714c3e6092",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_model.go",
+      "bytes": 2356,
+      "sha256": "50aa8087cee76a84d0c32325952ce7c73196761c8d58ad0d1b2aed74d0b3eb29",
+      "canonical_sha256": "50aa8087cee76a84d0c32325952ce7c73196761c8d58ad0d1b2aed74d0b3eb29",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_module.go",
+      "bytes": 6688,
+      "sha256": "32b9a237c56d82f1dd633094aae09ee9e26ca9e7d75a2c6c92d3b5e8ca2abe0d",
+      "canonical_sha256": "32b9a237c56d82f1dd633094aae09ee9e26ca9e7d75a2c6c92d3b5e8ca2abe0d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_race_migration_test.go",
+      "bytes": 11803,
+      "sha256": "a6b2e724f19e2ca940ef6fe419f286f0f0304c896477fb109b409a5f160a7099",
+      "canonical_sha256": "a6b2e724f19e2ca940ef6fe419f286f0f0304c896477fb109b409a5f160a7099",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_resource_test.go",
+      "bytes": 5918,
+      "sha256": "a3e83496c182a118082f0c56fa4f28c669d7ee863e80deafb7a4435097f20cef",
+      "canonical_sha256": "a3e83496c182a118082f0c56fa4f28c669d7ee863e80deafb7a4435097f20cef",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/scan_work.go",
+      "bytes": 13956,
+      "sha256": "529bcf61a49988216302b5de155766a5c9a14e881df885d66bfb14aad0717b50",
+      "canonical_sha256": "529bcf61a49988216302b5de155766a5c9a14e881df885d66bfb14aad0717b50",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/scan_work_empty_test.go",
+      "bytes": 3606,
+      "sha256": "b75bc2987298bd3470c626f6e98e8f7ed52d55f0ae84bf6995ad2bcc9789890d",
+      "canonical_sha256": "b75bc2987298bd3470c626f6e98e8f7ed52d55f0ae84bf6995ad2bcc9789890d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_artifacts.go",
+      "bytes": 21506,
+      "sha256": "30986c5e36f259e7f7b834b1d7201939c7d1e02d0bfcacce709c96bf513a2872",
+      "canonical_sha256": "30986c5e36f259e7f7b834b1d7201939c7d1e02d0bfcacce709c96bf513a2872",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_artifacts_test.go",
+      "bytes": 17562,
+      "sha256": "ece80f328e89c81da365154b1d98a4ca67a35b387b463e5420096bad73e3748b",
+      "canonical_sha256": "ece80f328e89c81da365154b1d98a4ca67a35b387b463e5420096bad73e3748b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_budget.go",
+      "bytes": 4459,
+      "sha256": "36b673342a0fd41ba27bd0ea48652431e11e45e7aabbf0886c7dc85eefa364f0",
+      "canonical_sha256": "36b673342a0fd41ba27bd0ea48652431e11e45e7aabbf0886c7dc85eefa364f0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_budget_test.go",
+      "bytes": 6216,
+      "sha256": "7563df8e765229e42088f909469c83beb4c480d3de3c3e23dda51e482c5c67fb",
+      "canonical_sha256": "7563df8e765229e42088f909469c83beb4c480d3de3c3e23dda51e482c5c67fb",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_compacted_original_test.go",
+      "bytes": 1851,
+      "sha256": "a8cf6749e9ee3c447adea6a79a308ab480c0df3a5ea6769c18e6558181d24abd",
+      "canonical_sha256": "a8cf6749e9ee3c447adea6a79a308ab480c0df3a5ea6769c18e6558181d24abd",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_dispatch.go",
+      "bytes": 11454,
+      "sha256": "003fce29dd23469ee84c5f1b168f5ba240985414f81473d32d7c050331e81bc7",
+      "canonical_sha256": "003fce29dd23469ee84c5f1b168f5ba240985414f81473d32d7c050331e81bc7",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_dispatch_test.go",
+      "bytes": 23777,
+      "sha256": "1f7c3cddb4736d20c4597037aaf6469b0ce87246fcd654c90b928a9efc396a9c",
+      "canonical_sha256": "1f7c3cddb4736d20c4597037aaf6469b0ce87246fcd654c90b928a9efc396a9c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_engine.go",
+      "bytes": 8922,
+      "sha256": "eeae4e3683f5eb69b1566b3fcc9efb82149e10f7cd0a5149b06961b3939239ec",
+      "canonical_sha256": "eeae4e3683f5eb69b1566b3fcc9efb82149e10f7cd0a5149b06961b3939239ec",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_engine_cli_test.go",
+      "bytes": 6797,
+      "sha256": "996969b6023e74ef4696cffad140b049a079e4663de088669ceb2ad0575ea1e1",
+      "canonical_sha256": "996969b6023e74ef4696cffad140b049a079e4663de088669ceb2ad0575ea1e1",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_engine_test.go",
+      "bytes": 11569,
+      "sha256": "040bb9ceee48e7b6b02058ca91abc59f613225dacb3526822d4d3fa4464daf9b",
+      "canonical_sha256": "040bb9ceee48e7b6b02058ca91abc59f613225dacb3526822d4d3fa4464daf9b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_http.go",
+      "bytes": 8594,
+      "sha256": "b2bda9d70ef4ed94bd22ad8f9d415af80ba069be23501699af2e34647b4a2730",
+      "canonical_sha256": "b2bda9d70ef4ed94bd22ad8f9d415af80ba069be23501699af2e34647b4a2730",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_lifecycle_test.go",
+      "bytes": 3622,
+      "sha256": "752984b7aaac29f793b43491e977b83be07972a013c48371ff05872a70bceae8",
+      "canonical_sha256": "752984b7aaac29f793b43491e977b83be07972a013c48371ff05872a70bceae8",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_migration.go",
+      "bytes": 5208,
+      "sha256": "c0cd3a57af6a91752ce84e3a16e4fea8a39b1db147c962fbce93569ef7e2fa38",
+      "canonical_sha256": "c0cd3a57af6a91752ce84e3a16e4fea8a39b1db147c962fbce93569ef7e2fa38",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_missing_original_test.go",
+      "bytes": 4057,
+      "sha256": "3b483fdd55ecbe1fa389c6d55112896d4356f5ba1e94f77d655afcfe7fb87bb5",
+      "canonical_sha256": "3b483fdd55ecbe1fa389c6d55112896d4356f5ba1e94f77d655afcfe7fb87bb5",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_queue.go",
+      "bytes": 7800,
+      "sha256": "8336f03559e4c587b6acde59c37097074b150e2361a0d17a4f95c1b4c585d123",
+      "canonical_sha256": "8336f03559e4c587b6acde59c37097074b150e2361a0d17a4f95c1b4c585d123",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_queue_test.go",
+      "bytes": 10516,
+      "sha256": "37a9ca1f95548aa38a6947ab9f47af1c327c7db60b5f0a9c14a90c4b471d9e7c",
+      "canonical_sha256": "37a9ca1f95548aa38a6947ab9f47af1c327c7db60b5f0a9c14a90c4b471d9e7c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_state.go",
+      "bytes": 12204,
+      "sha256": "7459d83bf431d670f94ac1f7c13641b90ef86c55763a22e8e1bd9df4958e4160",
+      "canonical_sha256": "7459d83bf431d670f94ac1f7c13641b90ef86c55763a22e8e1bd9df4958e4160",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_state_test.go",
+      "bytes": 14170,
+      "sha256": "22dbcdd04dd8a78ec3fcf19cc7d9f0ecc2bf7589a83014b1c3bee19d658d0b28",
+      "canonical_sha256": "22dbcdd04dd8a78ec3fcf19cc7d9f0ecc2bf7589a83014b1c3bee19d658d0b28",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_stream.go",
+      "bytes": 5129,
+      "sha256": "11dded845a48cd46ec0a5706006585614b5377ce9da4bde08ba34329d9b238d6",
+      "canonical_sha256": "11dded845a48cd46ec0a5706006585614b5377ce9da4bde08ba34329d9b238d6",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_transport_test.go",
+      "bytes": 13631,
+      "sha256": "8ae0b8acd3c04185334570583b0be82a63d861d4ada1619c0c7eebff265dfe41",
+      "canonical_sha256": "8ae0b8acd3c04185334570583b0be82a63d861d4ada1619c0c7eebff265dfe41",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_wire.go",
+      "bytes": 14252,
+      "sha256": "5016923c6c16332f34d4323024c91790b7b52bcb945347ea424b912795b2c7a0",
+      "canonical_sha256": "5016923c6c16332f34d4323024c91790b7b52bcb945347ea424b912795b2c7a0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_wire_test.go",
+      "bytes": 11827,
+      "sha256": "9fb3ce774d3b638107abf85ba30abf402a5e7e8e2e1ca2d68a3ece0f86129fc5",
+      "canonical_sha256": "9fb3ce774d3b638107abf85ba30abf402a5e7e8e2e1ca2d68a3ece0f86129fc5",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_job_p02_test.go",
+      "bytes": 14425,
+      "sha256": "7b0828d90de60792081c797cef185e5ebaed464be632df15f8f5d92f119fc3fc",
+      "canonical_sha256": "7b0828d90de60792081c797cef185e5ebaed464be632df15f8f5d92f119fc3fc",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_job_proof.go",
+      "bytes": 2990,
+      "sha256": "0d22264929e404a2be1446c167b73d3cad4d0eb92fafb08c1f61156597a31af2",
+      "canonical_sha256": "0d22264929e404a2be1446c167b73d3cad4d0eb92fafb08c1f61156597a31af2",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_job_receipts.go",
+      "bytes": 2144,
+      "sha256": "5059d857e0f4e0b1a4ca83a3ff3a95aecb9e7fa2d0d7b1ea09956474d1110925",
+      "canonical_sha256": "5059d857e0f4e0b1a4ca83a3ff3a95aecb9e7fa2d0d7b1ea09956474d1110925",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_job_receipts_p02_test.go",
+      "bytes": 1662,
+      "sha256": "fce15dfb45395f314e67fc16f27c705749b6d2dae2254ff39668e0002f6e6d81",
+      "canonical_sha256": "fce15dfb45395f314e67fc16f27c705749b6d2dae2254ff39668e0002f6e6d81",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_job_wire.go",
+      "bytes": 2871,
+      "sha256": "96a39e7be3768a90481938858f35cb2f796df3b34a7603e431348091e057fbb5",
+      "canonical_sha256": "96a39e7be3768a90481938858f35cb2f796df3b34a7603e431348091e057fbb5",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/snapshots.go",
+      "bytes": 13755,
+      "sha256": "0be623068c12850968222539e199dda3c32524344a0435f5ca7f05ab80d8a72f",
+      "canonical_sha256": "0be623068c12850968222539e199dda3c32524344a0435f5ca7f05ab80d8a72f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_capture_test.go",
+      "bytes": 11292,
+      "sha256": "d024c3fb78957143dc5d32b4afb57fbd90d204ddf594b44b43855cb1cb2c4e8c",
+      "canonical_sha256": "d024c3fb78957143dc5d32b4afb57fbd90d204ddf594b44b43855cb1cb2c4e8c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_incarnation.go",
+      "bytes": 5500,
+      "sha256": "4f44a4ab390b4423181e16a2fc2fb29fbfcb324d48aaa76be3ce192edffcd2df",
+      "canonical_sha256": "4f44a4ab390b4423181e16a2fc2fb29fbfcb324d48aaa76be3ce192edffcd2df",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_incarnation_test.go",
+      "bytes": 2054,
+      "sha256": "3566a5f7deddca23ab58588ae54fa14252cb29fd477f44d89884c83103df245d",
+      "canonical_sha256": "3566a5f7deddca23ab58588ae54fa14252cb29fd477f44d89884c83103df245d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_model.go",
+      "bytes": 4138,
+      "sha256": "99058f3ec138d32ebdb54cad2ecd12e3d717fe01356ae409e096913f35805be3",
+      "canonical_sha256": "99058f3ec138d32ebdb54cad2ecd12e3d717fe01356ae409e096913f35805be3",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_module.go",
+      "bytes": 9772,
+      "sha256": "41eea97002276ee2c548cf2af80abe61f2d5f6226762911f32e7a6e2f1a9e2ae",
+      "canonical_sha256": "41eea97002276ee2c548cf2af80abe61f2d5f6226762911f32e7a6e2f1a9e2ae",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_module_test.go",
+      "bytes": 7634,
+      "sha256": "81d26b1454cdab6a368d42ebd98ad66f6e1bc730bcb571b2ed2055ef39f92f24",
+      "canonical_sha256": "81d26b1454cdab6a368d42ebd98ad66f6e1bc730bcb571b2ed2055ef39f92f24",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_remount.go",
+      "bytes": 8506,
+      "sha256": "b408f3e9f777f50f6533a8259a12264ec8c13ee871889453fa6f0f0f398e3b9b",
+      "canonical_sha256": "b408f3e9f777f50f6533a8259a12264ec8c13ee871889453fa6f0f0f398e3b9b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_remount_cli_test.go",
+      "bytes": 5795,
+      "sha256": "5087234c54f6f54b6fcda5a1a7c681bbd993cd0af7f14dfb61349b97f47141e5",
+      "canonical_sha256": "5087234c54f6f54b6fcda5a1a7c681bbd993cd0af7f14dfb61349b97f47141e5",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_remount_test.go",
+      "bytes": 17102,
+      "sha256": "273503f3f78c6fe10f5d8489f9c3254a9801184d254bcc1f4f1f8e831a343b78",
+      "canonical_sha256": "273503f3f78c6fe10f5d8489f9c3254a9801184d254bcc1f4f1f8e831a343b78",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_resource_test.go",
+      "bytes": 7505,
+      "sha256": "b6900714a877fe120d848495ee7a88b5f58755e2d87d12e82cce83a8d8c4e33e",
+      "canonical_sha256": "b6900714a877fe120d848495ee7a88b5f58755e2d87d12e82cce83a8d8c4e33e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_restart_test.go",
+      "bytes": 3192,
+      "sha256": "24d049474d9ab36da2a3467ff5232af9062a37744208a9f88b0b845c33cd99d1",
+      "canonical_sha256": "24d049474d9ab36da2a3467ff5232af9062a37744208a9f88b0b845c33cd99d1",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_store.go",
+      "bytes": 11556,
+      "sha256": "f7c602874fe6fd29194213ca1ddf0a7b35047514d49d00d05ee1d403493256ca",
+      "canonical_sha256": "f7c602874fe6fd29194213ca1ddf0a7b35047514d49d00d05ee1d403493256ca",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_store_test.go",
+      "bytes": 10252,
+      "sha256": "256682a50bdbe6909b5e2b93dc44bb6667a61099ed0e284646813de0daa55a95",
+      "canonical_sha256": "256682a50bdbe6909b5e2b93dc44bb6667a61099ed0e284646813de0daa55a95",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_wal_backup_test.go",
+      "bytes": 17303,
+      "sha256": "3afb3b349b782bf8334ff935bf6c8dffef87def2d1a11266a45907519af91678",
+      "canonical_sha256": "3afb3b349b782bf8334ff935bf6c8dffef87def2d1a11266a45907519af91678",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/sqlite_statements.go",
+      "bytes": 5413,
+      "sha256": "f96377fd1e64d100ac445f91b57148fe946d46911adfc24e9ae312978e9b9491",
+      "canonical_sha256": "f96377fd1e64d100ac445f91b57148fe946d46911adfc24e9ae312978e9b9491",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/sqlite_statements_p02_test.go",
+      "bytes": 5749,
+      "sha256": "1eccdcdf6d2838d697aa40d6434bcffaaa0cedee3c4d90439e99da2d1e0520fd",
+      "canonical_sha256": "1eccdcdf6d2838d697aa40d6434bcffaaa0cedee3c4d90439e99da2d1e0520fd",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stage3_archival_reader_test.go",
+      "bytes": 1462,
+      "sha256": "398d79f2df346de92eb3d5405e84c68f46fb7be9dfd4a7ed19c7177a5e351c97",
+      "canonical_sha256": "398d79f2df346de92eb3d5405e84c68f46fb7be9dfd4a7ed19c7177a5e351c97",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stage3_batch_restart_backup_test.go",
+      "bytes": 23883,
+      "sha256": "115f1dd594fa8a567baa48bcc7308b80b93b5e17df1af5bb38c47bec1f75743a",
+      "canonical_sha256": "115f1dd594fa8a567baa48bcc7308b80b93b5e17df1af5bb38c47bec1f75743a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stage3_chat_c_test.go",
+      "bytes": 80557,
+      "sha256": "54e9f6a0a9406f1d3fff9d8abc764d6a343e8ecc56f249b61bc8d69c86340c91",
+      "canonical_sha256": "54e9f6a0a9406f1d3fff9d8abc764d6a343e8ecc56f249b61bc8d69c86340c91",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stage3_drained_backup_test.go",
+      "bytes": 7745,
+      "sha256": "ee4d044285b7e6be876bf8b8b15a7c47ca5eb5860110211678308fb43125044f",
+      "canonical_sha256": "ee4d044285b7e6be876bf8b8b15a7c47ca5eb5860110211678308fb43125044f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stage3_native_mount_fixture_test.go",
+      "bytes": 15021,
+      "sha256": "d86e1c2f7c28085cb9408ca427956769013a3a83cdedfe3de45ac18193567ee0",
+      "canonical_sha256": "d86e1c2f7c28085cb9408ca427956769013a3a83cdedfe3de45ac18193567ee0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stage3_pending_backup_test.go",
+      "bytes": 16640,
+      "sha256": "f78270f50eb513cf523224fdc958b695be2a76de34becac01649907da98cac6f",
+      "canonical_sha256": "f78270f50eb513cf523224fdc958b695be2a76de34becac01649907da98cac6f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/store.go",
+      "bytes": 15983,
+      "sha256": "bdf6d06d3bfe4c9172199c641c09e5441646f2b6e9099728acaa688fa88375fc",
+      "canonical_sha256": "bdf6d06d3bfe4c9172199c641c09e5441646f2b6e9099728acaa688fa88375fc",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/store_test.go",
+      "bytes": 30361,
+      "sha256": "69cdcb81865d67c4fbbd5f72f6b3c002558b7f153a0a465ef788dc090e0af7b7",
+      "canonical_sha256": "69cdcb81865d67c4fbbd5f72f6b3c002558b7f153a0a465ef788dc090e0af7b7",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_metadata_followup_test.go",
+      "bytes": 8173,
+      "sha256": "df130bcddf146d7e4c5f2c4c5863d532f2407a125aeb0f9a59c1d9409e19995e",
+      "canonical_sha256": "df130bcddf146d7e4c5f2c4c5863d532f2407a125aeb0f9a59c1d9409e19995e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_plan.go",
+      "bytes": 11429,
+      "sha256": "36549e033861c97a93f5c6fdadd7ec6a9e894befe34e12b1220fded9fc672ca7",
+      "canonical_sha256": "36549e033861c97a93f5c6fdadd7ec6a9e894befe34e12b1220fded9fc672ca7",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_receipt.go",
+      "bytes": 8282,
+      "sha256": "f2481719f332932d7f194a95651c8ed06467ef4aeccf699c32abd1c8196c92f4",
+      "canonical_sha256": "f2481719f332932d7f194a95651c8ed06467ef4aeccf699c32abd1c8196c92f4",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_source_proof.go",
+      "bytes": 3258,
+      "sha256": "420f9e7a7758039bf6895dbcaaa1fd7a5efffbb1870f7daecf1ca61daa66a4d1",
+      "canonical_sha256": "420f9e7a7758039bf6895dbcaaa1fd7a5efffbb1870f7daecf1ca61daa66a4d1",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_source_proof_p02_test.go",
+      "bytes": 7340,
+      "sha256": "abcb2c28fc7bd4cc3932ec6c088b6d0d82ca090cc3c572726953900f415e969f",
+      "canonical_sha256": "abcb2c28fc7bd4cc3932ec6c088b6d0d82ca090cc3c572726953900f415e969f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_upload.go",
+      "bytes": 10320,
+      "sha256": "ce953935f49cad652aed55d60a7b2a495143ffbdbe7681041e95b0c4a936b9f1",
+      "canonical_sha256": "ce953935f49cad652aed55d60a7b2a495143ffbdbe7681041e95b0c4a936b9f1",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_v2_p02_test.go",
+      "bytes": 5750,
+      "sha256": "7c029c2c72a54d1ea553f69ed13cb8e06d4374b0dc3e0b8b40c9f7f37880ca98",
+      "canonical_sha256": "7c029c2c72a54d1ea553f69ed13cb8e06d4374b0dc3e0b8b40c9f7f37880ca98",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_v2_state.go",
+      "bytes": 7018,
+      "sha256": "edccb9607aea78d78538f630fe34d16f78b1b8d68ea3bac53c0c4092d729370d",
+      "canonical_sha256": "edccb9607aea78d78538f630fe34d16f78b1b8d68ea3bac53c0c4092d729370d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_v2_transport.go",
+      "bytes": 11017,
+      "sha256": "76bef86c1c777b5e7dc1f1ba7f251a379c6e2c17c6592e6a2780e78ae8bcddb8",
+      "canonical_sha256": "76bef86c1c777b5e7dc1f1ba7f251a379c6e2c17c6592e6a2780e78ae8bcddb8",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_v2_transport_p02_test.go",
+      "bytes": 10622,
+      "sha256": "a615954006bbc3a90deef6d8c8f48d8cb611f5ac03e2788f7fb4d543feab8d1e",
+      "canonical_sha256": "a615954006bbc3a90deef6d8c8f48d8cb611f5ac03e2788f7fb4d543feab8d1e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_v2_wire.go",
+      "bytes": 3992,
+      "sha256": "06a7bc20880c70c350c31c584b0f2b0403ea9ef01caccaf97df1770b46152921",
+      "canonical_sha256": "06a7bc20880c70c350c31c584b0f2b0403ea9ef01caccaf97df1770b46152921",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/syncstate_native_bridge_linux_test.go",
+      "bytes": 2174,
+      "sha256": "c76da60d299805ad4846147bbde5ea8c5087d97249d8704282a2e61302668da8",
+      "canonical_sha256": "c76da60d299805ad4846147bbde5ea8c5087d97249d8704282a2e61302668da8",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/syncstate_native_bridge_other_test.go",
+      "bytes": 551,
+      "sha256": "e93b487eb0cd6796456d12e9e6bb7ae3ea760099e0f41ff987762ca3d9345536",
+      "canonical_sha256": "e93b487eb0cd6796456d12e9e6bb7ae3ea760099e0f41ff987762ca3d9345536",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/transport_budget.go",
+      "bytes": 6345,
+      "sha256": "05d3cef9e99a481fbea8c3aaa5126e69d2ed579f5041033ad2dea754311dab95",
+      "canonical_sha256": "05d3cef9e99a481fbea8c3aaa5126e69d2ed579f5041033ad2dea754311dab95",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/transport_budget_p02_test.go",
+      "bytes": 1052,
+      "sha256": "69367e6496c2cd6bde03b808e6125dd44b03a83cbb6aae23663d97d53e78a950",
+      "canonical_sha256": "69367e6496c2cd6bde03b808e6125dd44b03a83cbb6aae23663d97d53e78a950",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/verified_snapshot.go",
+      "bytes": 20331,
+      "sha256": "f61dc39766bdbae4906a865bfca07ca4fff07809054e35ab92fef1d51bd5809c",
+      "canonical_sha256": "f61dc39766bdbae4906a865bfca07ca4fff07809054e35ab92fef1d51bd5809c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/terminal_linux.go",
+      "bytes": 1747,
+      "sha256": "218b66bcf2a50a69185477bf857b284063ea34f50ba82540dbfef255fa8ef5d3",
+      "canonical_sha256": "218b66bcf2a50a69185477bf857b284063ea34f50ba82540dbfef255fa8ef5d3",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/tui.go",
+      "bytes": 11246,
+      "sha256": "5cc89671fc8155c97107510bad1c552a3ac6a606c4f5d7a6260daf0c17a554cf",
+      "canonical_sha256": "5cc89671fc8155c97107510bad1c552a3ac6a606c4f5d7a6260daf0c17a554cf",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/tui_live_status_test.go",
+      "bytes": 4518,
+      "sha256": "dcabfa3db8e93b400146a279406cfcbdb13bdb4e39a90959d8f0bc47e8b7f5c8",
+      "canonical_sha256": "dcabfa3db8e93b400146a279406cfcbdb13bdb4e39a90959d8f0bc47e8b7f5c8",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/tui_test.go",
+      "bytes": 4701,
+      "sha256": "f0b7c14705d52ebd03bcb36decadb4eba6485d01a9232566d5673585ae8f1924",
+      "canonical_sha256": "f0b7c14705d52ebd03bcb36decadb4eba6485d01a9232566d5673585ae8f1924",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/update.go",
+      "bytes": 16391,
+      "sha256": "fd8562581d7bfe22a5e198929609b71a08bd4b70f49c93186009f4c832bff2df",
+      "canonical_sha256": "fd8562581d7bfe22a5e198929609b71a08bd4b70f49c93186009f4c832bff2df",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/update_indexed.go",
+      "bytes": 2594,
+      "sha256": "0009947c96bb9b63466b24d33ee8ae9e45175e609886f5d986055cee63b8677c",
+      "canonical_sha256": "0009947c96bb9b63466b24d33ee8ae9e45175e609886f5d986055cee63b8677c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/update_notices.go",
+      "bytes": 11136,
+      "sha256": "5469dc0d0a17dcc0ab99dc657bc3177f04765848b3372fb1e747fe42a985d442",
+      "canonical_sha256": "5469dc0d0a17dcc0ab99dc657bc3177f04765848b3372fb1e747fe42a985d442",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/update_notices_test.go",
+      "bytes": 13815,
+      "sha256": "055d58f9a75adc9e418aa5459320302732316538c5114eb326418349a5bf137d",
+      "canonical_sha256": "055d58f9a75adc9e418aa5459320302732316538c5114eb326418349a5bf137d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/syncproto/README.md",
+      "bytes": 724,
+      "sha256": "455684df1bfd2b9c60d8277a61acfce0b6b1b309e860e4c88b2cc1c19951a98e",
+      "canonical_sha256": "455684df1bfd2b9c60d8277a61acfce0b6b1b309e860e4c88b2cc1c19951a98e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/syncproto/generated_test.go",
+      "bytes": 2685,
+      "sha256": "a7638c22fb258112d3de066ffa4124e1473dfbdd7c18e2ebef0bac1f210336d0",
+      "canonical_sha256": "a7638c22fb258112d3de066ffa4124e1473dfbdd7c18e2ebef0bac1f210336d0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/syncproto/name_codec.go",
+      "bytes": 1499,
+      "sha256": "35c7cd30ca9e002c8cf3444991e413028200abfa067bc75634510beff3fbe95a",
+      "canonical_sha256": "35c7cd30ca9e002c8cf3444991e413028200abfa067bc75634510beff3fbe95a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/syncproto/protocol.go",
+      "bytes": 11430,
+      "sha256": "e89a59768ba074edb92e4b7c741fbee70a91d594d33627f161db2ce392a3d71b",
+      "canonical_sha256": "e89a59768ba074edb92e4b7c741fbee70a91d594d33627f161db2ce392a3d71b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/syncproto/protocol_test.go",
+      "bytes": 1442,
+      "sha256": "21cd56d5f30eb8c79d2f58ff68ebe0fb76614a5d94a364968483df0ba2f11db7",
+      "canonical_sha256": "21cd56d5f30eb8c79d2f58ff68ebe0fb76614a5d94a364968483df0ba2f11db7",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/syncproto/snapshot_page.go",
+      "bytes": 2919,
+      "sha256": "72b9428a2cf263f9a4fdc311b81f9331cdbd7bb59f8ab03a411f70b28033b7a9",
+      "canonical_sha256": "72b9428a2cf263f9a4fdc311b81f9331cdbd7bb59f8ab03a411f70b28033b7a9",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/syncproto/snapshot_page_test.go",
+      "bytes": 3009,
+      "sha256": "1e74abe1ea29b9cd97904bf4603d31a9faa0370ab9017a3350a7ba9768cabb5e",
+      "canonical_sha256": "1e74abe1ea29b9cd97904bf4603d31a9faa0370ab9017a3350a7ba9768cabb5e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/syncproto/stage3_chat_c_test.go",
+      "bytes": 2215,
+      "sha256": "5f73dfa86df088259a3fe02d414f3c4ef8184e8547b939da7507dd7a76846d4a",
+      "canonical_sha256": "5f73dfa86df088259a3fe02d414f3c4ef8184e8547b939da7507dd7a76846d4a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/syncproto/testdata/boundaries.v1.json",
+      "bytes": 474588,
+      "sha256": "1106ebca2c9dc2feccb814562b81a2054ee5485e85f50c25d1ee79fa4609868c",
+      "canonical_sha256": "1106ebca2c9dc2feccb814562b81a2054ee5485e85f50c25d1ee79fa4609868c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/syncproto/testdata/golden.v1.json",
+      "bytes": 3263,
+      "sha256": "8719e08521eaad410e0bb6b1b180c559f14ad205c52b06fcbd9b33df92a2f4e0",
+      "canonical_sha256": "8719e08521eaad410e0bb6b1b180c559f14ad205c52b06fcbd9b33df92a2f4e0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/syncproto/testdata/name-codec-v1.json",
+      "bytes": 3029,
+      "sha256": "b76f70d28afb77b82cd8813fad4aeda4b94df0d4deea3b2b371756dedea07d16",
+      "canonical_sha256": "b76f70d28afb77b82cd8813fad4aeda4b94df0d4deea3b2b371756dedea07d16",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/syncproto/testdata/snapshot-pages.v1.json",
+      "bytes": 697094,
+      "sha256": "4447c73837d7c429e00e92bafcc0e486b3b6af4e4269a75bcd307c3be7d006f8",
+      "canonical_sha256": "4447c73837d7c429e00e92bafcc0e486b3b6af4e4269a75bcd307c3be7d006f8",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/cmd/pluto-native-owner/main_linux.go",
+      "bytes": 587,
+      "sha256": "f2339ea3ab1ce88035574f760ce2cbc63117b90886c41f88b7682142a9a987cf",
+      "canonical_sha256": "f2339ea3ab1ce88035574f760ce2cbc63117b90886c41f88b7682142a9a987cf",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/actor_linux.go",
+      "bytes": 15455,
+      "sha256": "45fc7b479cf3052be060dfb7125e048d814d2aed9c49491d64155b2c1bd6bc49",
+      "canonical_sha256": "45fc7b479cf3052be060dfb7125e048d814d2aed9c49491d64155b2c1bd6bc49",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/atomic_start.go",
+      "bytes": 556,
+      "sha256": "59e1b063596e01e7cb6e6fb40cc86fc3d05f30eec3a2a777409e349a9c533fef",
+      "canonical_sha256": "59e1b063596e01e7cb6e6fb40cc86fc3d05f30eec3a2a777409e349a9c533fef",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/atomic_start_test.go",
+      "bytes": 2608,
+      "sha256": "5d928a5b90ed66b5c90c33d8294d66c00a1ab6cf7e7350aae9658eb78071e17c",
+      "canonical_sha256": "5d928a5b90ed66b5c90c33d8294d66c00a1ab6cf7e7350aae9658eb78071e17c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/client_linux.go",
+      "bytes": 12666,
+      "sha256": "d4accb1515ba0f193320f12d50b4afa0ba02c8b2d61dd9460a626635369f34f1",
+      "canonical_sha256": "d4accb1515ba0f193320f12d50b4afa0ba02c8b2d61dd9460a626635369f34f1",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/client_sequence_linux_test.go",
+      "bytes": 847,
+      "sha256": "17d17500b6558bb5fcdd4168ac3be3c0078feacd0f6b98f7b3a2a56c00d82d40",
+      "canonical_sha256": "17d17500b6558bb5fcdd4168ac3be3c0078feacd0f6b98f7b3a2a56c00d82d40",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/copy_linux.go",
+      "bytes": 1987,
+      "sha256": "d9dee5aadba34c3b802fbde27ece1db0739af0ed53de2d559ff82ff604a8afa0",
+      "canonical_sha256": "d9dee5aadba34c3b802fbde27ece1db0739af0ed53de2d559ff82ff604a8afa0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/credential_plan.go",
+      "bytes": 1018,
+      "sha256": "d5a0ecea756c1802d4b521eea0e72714f7107d5cdd3a9c213c9b378f3f87b34f",
+      "canonical_sha256": "d5a0ecea756c1802d4b521eea0e72714f7107d5cdd3a9c213c9b378f3f87b34f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/custody/custody.go",
+      "bytes": 14165,
+      "sha256": "61fa48917e61850507a57ad1f3f91e3a7796a6a605891d82168b8ded6e17023a",
+      "canonical_sha256": "61fa48917e61850507a57ad1f3f91e3a7796a6a605891d82168b8ded6e17023a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/custody/custody_test.go",
+      "bytes": 9782,
+      "sha256": "71932bb6eccef9932bc8a4f0c42f1f3b44a93ec5040ff7ae4d7bf7252e0a9a80",
+      "canonical_sha256": "71932bb6eccef9932bc8a4f0c42f1f3b44a93ec5040ff7ae4d7bf7252e0a9a80",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/owner_linux.go",
+      "bytes": 19214,
+      "sha256": "063094c725593dc615b1f503352ffe10d941f7e87a4c796dc6ff72176f0cb57a",
+      "canonical_sha256": "063094c725593dc615b1f503352ffe10d941f7e87a4c796dc6ff72176f0cb57a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/proc_linux.go",
+      "bytes": 8871,
+      "sha256": "7680c1772f74763cfb28e036d10926ad99d4f81f597ab68f2fad40a5101eb7bf",
+      "canonical_sha256": "7680c1772f74763cfb28e036d10926ad99d4f81f597ab68f2fad40a5101eb7bf",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/proc_parser_linux_test.go",
+      "bytes": 698,
+      "sha256": "2c934b1bcbf4a8e03ea260bb7aff310563e325cb607bde4f8da4a1e95765fd3b",
+      "canonical_sha256": "2c934b1bcbf4a8e03ea260bb7aff310563e325cb607bde4f8da4a1e95765fd3b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/protocol.go",
+      "bytes": 11501,
+      "sha256": "f014c46970f138c00463778c8aa1b8a04c7949b85edfa17e5185cf291fba06e1",
+      "canonical_sha256": "f014c46970f138c00463778c8aa1b8a04c7949b85edfa17e5185cf291fba06e1",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/protocol_test.go",
+      "bytes": 2872,
+      "sha256": "61046ad1dcee639f322193113b883fb887b4d79f6403fefa0ca9204b11a0cbc7",
+      "canonical_sha256": "61046ad1dcee639f322193113b883fb887b4d79f6403fefa0ca9204b11a0cbc7",
+      "line_endings": "LF"
+    },
+    {
+      "path": "packaging/bootstrap.sh",
+      "bytes": 9156,
+      "sha256": "e44200aac849d27fe3ad2beca2b7e13ee79bc30a7f27be6259fdbf15e6e3921a",
+      "canonical_sha256": "e44200aac849d27fe3ad2beca2b7e13ee79bc30a7f27be6259fdbf15e6e3921a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "packaging/pluto.service",
+      "bytes": 622,
+      "sha256": "40c264025720654853173d2278466b39cc12ddf80d8750db12110898a66b392f",
+      "canonical_sha256": "40c264025720654853173d2278466b39cc12ddf80d8750db12110898a66b392f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "packaging/sqlite-v1.60.1/LICENSE",
+      "bytes": 1489,
+      "sha256": "c6fe05491a60ae13bcd223088d2705e36dede24e5587226231d2459ada5c4822",
+      "canonical_sha256": "c6fe05491a60ae13bcd223088d2705e36dede24e5587226231d2459ada5c4822",
+      "line_endings": "LF"
+    },
+    {
+      "path": "packaging/sqlite-v1.60.1/LICENSE-3RD-PARTY.md",
+      "bytes": 74323,
+      "sha256": "b4366b9c27a9364633e015011a231913ed19bf1228f335bf617e50a6f7b168a6",
+      "canonical_sha256": "b4366b9c27a9364633e015011a231913ed19bf1228f335bf617e50a6f7b168a6",
+      "line_endings": "LF"
+    },
+    {
+      "path": "packaging/sqlite-v1.60.1/LICENSE-SQLITE",
+      "bytes": 1506,
+      "sha256": "8438c9c89b849131ead81d5435cb97fcf052df5b0b286dda8a2d4c29e6cb3fd0",
+      "canonical_sha256": "8438c9c89b849131ead81d5435cb97fcf052df5b0b286dda8a2d4c29e6cb3fd0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "packaging/sqlite-v1.60.1/LICENSE-SQLITE_VEC",
+      "bytes": 1068,
+      "sha256": "6ce72bbe12d975bd5286e5ab0a064c069693300c47bccbc57bec18485f1621ea",
+      "canonical_sha256": "6ce72bbe12d975bd5286e5ab0a064c069693300c47bccbc57bec18485f1621ea",
+      "line_endings": "LF"
+    },
+    {
+      "path": "packaging/sqlite-v1.60.1/README.md",
+      "bytes": 4066,
+      "sha256": "cef75b955d04b312dbd36762329052dd55ca8e422ba58deb819b015aecb1f209",
+      "canonical_sha256": "cef75b955d04b312dbd36762329052dd55ca8e422ba58deb819b015aecb1f209",
+      "line_endings": "LF"
+    },
+    {
+      "path": "packaging/verify-runtime-contract.py",
+      "bytes": 3663,
+      "sha256": "20f5dcef0a4bc64ab0d7d59fb937c019c61aff9ae04d44511b98926d97a62d3d",
+      "canonical_sha256": "20f5dcef0a4bc64ab0d7d59fb937c019c61aff9ae04d44511b98926d97a62d3d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "packaging/verify-runtime-notices.py",
+      "bytes": 2251,
+      "sha256": "c2ac08668ce65c2abf655f203325372cb2ca6374fe2f8949e96416440cdd0536",
+      "canonical_sha256": "c2ac08668ce65c2abf655f203325372cb2ca6374fe2f8949e96416440cdd0536",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/__pycache__/known-problems-gate.cpython-313.pyc",
+      "bytes": 17284,
+      "sha256": "d248f90cc16654e0789f84a89b41856173a4e79d6c53b85a0a67567fd0b2186e",
+      "canonical_sha256": "d248f90cc16654e0789f84a89b41856173a4e79d6c53b85a0a67567fd0b2186e",
+      "line_endings": "BINARY"
+    },
+    {
+      "path": "scripts/bootstrap-contract.test.mjs",
+      "bytes": 5173,
+      "sha256": "d777f1eb756b82fd0bb89f7b1af80177f97ae910cac1e80139bf8ce485579a3a",
+      "canonical_sha256": "d777f1eb756b82fd0bb89f7b1af80177f97ae910cac1e80139bf8ce485579a3a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/bootstrap-distribution.test.mjs",
+      "bytes": 4778,
+      "sha256": "4714dd5358571b358ea1024345610fb569a17a55b8571eb6f5032d2a463bd42f",
+      "canonical_sha256": "4714dd5358571b358ea1024345610fb569a17a55b8571eb6f5032d2a463bd42f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/bootstrap.test.mjs",
+      "bytes": 6169,
+      "sha256": "7790bfc486969788283564455efc482a6bad0488059295461379ac3c6b3cccf4",
+      "canonical_sha256": "7790bfc486969788283564455efc482a6bad0488059295461379ac3c6b3cccf4",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/build-release.mjs",
+      "bytes": 5444,
+      "sha256": "84aa4b55dd1af91ce96406956cd05361689cd80c03eb33339cfbb2bd00ebf570",
+      "canonical_sha256": "84aa4b55dd1af91ce96406956cd05361689cd80c03eb33339cfbb2bd00ebf570",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/check-go-ci.py",
+      "bytes": 56136,
+      "sha256": "b0117436a56ed317db87fec980376841887e747071db01dba147b7f0ad361b5c",
+      "canonical_sha256": "b0117436a56ed317db87fec980376841887e747071db01dba147b7f0ad361b5c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/container-ci-accounting.py",
+      "bytes": 4049,
+      "sha256": "94ffa786fa027354f441cf03803b55fe713ba0a1ce3d369cc60d7e7e1af4b68d",
+      "canonical_sha256": "94ffa786fa027354f441cf03803b55fe713ba0a1ce3d369cc60d7e7e1af4b68d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/default-ci-conditional-policy.json",
+      "bytes": 9369,
+      "sha256": "d89e8e7c1184f5b898a97b7b518e55fd806c68d99397376568971e6b0a62ed32",
+      "canonical_sha256": "d89e8e7c1184f5b898a97b7b518e55fd806c68d99397376568971e6b0a62ed32",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/go-ci.py",
+      "bytes": 12696,
+      "sha256": "f30d397bd092c9db83a0323e44dede83b95c6d21046b4dc1cd1069f71b23ba11",
+      "canonical_sha256": "f30d397bd092c9db83a0323e44dede83b95c6d21046b4dc1cd1069f71b23ba11",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/known-problems-gate.py",
+      "bytes": 11728,
+      "sha256": "5fa3a3cd79da086bc7389ca1e2e7eb259bb16b6f7ce25134a65ccd8dce7438fb",
+      "canonical_sha256": "5fa3a3cd79da086bc7389ca1e2e7eb259bb16b6f7ce25134a65ccd8dce7438fb",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/Dockerfile.ci",
+      "bytes": 274,
+      "sha256": "69b40bf7e78eecbf164ab3b38e9da786b8cd9230afdb9cb39335dca15ed4f65b",
+      "canonical_sha256": "69b40bf7e78eecbf164ab3b38e9da786b8cd9230afdb9cb39335dca15ed4f65b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/api/case-policy.json",
+      "bytes": 1284,
+      "sha256": "072ac174e99d9f13e8174f76815c96ef23dc078a914984ebc934edbb4b698691",
+      "canonical_sha256": "072ac174e99d9f13e8174f76815c96ef23dc078a914984ebc934edbb4b698691",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/api/finish.mjs",
+      "bytes": 5014,
+      "sha256": "f1f7913423ce2552ef0f2ba0dff44add643a6a4bc6fdec38a3c1864d9e8fe489",
+      "canonical_sha256": "f1f7913423ce2552ef0f2ba0dff44add643a6a4bc6fdec38a3c1864d9e8fe489",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/api/producer.mjs",
+      "bytes": 24630,
+      "sha256": "f3aa4756ef2970db0f2840d16cb899823f39269eb6966b7778c7d55ddcbac86c",
+      "canonical_sha256": "f3aa4756ef2970db0f2840d16cb899823f39269eb6966b7778c7d55ddcbac86c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/api/run-native.sh",
+      "bytes": 2629,
+      "sha256": "0ffaa9511b5743860b530ab06e2227aacc3223fb225376c085e5043fe7f6d02f",
+      "canonical_sha256": "0ffaa9511b5743860b530ab06e2227aacc3223fb225376c085e5043fe7f6d02f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/api/write-native-manifest.py",
+      "bytes": 3041,
+      "sha256": "a422996d6704d0625b84ac45a56903a5c91e49f4e087732dcac3de0168000a4b",
+      "canonical_sha256": "a422996d6704d0625b84ac45a56903a5c91e49f4e087732dcac3de0168000a4b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/adoption.fixture.ts",
+      "bytes": 7513,
+      "sha256": "4ffbd37eebb23dad4ea36d2ffa33990cad4ff3858e0968557e5433aeb950412a",
+      "canonical_sha256": "bda1edc30d33309bae331b3cef0a90ecd1df9284cc78d1826a597af225127922",
+      "line_endings": "MIXED",
+      "crlf_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        19,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ]
+    },
+    {
+      "path": "scripts/native-fixture/bulk/api.integration.test.ts",
+      "bytes": 25880,
+      "sha256": "0b879fbcc132f71d7c7aadeae63cd3447b214840b0723a67d03aaf3752f46c15",
+      "canonical_sha256": "56302e49b924e4e745c010531ac6e4566071ff10f8753b8d84e3605313726a2c",
+      "line_endings": "MIXED",
+      "crlf_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        80,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        259,
+        260,
+        261,
+        262,
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298
+      ]
+    },
+    {
+      "path": "scripts/native-fixture/bulk/backend-policy.json",
+      "bytes": 33959,
+      "sha256": "bfa96fe64b09592197eda7098f0908c956816492f5d429a32ad274c9f6eb96c8",
+      "canonical_sha256": "bfa96fe64b09592197eda7098f0908c956816492f5d429a32ad274c9f6eb96c8",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/capture.sql",
+      "bytes": 2044,
+      "sha256": "752206da476499aa82f7dfeb539e9173b610b6337c0d09acb2bfde26ee6801f8",
+      "canonical_sha256": "752206da476499aa82f7dfeb539e9173b610b6337c0d09acb2bfde26ee6801f8",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/checkpoint-bridge.mjs",
+      "bytes": 19269,
+      "sha256": "12fc4f3dd63d8040a81cd57c2a4da341f9cc52e281ce4323d34a2e7b57d196d5",
+      "canonical_sha256": "12fc4f3dd63d8040a81cd57c2a4da341f9cc52e281ce4323d34a2e7b57d196d5",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/checkpoint.fixture.ts",
+      "bytes": 8981,
+      "sha256": "54d80b200dae941496182645202c27215de48e2538454c1d0ae8fb7a48cb9f53",
+      "canonical_sha256": "54d80b200dae941496182645202c27215de48e2538454c1d0ae8fb7a48cb9f53",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/closed-tree.py",
+      "bytes": 9664,
+      "sha256": "5f519c5b329c5d98f07442378635383bb23342fa874fa1bc65c83a2281d4cc21",
+      "canonical_sha256": "5f519c5b329c5d98f07442378635383bb23342fa874fa1bc65c83a2281d4cc21",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/collect-output.py",
+      "bytes": 602,
+      "sha256": "31736b9ea92e9ca4d5c38a0267855605048533a9f16f9becf481258485d546a5",
+      "canonical_sha256": "31736b9ea92e9ca4d5c38a0267855605048533a9f16f9becf481258485d546a5",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/container.mjs",
+      "bytes": 5927,
+      "sha256": "aad4135392a073df398cb1c2d3e509ae305f6d49ae6da69f7fd78bfcd4678f50",
+      "canonical_sha256": "aad4135392a073df398cb1c2d3e509ae305f6d49ae6da69f7fd78bfcd4678f50",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/docker",
+      "bytes": 66,
+      "sha256": "3fd57a658f7d10e40d64331285ba194ce76ff508108e5223d9c76431991e3b38",
+      "canonical_sha256": "3fd57a658f7d10e40d64331285ba194ce76ff508108e5223d9c76431991e3b38",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/docker-container.fixture.ts",
+      "bytes": 710,
+      "sha256": "1394e058e1d60f68bf4d2d70a12b0ca4163efaf5ce60e13fb5bbe9910fe7849c",
+      "canonical_sha256": "716ab2d0137362f5c6dee13d4adf558d27b1c9a1dd19c8529ff2508ffa236795",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/final-cold.mjs",
+      "bytes": 14691,
+      "sha256": "b52d449c7b17416b504c902c8e3f98f26ebb7c34a3f68889d7f8850916147202",
+      "canonical_sha256": "b52d449c7b17416b504c902c8e3f98f26ebb7c34a3f68889d7f8850916147202",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/final-native.py",
+      "bytes": 6928,
+      "sha256": "744d658bca16096e3b1a7f5fe38baa5668dc8bb4fe314227249c9e6937e65a39",
+      "canonical_sha256": "744d658bca16096e3b1a7f5fe38baa5668dc8bb4fe314227249c9e6937e65a39",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/final-reader.integration.test.ts",
+      "bytes": 12077,
+      "sha256": "b8639dc599104bafc864f339baf188810745adfde52479dcbb4b9ed6755a70cd",
+      "canonical_sha256": "b8639dc599104bafc864f339baf188810745adfde52479dcbb4b9ed6755a70cd",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/finish.mjs",
+      "bytes": 9359,
+      "sha256": "0c807927a402061a4b67909c0b7e5a20c4688864c8b8fcfda67764af5053a53d",
+      "canonical_sha256": "0c807927a402061a4b67909c0b7e5a20c4688864c8b8fcfda67764af5053a53d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/inspect-client.mjs",
+      "bytes": 1572,
+      "sha256": "2e51051e62b7bc96ba4282c70b87b3f108e0ae38ea49c7dff9f24417dc4577ff",
+      "canonical_sha256": "2e51051e62b7bc96ba4282c70b87b3f108e0ae38ea49c7dff9f24417dc4577ff",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/inspect-shim.sh",
+      "bytes": 66,
+      "sha256": "3fd57a658f7d10e40d64331285ba194ce76ff508108e5223d9c76431991e3b38",
+      "canonical_sha256": "3fd57a658f7d10e40d64331285ba194ce76ff508108e5223d9c76431991e3b38",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/operator-lifecycle.mts",
+      "bytes": 42825,
+      "sha256": "529a2807742e9341db0bc651ea93640bdfb3188b8a97e7e8ac99ec1e6f52aa9d",
+      "canonical_sha256": "3c8be53adcaddac68db9993b8c88b0afcc223fd95a3d992b42f84529bf3b783d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/outputs.mjs",
+      "bytes": 1663,
+      "sha256": "4cc3478e922a46684e3d0c484ea7f340ae2ffedd9d816eb8d53d7ae48c7d4379",
+      "canonical_sha256": "4cc3478e922a46684e3d0c484ea7f340ae2ffedd9d816eb8d53d7ae48c7d4379",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/prepare-reader-credentials.py",
+      "bytes": 1835,
+      "sha256": "a3ff25fbddaf3395ac895c23805b9ab3d753278bfb3429c840d719184eaf6dd6",
+      "canonical_sha256": "a3ff25fbddaf3395ac895c23805b9ab3d753278bfb3429c840d719184eaf6dd6",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/producer-running.test.mjs",
+      "bytes": 1069,
+      "sha256": "6c17b35d5608126503da488a0c7f656dd1962d2793fb4c8064eafd06646a89c0",
+      "canonical_sha256": "6c17b35d5608126503da488a0c7f656dd1962d2793fb4c8064eafd06646a89c0",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/producer.mjs",
+      "bytes": 26177,
+      "sha256": "76f718d4a7d760c43a2b7d1a27e7692e91ff8e5fab20044c8999ee929953f46c",
+      "canonical_sha256": "76f718d4a7d760c43a2b7d1a27e7692e91ff8e5fab20044c8999ee929953f46c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/restored-reader.integration.test.ts",
+      "bytes": 9078,
+      "sha256": "3bc7e6687421e564bfdee0fd65dc8c50d16b048622b8171c76ea229357807e15",
+      "canonical_sha256": "3bc7e6687421e564bfdee0fd65dc8c50d16b048622b8171c76ea229357807e15",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/resume.fixture.ts",
+      "bytes": 12901,
+      "sha256": "7c9d81e87f3e7b3a6695dac0e2bba8072359380c7d82078280658ba9439810bc",
+      "canonical_sha256": "e900a4ed671ac8fdfb7d47ac1adb6dd41abd9ddd894b9337f53474894c34ed47",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/root-control.py",
+      "bytes": 4571,
+      "sha256": "390c855c1148d575b2a8fd8474edc9a17b9e1d50ec1997b0b50dd0915f204b1a",
+      "canonical_sha256": "390c855c1148d575b2a8fd8474edc9a17b9e1d50ec1997b0b50dd0915f204b1a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/run-native.sh",
+      "bytes": 2445,
+      "sha256": "7cbbf24baf27d0e41fff74c1a3d62714bc52093d0d7d6b5184f5308b6f754bb6",
+      "canonical_sha256": "7cbbf24baf27d0e41fff74c1a3d62714bc52093d0d7d6b5184f5308b6f754bb6",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/sftp-entrypoint.sh",
+      "bytes": 205,
+      "sha256": "c3d6e1e278aa06d839e0f4b56165e0b9ae2644103837fc55e328cb67fad6c624",
+      "canonical_sha256": "c3d6e1e278aa06d839e0f4b56165e0b9ae2644103837fc55e328cb67fad6c624",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/shared-backend.fixture.ts",
+      "bytes": 2760,
+      "sha256": "a6e33f6bb5edacd9721f33bfd30438d70222e00cb7cd04c5478f89a8d49cbca9",
+      "canonical_sha256": "12c8f42faa3195482b574312f214cf38ae078ec8745625cbdcbf9db71441747d",
+      "line_endings": "MIXED",
+      "crlf_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ]
+    },
+    {
+      "path": "scripts/native-fixture/bulk/stage13-command.mjs",
+      "bytes": 3774,
+      "sha256": "3ddce926d6a1693837ccf3d56a0e329ff7521065b1a45e52ec24f061418ba944",
+      "canonical_sha256": "3ddce926d6a1693837ccf3d56a0e329ff7521065b1a45e52ec24f061418ba944",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/stage13-runtime.mjs",
+      "bytes": 24517,
+      "sha256": "31408162416d465b7a75f6d9b2c00775387e6ee318a98bfb4f4e18f90ed06567",
+      "canonical_sha256": "31408162416d465b7a75f6d9b2c00775387e6ee318a98bfb4f4e18f90ed06567",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/stage3.fixture.ts",
+      "bytes": 18384,
+      "sha256": "a985c0625c94a4ac6fd9f276052e289783e1cfee505fb238859765d0e923840e",
+      "canonical_sha256": "38d1b3ea0edf2dadbd42fe83bf3c57b594af3f95e2d9dcbc8768ec16a66bb0a3",
+      "line_endings": "MIXED",
+      "crlf_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156
+      ]
+    },
+    {
+      "path": "scripts/native-fixture/bulk/verify-backend.mjs",
+      "bytes": 2334,
+      "sha256": "91c4667cfb11c739f9a0643049d8d02f40d6104c9e6aa67439649fa2cad36b9a",
+      "canonical_sha256": "91c4667cfb11c739f9a0643049d8d02f40d6104c9e6aa67439649fa2cad36b9a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/verify-originals.py",
+      "bytes": 2105,
+      "sha256": "66ea8303211eafe9687ee1aaccce4a1b5896924c3c86f85b02c8d58dc7664d2e",
+      "canonical_sha256": "66ea8303211eafe9687ee1aaccce4a1b5896924c3c86f85b02c8d58dc7664d2e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/write-native-manifest.py",
+      "bytes": 3376,
+      "sha256": "87e5dfc6af82471c0e60cee27286ad636da1c30682cc2efe289bd6081e9ed536",
+      "canonical_sha256": "87e5dfc6af82471c0e60cee27286ad636da1c30682cc2efe289bd6081e9ed536",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/c01_checkpoint_control.py",
+      "bytes": 4690,
+      "sha256": "00e65fb23cb2484569efd7aaf461cac40ed4a0afe13a822c2737e69247b21580",
+      "canonical_sha256": "00e65fb23cb2484569efd7aaf461cac40ed4a0afe13a822c2737e69247b21580",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/c01_checkpoint_worker.py",
+      "bytes": 13507,
+      "sha256": "2463a054f0929c94b5c729ae7b5ef9cc19a6f911e6d567ac8f157c1d474b828c",
+      "canonical_sha256": "2463a054f0929c94b5c729ae7b5ef9cc19a6f911e6d567ac8f157c1d474b828c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/export_c01_ci.py",
+      "bytes": 5790,
+      "sha256": "04d0aedc083390ff9ad469ffe25be1a7a3679027a5fd66d8f206f52ba1e6a128",
+      "canonical_sha256": "04d0aedc083390ff9ad469ffe25be1a7a3679027a5fd66d8f206f52ba1e6a128",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/mount/actors.py",
+      "bytes": 21253,
+      "sha256": "a2542f41f40f13ab35bd5f46d16a3d9cf2ad651c7b447af969b0f1864f851d75",
+      "canonical_sha256": "a2542f41f40f13ab35bd5f46d16a3d9cf2ad651c7b447af969b0f1864f851d75",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/mount/base.py",
+      "bytes": 29907,
+      "sha256": "1a16a684f4e341f11c3def115e7be56d927e03eb915d6905d8bbe7abd259d3fe",
+      "canonical_sha256": "1a16a684f4e341f11c3def115e7be56d927e03eb915d6905d8bbe7abd259d3fe",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/network_checkpoint_control.py",
+      "bytes": 4976,
+      "sha256": "2fd90ebaee3fb9a5ab2e9e16bbf57d68006560103c555912513fe544483bb184",
+      "canonical_sha256": "2fd90ebaee3fb9a5ab2e9e16bbf57d68006560103c555912513fe544483bb184",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/network_checkpoint_worker.py",
+      "bytes": 15453,
+      "sha256": "f6335b465311aee16505ba82bb5f3dd6adc16ef6643ee90c203ef587755c18c7",
+      "canonical_sha256": "f6335b465311aee16505ba82bb5f3dd6adc16ef6643ee90c203ef587755c18c7",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/ordinary/bootstrap.py",
+      "bytes": 1796,
+      "sha256": "0191226900d8fdd3e22c46bee64cb53e379be7e7dd1618e5ea3f8f5b53069ce9",
+      "canonical_sha256": "0191226900d8fdd3e22c46bee64cb53e379be7e7dd1618e5ea3f8f5b53069ce9",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/ordinary/worker.py",
+      "bytes": 11009,
+      "sha256": "e47293c5e98186e28297545ae6e1d313c71be86e757f2edebd7743bcb907835d",
+      "canonical_sha256": "e47293c5e98186e28297545ae6e1d313c71be86e757f2edebd7743bcb907835d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/owner-case-policy.json",
+      "bytes": 6103,
+      "sha256": "c803164c3f7054c110f9e59824ef2a48a8f0d281cfadd340dbcb35b4fe6ed5a4",
+      "canonical_sha256": "c803164c3f7054c110f9e59824ef2a48a8f0d281cfadd340dbcb35b4fe6ed5a4",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/prepared_control.py",
+      "bytes": 4728,
+      "sha256": "45d157236c047b243568c74cb28d91a949d7e798f90fd3af203ee5285022ce45",
+      "canonical_sha256": "45d157236c047b243568c74cb28d91a949d7e798f90fd3af203ee5285022ce45",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/prepared_worker.py",
+      "bytes": 10559,
+      "sha256": "3d39866949406a44329a19bb380152e21c6d36908b29ad60db96736e677e1778",
+      "canonical_sha256": "3d39866949406a44329a19bb380152e21c6d36908b29ad60db96736e677e1778",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/run_c01_checkpoint.sh",
+      "bytes": 2863,
+      "sha256": "62d5f97007c75495b8b9bd84a84f7258f14d3651fe719646b9aaf8a1829e2564",
+      "canonical_sha256": "62d5f97007c75495b8b9bd84a84f7258f14d3651fe719646b9aaf8a1829e2564",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/run_network_checkpoint.sh",
+      "bytes": 2959,
+      "sha256": "9dca61cfd34061bb01072154612537ce4a48831dc889e6edcdd1a4fb4d134502",
+      "canonical_sha256": "9dca61cfd34061bb01072154612537ce4a48831dc889e6edcdd1a4fb4d134502",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/run_owner.sh",
+      "bytes": 1734,
+      "sha256": "b2b980ea2d5bf89712572a166b4939dfa4adb2c68fe2de29b7855a81bc6c7458",
+      "canonical_sha256": "b2b980ea2d5bf89712572a166b4939dfa4adb2c68fe2de29b7855a81bc6c7458",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/run_prepared.sh",
+      "bytes": 3248,
+      "sha256": "aaec094ea12c7c2e5242ff7b8fbdd5793b69bde7017739dfa1b24f49fb065fcc",
+      "canonical_sha256": "aaec094ea12c7c2e5242ff7b8fbdd5793b69bde7017739dfa1b24f49fb065fcc",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/write_c01_checkpoint_manifest.py",
+      "bytes": 4946,
+      "sha256": "e51a0acf051c180e957d9e7a289dbfc06ab1b0b92722664ce33ac8237378b358",
+      "canonical_sha256": "e51a0acf051c180e957d9e7a289dbfc06ab1b0b92722664ce33ac8237378b358",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/write_network_checkpoint_manifest.py",
+      "bytes": 5047,
+      "sha256": "0aeed47b5346707b54ad1e7a290ddff3c727b7648ba71e011791822e5152145f",
+      "canonical_sha256": "0aeed47b5346707b54ad1e7a290ddff3c727b7648ba71e011791822e5152145f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/write_owner_manifest.py",
+      "bytes": 2773,
+      "sha256": "1e01e41f145a5904f8fcf8fbbbc006c7eabd7805ab7007b2375bad91fd75721a",
+      "canonical_sha256": "1e01e41f145a5904f8fcf8fbbbc006c7eabd7805ab7007b2375bad91fd75721a",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/native-fixture/write_prepared_manifest.py",
+      "bytes": 4834,
+      "sha256": "d14e989e8f82742674e1cc7cb76caf9d752ba9ae20a2409fefd9a7a898de6960",
+      "canonical_sha256": "d14e989e8f82742674e1cc7cb76caf9d752ba9ae20a2409fefd9a7a898de6960",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/prepare-bulk-backend-inputs.mjs",
+      "bytes": 2182,
+      "sha256": "43ad650c6dd04c4003e0f79041f607bf6f37632d3903648a734ada5847b7c0d2",
+      "canonical_sha256": "43ad650c6dd04c4003e0f79041f607bf6f37632d3903648a734ada5847b7c0d2",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/prepare-c01-ci.sh",
+      "bytes": 4410,
+      "sha256": "b715aa16d776e4f7338923de7928dc160c9ae1a49f2b7a688423f3a71dd6da94",
+      "canonical_sha256": "b715aa16d776e4f7338923de7928dc160c9ae1a49f2b7a688423f3a71dd6da94",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/qualify-kernel.mjs",
+      "bytes": 5144,
+      "sha256": "6fed0c5c986cd3291e36052bdb6cd3834d188af1fb61622c24a189d51ce8422f",
+      "canonical_sha256": "6fed0c5c986cd3291e36052bdb6cd3834d188af1fb61622c24a189d51ce8422f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/qualify-native-lifecycle.sh",
+      "bytes": 2387,
+      "sha256": "4330f1dbd972998b71c0f9c9d516fb29c43de1ca675488e7b6c38b28b3648712",
+      "canonical_sha256": "4330f1dbd972998b71c0f9c9d516fb29c43de1ca675488e7b6c38b28b3648712",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/qualify-saturn.sh",
+      "bytes": 961,
+      "sha256": "977f6d81c9d31a467d5605d43214282bcc6b99333ab1cb4caa020af2b3de80ad",
+      "canonical_sha256": "977f6d81c9d31a467d5605d43214282bcc6b99333ab1cb4caa020af2b3de80ad",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/regenerate-runtime-notices.mjs",
+      "bytes": 1933,
+      "sha256": "0f658ec94d81c0ca2254a321905df40b575dcde6b8cf693b98976cb42d44d1cc",
+      "canonical_sha256": "0f658ec94d81c0ca2254a321905df40b575dcde6b8cf693b98976cb42d44d1cc",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/run-api-ci.mjs",
+      "bytes": 14139,
+      "sha256": "a0e69c222973760371657688e11963321ff548b3789dc3c47b6b5f319ce00ae4",
+      "canonical_sha256": "a0e69c222973760371657688e11963321ff548b3789dc3c47b6b5f319ce00ae4",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/run-bulk-ci.mjs",
+      "bytes": 13811,
+      "sha256": "0009952b07b8c8cd9e556b1f18149074718f133dc9a98fa1d7eb27297f041f6c",
+      "canonical_sha256": "0009952b07b8c8cd9e556b1f18149074718f133dc9a98fa1d7eb27297f041f6c",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/run-c01-ci.py",
+      "bytes": 15300,
+      "sha256": "e1597de65c34094b077d68a97791e6dc0fdd9c5762831e50ac5cb88f02c2d935",
+      "canonical_sha256": "e1597de65c34094b077d68a97791e6dc0fdd9c5762831e50ac5cb88f02c2d935",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/run-container-go-ci.py",
+      "bytes": 14683,
+      "sha256": "215ddd9aaca3ddec1636efd6c3c6d5d465ed3a523f25f7b4473a7e9c6ee3ffd1",
+      "canonical_sha256": "215ddd9aaca3ddec1636efd6c3c6d5d465ed3a523f25f7b4473a7e9c6ee3ffd1",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/run-disposable-ci.py",
+      "bytes": 10153,
+      "sha256": "1c96eba7622abd81d14e9ba66db95f62926fbbb480213a58685f66476303a930",
+      "canonical_sha256": "1c96eba7622abd81d14e9ba66db95f62926fbbb480213a58685f66476303a930",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/run-go-ci.sh",
+      "bytes": 169,
+      "sha256": "f260f3bc24b2acd97ae682cb4f00a6f1d545b6a8dc988ec75cea4f094dfe3ce3",
+      "canonical_sha256": "f260f3bc24b2acd97ae682cb4f00a6f1d545b6a8dc988ec75cea4f094dfe3ce3",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/run-mount-ci.py",
+      "bytes": 12205,
+      "sha256": "abf544ddeb35d22fdd72881ca227e73ca363830ce40033fd1e00de80ce0a6a8e",
+      "canonical_sha256": "abf544ddeb35d22fdd72881ca227e73ca363830ce40033fd1e00de80ce0a6a8e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/run-unprivileged-go-ci.py",
+      "bytes": 15906,
+      "sha256": "542be8f0d6bab9c5185a78d9e1c988e60bff370347cf1f4e247238998dac0b86",
+      "canonical_sha256": "542be8f0d6bab9c5185a78d9e1c988e60bff370347cf1f4e247238998dac0b86",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/runtime-contract.mjs",
+      "bytes": 4563,
+      "sha256": "fa799b559f8ff67121c991a5a7d727019700d17f430dfdb204918776ff48993f",
+      "canonical_sha256": "fa799b559f8ff67121c991a5a7d727019700d17f430dfdb204918776ff48993f",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/runtime-contract.test.mjs",
+      "bytes": 7677,
+      "sha256": "00ee2d080677166b0c3272ea58525d102ba1c7fb6d870693866d8304238d3b85",
+      "canonical_sha256": "00ee2d080677166b0c3272ea58525d102ba1c7fb6d870693866d8304238d3b85",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/runtime-notices.mjs",
+      "bytes": 4459,
+      "sha256": "0f73daa4383c86119464a315cd5e471e01739b097e4780ed35a1f632dbd4d94e",
+      "canonical_sha256": "0f73daa4383c86119464a315cd5e471e01739b097e4780ed35a1f632dbd4d94e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/runtime-notices.test.mjs",
+      "bytes": 5989,
+      "sha256": "8a1d6a82410b773d64c5e5ba82098fe47c4fc4c5749564239a9a32d084ed4d51",
+      "canonical_sha256": "8a1d6a82410b773d64c5e5ba82098fe47c4fc4c5749564239a9a32d084ed4d51",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/test-container-ci-accounting.py",
+      "bytes": 4883,
+      "sha256": "b5a41ccb6d6adca778865e9b4a16b790b73ba41d239ca7eb792e51c900c9a2c5",
+      "canonical_sha256": "b5a41ccb6d6adca778865e9b4a16b790b73ba41d239ca7eb792e51c900c9a2c5",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/test-go-ci-dispatch.py",
+      "bytes": 13818,
+      "sha256": "84fc2bb2905c6f3fc1823ad239ec2c5cc9b2660b2428f3d869e4f90c24656ad2",
+      "canonical_sha256": "84fc2bb2905c6f3fc1823ad239ec2c5cc9b2660b2428f3d869e4f90c24656ad2",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/test-go-ci-report.py",
+      "bytes": 45078,
+      "sha256": "5d57eea6fe9559b1003fe1b3ab424939b00b2cf64ad839961c280e75f74dcb7b",
+      "canonical_sha256": "5d57eea6fe9559b1003fe1b3ab424939b00b2cf64ad839961c280e75f74dcb7b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/test-known-problems-gate.py",
+      "bytes": 5876,
+      "sha256": "4d84923deb0aa04c6537674b54317316b3c915ff669de373bcceeff66c30be3d",
+      "canonical_sha256": "4d84923deb0aa04c6537674b54317316b3c915ff669de373bcceeff66c30be3d",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/test-ordinary-process-ci.py",
+      "bytes": 7990,
+      "sha256": "da08001535cae256d78f37df9ab961c83816f2ceab59f2b0ee6ee6a5cced7a7e",
+      "canonical_sha256": "da08001535cae256d78f37df9ab961c83816f2ceab59f2b0ee6ee6a5cced7a7e",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/verify-package3-source.py",
+      "bytes": 4165,
+      "sha256": "9f7cbebfc7a04b6dd2ecdfbe7dba8e27c2929a6723811d455740fe9b9e92bae6",
+      "canonical_sha256": "9f7cbebfc7a04b6dd2ecdfbe7dba8e27c2929a6723811d455740fe9b9e92bae6",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/verify-release.mjs",
+      "bytes": 9990,
+      "sha256": "c585a1757a54f87fa6985c348e88d516cf97feb3bd5f5ff0c03aaf8dd002e1a4",
+      "canonical_sha256": "c585a1757a54f87fa6985c348e88d516cf97feb3bd5f5ff0c03aaf8dd002e1a4",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/verify-release.test.mjs",
+      "bytes": 10254,
+      "sha256": "e0d676c30b76bb87becfc8c2178b1ce1b1e880245b8ac68895f2ceb0a530b8fb",
+      "canonical_sha256": "e0d676c30b76bb87becfc8c2178b1ce1b1e880245b8ac68895f2ceb0a530b8fb",
+      "line_endings": "LF"
+    },
+    {
+      "path": "testdata/releases/.gitattributes",
+      "bytes": 97,
+      "sha256": "0c40375f3b3c1cb7830c63c43d84a40d790268e72e88d784b698945641ce44c3",
+      "canonical_sha256": "0c40375f3b3c1cb7830c63c43d84a40d790268e72e88d784b698945641ce44c3",
+      "line_endings": "LF"
+    },
+    {
+      "path": "testdata/releases/pluto-v0.1.4/pluto-release.json",
+      "bytes": 640,
+      "sha256": "18e45f92b3c2c4570ef9841cdbdd23714aa548a19a75ae0e7b0c0b50f7fe5d40",
+      "canonical_sha256": "18e45f92b3c2c4570ef9841cdbdd23714aa548a19a75ae0e7b0c0b50f7fe5d40",
+      "line_endings": "LF"
+    },
+    {
+      "path": "testdata/releases/pluto-v0.1.4/pluto-release.json.sig.json",
+      "bytes": 676,
+      "sha256": "19f564088650795972505e001e0256b5ef20805f7a696ac0e59e45ec21c00e70",
+      "canonical_sha256": "19f564088650795972505e001e0256b5ef20805f7a696ac0e59e45ec21c00e70",
+      "line_endings": "LF"
+    },
+    {
+      "path": "testdata/releases/pluto-v0.1.4/provenance.json",
+      "bytes": 1005,
+      "sha256": "88edc12cafa1fbaf9447b574d304578aaf4cf22610b5f1c37a64ed86cf148fd6",
+      "canonical_sha256": "88edc12cafa1fbaf9447b574d304578aaf4cf22610b5f1c37a64ed86cf148fd6",
+      "line_endings": "LF"
+    },
+    {
+      "path": "testdata/releases/pluto-v0.1.4/release-public.pem",
+      "bytes": 625,
+      "sha256": "2e7e2b857ceb0bf0d2488c5f1ca9c1248b38d759728e549b17545be764508b29",
+      "canonical_sha256": "2e7e2b857ceb0bf0d2488c5f1ca9c1248b38d759728e549b17545be764508b29",
+      "line_endings": "LF"
+    }
+  ]
+}

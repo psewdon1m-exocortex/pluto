@@ -264,7 +264,7 @@ func (r *RemoteImport) AckCaptured(ctx context.Context, pub CapturedPublication)
 		return r.ackCapturedTx(ctx, tx, pub)
 	})
 	if err == nil {
-		err = r.afterCapturedContentAck(ctx, pub.Receipt.OperationID)
+		err = r.afterContentAck(ctx, pub.Receipt.OperationID)
 	}
 	return err
 }

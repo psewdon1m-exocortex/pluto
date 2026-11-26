@@ -74,7 +74,7 @@ func (s *IsolatedHTTPSession) ackStream(ctx context.Context, op Operation, statu
 	if err = s.Refresh(ctx); err != nil {
 		return err
 	}
-	return s.r.sources.change(ctx, MaxSourcePageBytes, func(tx *sql.Tx) error {
+	err = s.r.sources.change(ctx, MaxSourcePageBytes, func(tx *sql.Tx) error {
 		original, e := readOperation(ctx, tx, op.OperationID)
 		if e != nil {
 			return e
@@ -132,6 +132,10 @@ func (s *IsolatedHTTPSession) ackStream(ctx context.Context, op Operation, statu
 		_, e = tx.ExecContext(ctx, "UPDATE operations SET stage='CLIENT_ACKED',receipt_json=? WHERE operation_id=?", string(mustJSON(status)), op.OperationID)
 		return e
 	})
+	if err != nil {
+		return err
+	}
+	return s.r.afterContentAck(ctx, op.OperationID)
 }
 
 func streamSealedIntentHash(op Operation) (string, error) {

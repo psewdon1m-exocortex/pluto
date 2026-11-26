@@ -62,7 +62,7 @@ func (d *smallBatchDispatcher) applySmallJobOutcomes(ctx context.Context, plan *
 	}
 	for _, outcome := range outcomes {
 		if outcome.status != nil && outcome.status.publication != nil {
-			if err := r.afterCapturedContentAck(ctx, outcome.operationID); err != nil {
+			if err := r.afterContentAck(ctx, outcome.operationID); err != nil {
 				return err
 			}
 		}

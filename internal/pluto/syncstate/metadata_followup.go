@@ -17,7 +17,7 @@ func (r *RemoteImport) EnableMetadataFollowups(ctx context.Context, w SourceWitn
 	return nil
 }
 
-func (r *RemoteImport) afterCapturedContentAck(ctx context.Context, operationID string) error {
+func (r *RemoteImport) afterContentAck(ctx context.Context, operationID string) error {
 	w := r.metadataObserver.Load()
 	if w == nil {
 		return nil
@@ -25,10 +25,10 @@ func (r *RemoteImport) afterCapturedContentAck(ctx context.Context, operationID 
 	if err := r.point("metadata.after_content_ack"); err != nil {
 		return err
 	}
-	return r.queueCapturedMetadata(ctx, *w, operationID)
+	return r.queueContentMetadata(ctx, *w, operationID)
 }
 
-func (r *RemoteImport) queueCapturedMetadata(ctx context.Context, w SourceWitness, operationID string) error {
+func (r *RemoteImport) queueContentMetadata(ctx context.Context, w SourceWitness, operationID string) error {
 	var hint *DirtyHint
 	err := r.sources.change(ctx, MaxSourcePageBytes, func(tx *sql.Tx) error {
 		set, err := r.sources.checkWitness(ctx, tx, w)
@@ -39,7 +39,24 @@ func (r *RemoteImport) queueCapturedMetadata(ctx context.Context, w SourceWitnes
 		if err != nil {
 			return err
 		}
-		if op.Kind != "PUT" || op.Stage != "CLIENT_ACKED" || op.Captured == nil || op.RootID != set.AttachedRootID || op.Captured.Evidence.SetID != w.SetID {
+		if op.Stage != "CLIENT_ACKED" || op.RootID != set.AttachedRootID {
+			return nil
+		}
+		var setID, destination string
+		var generation, incarnation int64
+		switch {
+		case op.Kind == "PUT" && op.Captured != nil && op.Stream == nil:
+			evidence := op.Captured.Evidence
+			setID, destination = evidence.SetID, evidence.Destination
+			generation, incarnation = evidence.EntryGeneration, evidence.SourceIncarnation
+		case op.Kind == "STREAM_PUT" && op.Stream != nil && op.Captured == nil:
+			source := op.Stream.Source
+			setID, destination = source.SetID, source.Destination
+			generation, incarnation = source.Generation, source.SourceIncarnation
+		default:
+			return nil
+		}
+		if setID != w.SetID {
 			return nil
 		}
 		base, err := readJSON[Baseline](ctx, tx, "SELECT descriptor_json FROM baselines WHERE root_id=? AND entry_id=?", op.RootID, op.EntryID)
@@ -53,15 +70,14 @@ func (r *RemoteImport) queueCapturedMetadata(ctx context.Context, w SourceWitnes
 		if base.OperationID != op.OperationID || base.LocalGeneration != op.LocalGeneration {
 			return nil
 		}
-		evidence := op.Captured.Evidence
-		source, err := readSourceEntry(ctx, tx, w.SetID, evidence.Destination)
+		source, err := readSourceEntry(ctx, tx, w.SetID, destination)
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil // Removing a source never deletes its stored copy.
 		}
 		if err != nil {
 			return err
 		}
-		if source.Ambiguous || source.Generation != evidence.EntryGeneration || source.SourceIncarnation != evidence.SourceIncarnation || source.FileIdentity != op.FileIdentity || base.PublishedMTimeNS == source.MTimeNS {
+		if source.Ambiguous || source.Generation != generation || source.SourceIncarnation != incarnation || source.FileIdentity != op.FileIdentity || base.PublishedMTimeNS == source.MTimeNS {
 			return nil
 		}
 		hint = &DirtyHint{SourceID: source.SourceID, Destination: source.Destination, PhysicalPath: source.PhysicalPath}
