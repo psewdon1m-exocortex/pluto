@@ -6,10 +6,11 @@ import hashlib
 import importlib.util
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import re
 import secrets
 import shutil
+import stat
 import subprocess
 import sys
 import time
@@ -18,6 +19,82 @@ PROJECT = Path(__file__).resolve().parents[1]
 PACKAGES = {'pluto/internal/pluto', 'pluto/internal/pluto/syncstate', 'pluto/internal/network',
             'pluto/internal/syncproto', 'pluto/internal/testsupport/nativeprocess',
             'pluto/internal/testsupport/nativeprocess/custody'}
+
+
+def worktree_source(project, qualified_manifest=None):
+    """Pin this checkout; never implicitly select an earlier qualification."""
+    project = Path(project).resolve(strict=True)
+    maximum_file, maximum_total = 8 * 2**20, 64 * 2**20
+
+    def regular(name):
+        relative = PurePosixPath(name)
+        if (not isinstance(name, str) or not name or relative.is_absolute() or
+                relative.as_posix() != name or '\\' in name or ':' in name or
+                any(part in ('.', '..', '.git') for part in relative.parts) or
+                any(ord(char) < 32 or ord(char) == 127 for char in name)):
+            raise ValueError('regular bounded checkout-relative source path required')
+        file = project
+        for part in relative.parts:
+            file = file / part
+            if file.is_symlink() or getattr(file, 'is_junction', lambda: False)():
+                raise ValueError('source reparse/symlink is not permitted')
+        if not file.resolve(strict=True).is_relative_to(project) or not stat.S_ISREG(file.lstat().st_mode):
+            raise ValueError('source must be a regular file within this checkout')
+        size = file.stat().st_size
+        if not 0 <= size <= maximum_file:
+            raise ValueError('source file exceeds its bound')
+        raw = file.read_bytes()
+        if len(raw) != size or len(raw) > maximum_file:
+            raise ValueError('source changed during bounded observation')
+        return raw
+
+    manifest = None
+    if qualified_manifest is None:
+        tracked = subprocess.run(['git', '-C', str(project), 'ls-files', '--cached', '-z'],
+                                 check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        names = [name.decode('utf-8') for name in tracked.stdout.split(b'\0') if name]
+        declared = None
+        mode = 'CURRENT_GIT_TRACKED_FILES'
+    else:
+        selected = Path(qualified_manifest)
+        if selected.is_absolute():
+            try:
+                selected = selected.relative_to(project)
+            except ValueError:
+                raise ValueError('qualified manifest must be within this checkout') from None
+        name = selected.as_posix()
+        raw = regular(name)
+        if len(raw) > 2 * 2**20:
+            raise ValueError('qualified source manifest exceeds its bound')
+        frozen = json.loads(raw)
+        if not isinstance(frozen, dict) or frozen.get('schema') != 'exocortex.package3.frozen-source.v1':
+            raise ValueError('reviewed qualified source manifest schema required')
+        declared = frozen.get('files')
+        if not isinstance(declared, list) or not all(isinstance(row, dict) for row in declared):
+            raise ValueError('qualified source file inventory required')
+        names = [row.get('path') for row in declared]
+        manifest = dict(path=name, bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+        mode = 'EXPLICIT_QUALIFIED_MANIFEST'
+    if (not 0 < len(names) <= 4096 or not all(isinstance(name, str) for name in names) or
+            len(set(names)) != len(names)):
+        raise ValueError('bounded distinct source file inventory required')
+    expected = {row['path']: row for row in declared} if declared is not None else None
+    files, total = [], 0
+    for name in sorted(names):
+        if expected is not None:
+            row = expected[name]
+            if (type(row.get('bytes')) is not int or not 0 <= row['bytes'] <= maximum_file or
+                    not isinstance(row.get('sha256'), str) or not re.fullmatch('[a-f0-9]{64}', row['sha256'])):
+                raise ValueError('exact bounded qualified source bytes/SHA required')
+        raw = regular(name)
+        observed = dict(path=name, bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+        if expected is not None and any(observed[key] != expected[name][key] for key in ('bytes', 'sha256')):
+            raise ValueError('actual raw qualified source bytes differ: ' + name)
+        total += len(raw)
+        if total > maximum_total:
+            raise ValueError('source inventory exceeds its total byte bound')
+        files.append(observed)
+    return dict(schema='pluto.ordinary-ci-worktree-source.v1', mode=mode, manifest=manifest, files=files)
 
 
 def digest(file):
@@ -52,6 +129,8 @@ def main():
                  'image', 'docker', 'docker-host'):
         parser.add_argument('--' + name, required=True)
     parser.add_argument('--allow-running-id', action='append', default=[])
+    parser.add_argument('--workspace-source-manifest',
+                        default=os.environ.get('PLUTO_GO_CI_WORKTREE_SOURCE_MANIFEST') or None)
     args = parser.parse_args()
     os.umask(0o077)
     assert args.package in PACKAGES and re.fullmatch('sha256:[a-f0-9]{64}', args.image)
@@ -67,6 +146,7 @@ def main():
     source = json.loads(Path(args.source_inputs).read_bytes())
     assert source['schema'] == 'pluto.c01-ci-source.v1'
     assert source['inputs'] == report.c01_source_inputs(PROJECT)
+    worktree = worktree_source(PROJECT, args.workspace_source_manifest)
     assert helper.host_available_gib() >= 17 and shutil.disk_usage(output).free >= 85 * 2**30
     command = [args.docker, '--host', args.docker_host]
 
@@ -102,16 +182,10 @@ def main():
     view = output / 'readonly-source'
     view.mkdir(mode=0o755)
     os.chmod(view, 0o755)
-    frozen = json.loads((PROJECT / '.release/package3-qualification/source-inputs.json').read_bytes())
-    assert 0 < len(frozen['files']) <= 4096
-    for row in frozen['files']:
+    for row in worktree['files']:
         relative = Path(row['path'])
         assert not relative.is_absolute() and '..' not in relative.parts
         original = PROJECT / relative
-        raw = original.read_bytes()
-        canonical = raw if row.get('line_endings') == 'BINARY' else raw.replace(b'\r\n', b'\n')
-        assert (hashlib.sha256(raw).hexdigest() == row['sha256'] or
-                hashlib.sha256(canonical).hexdigest() == row['canonical_sha256'])
         target = view / relative
         target.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
         parent = target.parent
@@ -119,6 +193,9 @@ def main():
             os.chmod(parent, 0o755)
             parent = parent.parent
         public_copy(original, target)
+        assert target.stat().st_size == row['bytes'] and digest(target) == row['sha256']
+    assert report.c01_source_inputs(view) == source['inputs']
+    write(output / 'worktree-source-inputs.json', worktree)
     helpers = output / 'readonly-helpers'
     helpers.mkdir(mode=0o700)
     bootstrap = public_copy(PROJECT / 'scripts/native-fixture/ordinary/bootstrap.py', helpers / 'bootstrap.py')
@@ -263,6 +340,7 @@ print(json.dumps(dict(files=files,converterActualExit=converted.returncode)))
                   containerId=cid, actualContainerExit=state['ExitCode'], actualWait=process['actualWait'],
                   converterActualExit=packet['converterActualExit'], process=process,
                   testBinarySHA256=digest(binary), volumesPreserved=[item['Name'] for item in volumes],
+                  worktreeSourceInputsSHA256=digest(output / 'worktree-source-inputs.json'),
                   caseAccounting=accounting, fullOrdinaryCiGreen=False)
     result['status'] = ('PASS_SCOPED_ACTUAL_UNPRIVILEGED_GO_SHARD'
                         if state['ExitCode'] == 0 and process['status'] == 'PASS_ACTUAL_UNPRIVILEGED_GO_SHARD'

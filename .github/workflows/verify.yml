@@ -43,6 +43,7 @@ jobs:
           python3 -I -B scripts/test-go-ci-report.py
           python3 -I -B scripts/test-go-ci-dispatch.py
           python3 -I -B scripts/test-container-ci-accounting.py
+          python3 -I -B scripts/test-worktree-source.py
           node --test scripts/native-fixture/bulk/producer-running.test.mjs
       - name: Prepare source-bound native and ordinary CI inputs
         env:
@@ -56,6 +57,8 @@ jobs:
           bash scripts/prepare-c01-ci.sh "$RUNNER_TEMP/pluto-c01-ci"
           cat "$RUNNER_TEMP/pluto-c01-ci/c01.env" >> "$GITHUB_ENV"
       - name: Run ordinary Go CI with complete test accounting
+        env:
+          PLUTO_GO_CI_WORKTREE_SOURCE_MANIFEST: ${{ inputs.qualification_source_manifest }}
         run: bash scripts/run-go-ci.sh
       - name: Preserve ordinary Go CI evidence
         if: always()

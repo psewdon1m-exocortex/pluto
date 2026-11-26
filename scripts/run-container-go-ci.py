@@ -70,6 +70,8 @@ def main():
                  'converter', 'image', 'docker', 'docker-host'):
         parser.add_argument('--' + name, required=True)
     parser.add_argument('--allow-running-id', action='append', default=[])
+    parser.add_argument('--workspace-source-manifest',
+                        default=os.environ.get('PLUTO_GO_CI_WORKTREE_SOURCE_MANIFEST') or None)
     args = parser.parse_args()
     os.umask(0o077)
     output = Path(args.output).resolve()
@@ -84,6 +86,7 @@ def main():
     assert not native_preflight['errors']
     source = report.bounded_json(args.source_inputs)
     assert source['inputs'] == report.c01_source_inputs(PROJECT)
+    expected_worktree = ordinary_helper.worktree_source(PROJECT, args.workspace_source_manifest)
     binaries = report.bounded_json(args.binaries)
     assert binaries['schema'] == 'pluto.ci-test-binaries.v1'
     assert binaries['sourceInputsSHA256'] == digest(args.source_inputs)
@@ -186,7 +189,9 @@ def main():
             save(names_file, names)
             actual = invoke(name, 'run-unprivileged-go-ci.py', ['--output', str(directory), '--package', package,
                             '--cases', str(names_file), '--source-inputs', args.source_inputs,
-                            '--test-binary', binaries['packages'][package]['path'], *common])
+                            '--test-binary', binaries['packages'][package]['path'], *common,
+                            *(['--workspace-source-manifest', args.workspace_source_manifest]
+                              if args.workspace_source_manifest is not None else [])])
             proof = report.bounded_json(directory / 'producer-result.json')
             process = report.bounded_json(directory / 'process.json')
             wait = report.bounded_json(directory / 'actual-wait.json')
@@ -194,6 +199,9 @@ def main():
             assert proof['status'] == 'PASS_SCOPED_ACTUAL_UNPRIVILEGED_GO_SHARD'
             assert proof['package'] == package and proof['cases'] == names
             assert proof['testBinarySHA256'] == binaries['packages'][package]['sha256']
+            worktree_file = directory / 'worktree-source-inputs.json'
+            assert report.bounded_json(worktree_file) == expected_worktree
+            assert proof['worktreeSourceInputsSHA256'] == digest(worktree_file)
             shard_source = report.bounded_json(directory / 'source-inputs.json')
             assert shard_source['inputs'] == source['inputs']
             assert shard_source['testBinarySHA256'] == proof['testBinarySHA256']

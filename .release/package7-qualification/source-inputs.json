@@ -2,9 +2,9 @@
   "schema": "exocortex.package3.frozen-source.v1",
   "component": "Pluto",
   "version": "0.1.5",
-  "baseGitCommit": "aa6097f8cecd2290f8350dd76d6ec2f446567096",
-  "scope": "Package7 exact current Saturn612-files/122-migrations/cutoff131 CI producer AND strict receipt consumers; no Go runtime changes",
-  "sourceSetSHA256": "8fceb6189ce40ad34e8b26610cfbf9bd190e13f6d4c4b8c5219334fd76805ff7",
+  "baseGitCommit": "73b66c34f9e1532918fa6711a4030e38b34dd9dd",
+  "scope": "Package7 explicit current qualified worktree source or current Git-tracked snapshot; strict raw bytes/path/symlink and independent copied-view proof. No Go/runtime/helper lifecycle changes.",
+  "sourceSetSHA256": "a873dc062793df44695b6c033f85f6b9b42274ea4e61d6387def0f4cd004eef3",
   "sourceSetHashEncoding": "SHA256 of UTF8 JSON.stringify(files) in sorted path order",
   "files": [
     {
@@ -30,9 +30,9 @@
     },
     {
       "path": ".github/workflows/verify.yml",
-      "bytes": 3774,
-      "sha256": "8f708f651295d32985379cf1fec64ab139cf5e61c5bb9b223dea8969c8e67e4b",
-      "canonical_sha256": "8f708f651295d32985379cf1fec64ab139cf5e61c5bb9b223dea8969c8e67e4b",
+      "bytes": 3935,
+      "sha256": "705eca9c094f029788c28915425c8b64b1fabde665d344c5a887862eef5e6d31",
+      "canonical_sha256": "705eca9c094f029788c28915425c8b64b1fabde665d344c5a887862eef5e6d31",
       "line_endings": "LF"
     },
     {
@@ -3430,9 +3430,9 @@
     },
     {
       "path": "scripts/run-container-go-ci.py",
-      "bytes": 14683,
-      "sha256": "215ddd9aaca3ddec1636efd6c3c6d5d465ed3a523f25f7b4473a7e9c6ee3ffd1",
-      "canonical_sha256": "215ddd9aaca3ddec1636efd6c3c6d5d465ed3a523f25f7b4473a7e9c6ee3ffd1",
+      "bytes": 15336,
+      "sha256": "8d4c560a402f5b508db7430688a053efae92ce105505142c7085faab8c6c118c",
+      "canonical_sha256": "8d4c560a402f5b508db7430688a053efae92ce105505142c7085faab8c6c118c",
       "line_endings": "LF"
     },
     {
@@ -3458,9 +3458,9 @@
     },
     {
       "path": "scripts/run-unprivileged-go-ci.py",
-      "bytes": 15906,
-      "sha256": "542be8f0d6bab9c5185a78d9e1c988e60bff370347cf1f4e247238998dac0b86",
-      "canonical_sha256": "542be8f0d6bab9c5185a78d9e1c988e60bff370347cf1f4e247238998dac0b86",
+      "bytes": 20269,
+      "sha256": "42a793556d47aadcd010dd4757110fa780d3e67cd3222d7af2465063ff168ac6",
+      "canonical_sha256": "42a793556d47aadcd010dd4757110fa780d3e67cd3222d7af2465063ff168ac6",
       "line_endings": "LF"
     },
     {
@@ -3524,6 +3524,13 @@
       "bytes": 8909,
       "sha256": "740784316d9a647eb2e68ac90f356320687ec0b2e55d5cf45633b4be7e4291d7",
       "canonical_sha256": "740784316d9a647eb2e68ac90f356320687ec0b2e55d5cf45633b4be7e4291d7",
+      "line_endings": "LF"
+    },
+    {
+      "path": "scripts/test-worktree-source.py",
+      "bytes": 6979,
+      "sha256": "05cdd156d1778ebddcb6ef6abdd1460871b914f634bbe6767e5e4e5445eb1c42",
+      "canonical_sha256": "05cdd156d1778ebddcb6ef6abdd1460871b914f634bbe6767e5e4e5445eb1c42",
       "line_endings": "LF"
     },
     {
