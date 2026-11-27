@@ -204,9 +204,9 @@ func (s *IsolatedHTTPSession) streamV2Source(ctx context.Context, op Operation, 
 	}
 	defer release()
 	source := op.Stream.Source
-	incarnation, err := ObserveSourceIncarnation(source.SourceRootPath)
-	if err != nil || incarnation.object != source.SourceObject {
-		return "", ErrCaptureChanged
+	observation, err := s.observedStreamSource(ctx, op)
+	if err != nil {
+		return "", err
 	}
 	link, err := linkGuard(source.PhysicalPath)
 	if err != nil {
@@ -310,8 +310,10 @@ func (s *IsolatedHTTPSession) streamV2Source(ctx context.Context, op Operation, 
 	if err != nil {
 		return "", err
 	}
-	incarnation, err = ObserveSourceIncarnation(source.SourceRootPath)
-	if err != nil || incarnation.object != source.SourceObject || !os.SameFile(before, current) || !os.SameFile(before, after) || before.Size() != after.Size() || current.Size() != after.Size() || before.ModTime() != after.ModTime() || current.ModTime() != after.ModTime() || statCTime(current) != statCTime(after) || statCTime(before) != statCTime(after) || link != afterLink {
+	if err = s.validateStreamSourceRead(ctx, op, observation); err != nil {
+		return "", err
+	}
+	if !os.SameFile(before, current) || !os.SameFile(before, after) || before.Size() != after.Size() || current.Size() != after.Size() || before.ModTime() != after.ModTime() || current.ModTime() != after.ModTime() || statCTime(current) != statCTime(after) || statCTime(before) != statCTime(after) || link != afterLink {
 		return "", ErrCaptureChanged
 	}
 	return hex.EncodeToString(whole.Sum(nil)), nil

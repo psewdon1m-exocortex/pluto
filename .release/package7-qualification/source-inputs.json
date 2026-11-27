@@ -2,9 +2,9 @@
   "schema": "exocortex.package3.frozen-source.v1",
   "component": "Pluto",
   "version": "0.1.5",
-  "baseGitCommit": "73b66c34f9e1532918fa6711a4030e38b34dd9dd",
-  "scope": "Package7 explicit current qualified worktree source or current Git-tracked snapshot; strict raw bytes/path/symlink and independent copied-view proof. No Go/runtime/helper lifecycle changes.",
-  "sourceSetSHA256": "a873dc062793df44695b6c033f85f6b9b42274ea4e61d6387def0f4cd004eef3",
+  "baseGitCommit": "310f43d9f4ffa1620dd3b26725bbdb76a0a76a10",
+  "scope": "Package7 retained stream recovery after an already accepted mount-only re-observation. Preserve original immutable ID/input/source witness, stable inode/size/mtime/ctime, acknowledged parts and whole SHA; bind live owner/config/source/root before and after the joined read. Stream RECOVER keeps its stream transport and existing admission/retry budgets. No trust, authority, protocol, schema or threshold relaxation.",
+  "sourceSetSHA256": "d1bdb7ea50b68758da8e6b30d4e92b75ba358ea76ec25c6b0214877826e46b88",
   "sourceSetHashEncoding": "SHA256 of UTF8 JSON.stringify(files) in sorted path order",
   "files": [
     {
@@ -1090,9 +1090,9 @@
     },
     {
       "path": "internal/pluto/syncstate/captured_scan.go",
-      "bytes": 18562,
-      "sha256": "a5560f57d34c2b1fab1836dcbcdaf97eee62fb64e61c65a4c3c738512869e295",
-      "canonical_sha256": "a5560f57d34c2b1fab1836dcbcdaf97eee62fb64e61c65a4c3c738512869e295",
+      "bytes": 19328,
+      "sha256": "4bd4fad29e285e911e044db0674c20a705339c572b5acbfc63f0b9c4c129211e",
+      "canonical_sha256": "4bd4fad29e285e911e044db0674c20a705339c572b5acbfc63f0b9c4c129211e",
       "line_endings": "LF"
     },
     {
@@ -2006,6 +2006,13 @@
       "line_endings": "LF"
     },
     {
+      "path": "internal/pluto/syncstate/stream_remount_original_test.go",
+      "bytes": 7918,
+      "sha256": "a288b789a4bd3ee6ea32d73c093724f46872cd31e778e2c970d08d3890549d16",
+      "canonical_sha256": "a288b789a4bd3ee6ea32d73c093724f46872cd31e778e2c970d08d3890549d16",
+      "line_endings": "LF"
+    },
+    {
       "path": "internal/pluto/syncstate/stream_source_proof.go",
       "bytes": 3258,
       "sha256": "420f9e7a7758039bf6895dbcaaa1fd7a5efffbb1870f7daecf1ca61daa66a4d1",
@@ -2020,10 +2027,17 @@
       "line_endings": "LF"
     },
     {
+      "path": "internal/pluto/syncstate/stream_source_remount.go",
+      "bytes": 3328,
+      "sha256": "927c622f8ccaab9ce03d53b73aac54a8d5e8ac2f9cfbdaea9301282c8d2ed234",
+      "canonical_sha256": "927c622f8ccaab9ce03d53b73aac54a8d5e8ac2f9cfbdaea9301282c8d2ed234",
+      "line_endings": "LF"
+    },
+    {
       "path": "internal/pluto/syncstate/stream_upload.go",
-      "bytes": 10320,
-      "sha256": "ce953935f49cad652aed55d60a7b2a495143ffbdbe7681041e95b0c4a936b9f1",
-      "canonical_sha256": "ce953935f49cad652aed55d60a7b2a495143ffbdbe7681041e95b0c4a936b9f1",
+      "bytes": 10207,
+      "sha256": "09d0bcd90faf965acc41b536b8e8cce1f5b9f9ce10abefaccfc14c3da3fec1ff",
+      "canonical_sha256": "09d0bcd90faf965acc41b536b8e8cce1f5b9f9ce10abefaccfc14c3da3fec1ff",
       "line_endings": "LF"
     },
     {
@@ -2042,9 +2056,9 @@
     },
     {
       "path": "internal/pluto/syncstate/stream_v2_transport.go",
-      "bytes": 11017,
-      "sha256": "76bef86c1c777b5e7dc1f1ba7f251a379c6e2c17c6592e6a2780e78ae8bcddb8",
-      "canonical_sha256": "76bef86c1c777b5e7dc1f1ba7f251a379c6e2c17c6592e6a2780e78ae8bcddb8",
+      "bytes": 10908,
+      "sha256": "38976cfc8f52a351a73e04449fd9e146c9a21252a9009bb4698e0618db0eb165",
+      "canonical_sha256": "38976cfc8f52a351a73e04449fd9e146c9a21252a9009bb4698e0618db0eb165",
       "line_endings": "LF"
     },
     {

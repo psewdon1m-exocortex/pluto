@@ -191,6 +191,29 @@ func (r *RemoteImport) RunCapturedScan(ctx context.Context, o CapturedScanOption
 						return
 					}
 					if d.Kind == "RECOVER" {
+						original, lookup := r.store.Operation(ctx, d.OperationID)
+						if lookup != nil {
+							problem(job.ordinal, path, lookup)
+							return
+						}
+						if original.Stream != nil {
+							transport := httpSession(o.Session)
+							if transport == nil {
+								problem(job.ordinal, path, ErrRemoteUnqualified)
+								return
+							}
+							// A deferred historical stream still has its own transport,
+							// retry deadline and data/source admission. It cannot enter
+							// catalog recovery with a nil captured artifact.
+							if e = transport.StreamOriginal(ctx, original, o.AcquireStream); e != nil {
+								problem(job.ordinal, path, e)
+							} else {
+								mu.Lock()
+								report.Recovered++
+								mu.Unlock()
+							}
+							return
+						}
 						release := func() {}
 						if o.AcquireRecovery != nil {
 							release, e = o.AcquireRecovery(ctx)
