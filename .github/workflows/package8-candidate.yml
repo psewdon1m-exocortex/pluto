@@ -1,0 +1,57 @@
+name: Package 8 exact candidate draft factory
+on:
+  push:
+    branches: ["release-promotion/package8-pluto-candidate-20261128-02"]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: package8-pluto-candidate-20261128
+  cancel-in-progress: false
+jobs:
+  create-exact-candidate-draft:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          fetch-depth: 0
+      - name: Require exact source, metadata delta and actual successful CI before draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 -I -B - <<'PY'
+          import json,os,pathlib,subprocess,urllib.request
+          r=json.loads(pathlib.Path('.release/package8-candidate/request.json').read_bytes())
+          assert r['schema']=='exocortex.package8.exact-candidate-draft.v1'
+          assert os.environ['GITHUB_REPOSITORY']==r['repository']=='psewdon1m-exocortex/pluto'
+          assert os.environ['GITHUB_REF']==r['branch']=='refs/heads/release-promotion/package8-pluto-candidate-20261128-02'
+          assert r['sourceRevision']=='f8108f38b723abcbec04ced08f688d0222844d8a'and r['tag']=='pluto-v0.1.6'
+          assert subprocess.check_output(['git','rev-parse','HEAD^'],text=True).strip()==r['sourceRevision']
+          assert sorted(subprocess.check_output(['git','diff','--name-only','HEAD^','HEAD'],text=True).splitlines())==sorted(r['allowedMetadataDelta'])
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self,*args,**kwargs):return None
+          opener=urllib.request.build_opener(NoRedirect)
+          def api(route,body=None,allowed=(200,)):
+              request=urllib.request.Request('https://api.github.com/repos/'+r['repository']+route,data=json.dumps(body).encode()if body is not None else None,headers={'Accept':'application/vnd.github+json','Content-Type':'application/json','Authorization':'Bearer '+os.environ['GH_TOKEN'],'User-Agent':'exocortex-package8-draft-factory','X-GitHub-Api-Version':'2022-11-28'})
+              with opener.open(request,timeout=30)as response:
+                  assert response.status in allowed
+                  return json.load(response)
+          observed=[]
+          for expected in r['requiredCI']:
+              run=api('/actions/runs/'+str(expected['id']));jobs=api('/actions/runs/'+str(run['id'])+'/jobs?per_page=100')['jobs']
+              assert run['head_sha']==expected['head']and run['status']=='completed'and run['conclusion']=='success'and run['run_attempt']==1
+              assert jobs and all(j['status']=='completed'and j['conclusion']in('success','skipped')for j in jobs)
+              observed.append({'id':run['id'],'head_sha':run['head_sha'],'conclusion':run['conclusion'],'jobs':[{'name':j['name'],'conclusion':j['conclusion']}for j in jobs]})
+          # Ref creation and draft creation must fail closed if another owner
+          # already supplied this version. Never replace a tag or release.
+          ref=api('/git/refs',{'ref':'refs/tags/'+r['tag'],'sha':r['sourceRevision']},(201,))
+          draft=api('/releases',{'tag_name':r['tag'],'target_commitish':r['sourceRevision'],'name':'pluto '+r['version']+' qualified candidate','draft':True,'prerelease':True,'make_latest':'false','body':'Exact locally qualified package8 candidate. Owner exceptions and self-signed trust limitations remain explicit in the acceptance handoff. No production deployment. Assets are verified separately before publication.'},(201,))
+          pathlib.Path('factory-result.json').write_text(json.dumps({'status':'PASS_EXACT_f8108f38b723abcbec04ced08f688d0222844d8a_pluto-v0.1.6_AND_DRAFT_CREATED_NO_PAYLOAD_REBUILD','source':r['sourceRevision'],'tag':r['tag'],'releaseId':draft['id'],'draft':draft['draft'],'prerelease':draft['prerelease'],'actualRequiredCI':observed,'assetsUploaded':0,'published':False,'productionDeployment':False},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: package8-pluto-draft-${{ github.sha }}
+          path: factory-result.json
+          if-no-files-found: error
+          retention-days: 30
