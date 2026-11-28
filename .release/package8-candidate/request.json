@@ -1,0 +1,65 @@
+{
+  "schema": "exocortex.package8.exact-candidate-draft.v1",
+  "repository": "psewdon1m-exocortex/pluto",
+  "sourceRevision": "f8108f38b723abcbec04ced08f688d0222844d8a",
+  "version": "0.1.6",
+  "tag": "pluto-v0.1.6",
+  "branch": "refs/heads/release-promotion/package8-pluto-candidate-20261128",
+  "allowedMetadataDelta": [
+    ".github/workflows/package8-candidate.yml",
+    ".release/package8-candidate/request.json"
+  ],
+  "requiredCI": [
+    {
+      "id": 45951464046,
+      "head": "f8108f38b723abcbec04ced08f688d0222844d8a"
+    }
+  ],
+  "assets": [
+    {
+      "name": "bootstrap.sh",
+      "bytes": 23781,
+      "sha256": "fce0feb7e7b65c40b06887ecbc5dad676f504908f3a7dfcdf274e9f9b4e6f613"
+    },
+    {
+      "name": "pluto-linux-amd64",
+      "bytes": 14172322,
+      "sha256": "898d8aef33cb65d5b31c699aefe30ffdbab8e79971cf55ed98e942daec7c53ff"
+    },
+    {
+      "name": "pluto-linux-arm64",
+      "bytes": 13303970,
+      "sha256": "b454232e927ea1ba194f19a9196d2d08197532f2d43c2ce2ee2f2fb6546dd51b"
+    },
+    {
+      "name": "pluto-release.json",
+      "bytes": 1321,
+      "sha256": "673b7f3d9e379873202849758efc7504976c971cfd263658f07eb81734ea7f42"
+    },
+    {
+      "name": "pluto-release.json.sig.json",
+      "bytes": 676,
+      "sha256": "91155ed0831ca8a69a40d1440cb6d0d64fd5e4d9982ace2c879bd608e4e4ac75"
+    },
+    {
+      "name": "pluto-runtime-notices.tar",
+      "bytes": 86528,
+      "sha256": "7323edf3d80be66f5f6b98a861476736daa2116f7883f74a0b95c0c95cd8cec0"
+    },
+    {
+      "name": "release-public.pem",
+      "bytes": 625,
+      "sha256": "2e7e2b857ceb0bf0d2488c5f1ca9c1248b38d759728e549b17545be764508b29"
+    }
+  ],
+  "scope": "Create only exact-source tag and draft prerelease, latestfalse. GITHUB_TOKEN generated tag does not dispatch recursive release builders. Upload/publication requires local exact bytes/digests and separate continuation. No stable promotion/deployment.",
+  "review": {
+    "identity": "Metadata-only exact-source draft factory; runtime bytes/DB/schema/data paths unchanged. Workflow contentswrite restricted by exact repo/ref/source/CI and no existing tag/release replacement.",
+    "product": "Metadata-only exact-source draft factory; runtime bytes/DB/schema/data paths unchanged. Workflow contentswrite restricted by exact repo/ref/source/CI and no existing tag/release replacement.",
+    "data": "Metadata-only exact-source draft factory; runtime bytes/DB/schema/data paths unchanged. Workflow contentswrite restricted by exact repo/ref/source/CI and no existing tag/release replacement.",
+    "compatibility": "Metadata-only exact-source draft factory; runtime bytes/DB/schema/data paths unchanged. Workflow contentswrite restricted by exact repo/ref/source/CI and no existing tag/release replacement.",
+    "security": "Metadata-only exact-source draft factory; runtime bytes/DB/schema/data paths unchanged. Workflow contentswrite restricted by exact repo/ref/source/CI and no existing tag/release replacement.",
+    "lifecycle": "Metadata-only exact-source draft factory; runtime bytes/DB/schema/data paths unchanged. Workflow contentswrite restricted by exact repo/ref/source/CI and no existing tag/release replacement.",
+    "resources": "Metadata-only exact-source draft factory; runtime bytes/DB/schema/data paths unchanged. Workflow contentswrite restricted by exact repo/ref/source/CI and no existing tag/release replacement."
+  }
+}
