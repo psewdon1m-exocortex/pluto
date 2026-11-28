@@ -64,6 +64,29 @@ These commands describe a later authorized deployment; none were executed during
 
 All commands retain `--config`, `--state`, `--socket` overrides. `inspect` reports schema, pending work, retained artifacts, retry states and conservative rollback information. `diagnostics` prefers live status/transport counters and falls back to readonly inspection. `checkpoint` and `backup` use the paused local service or exclusive offline ownership. Backup uses SQLite's backup API, including committed WAL, and returns its SHA-256.
 
+After a host reboot or filesystem remount, device and boot identifiers may change
+even when the original source directory inode remains in place. Ordinary startup
+refuses that uncertain incarnation. Stop the paused daemon and retain its
+diagnostics, originals and backup. If an empty artifact directory also requires
+custody recovery, use the separate `restore-artifact-directory` command with its
+exact standalone backup SHA first. Never edit recorded identities by hand.
+
+For an already recorded `UNKNOWN` source, explicitly review
+`pluto source-recover-plan --config /protected/config.json --state /protected/state --source-id SOURCE_ID`.
+The plan binds the original configuration, full root authority, source-set owner
+and revision, prior/pending/current native objects and absence of pending
+originals, retained artifacts, retry work or incomplete binding transitions.
+Recovery requires the same directory inode/mode, plain directory ancestors and
+two equal current observations; replacement directories remain refused. Apply
+only the exact reviewed digest using `source-recover-apply` with those same flags
+and `--plan-digest DIGEST`. Apply preserves a real SQLite backup, retains the
+observation gap and records only a new locally observed incarnation. It neither
+proves content continuity nor establishes an agreed remote baseline. The next
+ordinary complete guarded scan must still verify the source and remote state.
+Configuration, enrollment and immutable publication originals are not rewritten.
+The durable `source-recovery-DIGEST.json` receipt survives a lost stdout response;
+inspect it before attempting another recovery after an interrupted command.
+
 Additive v8 stores observer/dirty generations, retries, parent cache, policy and stream progress. Original JSON, IDs, receipts and batch membership remain intact. Feature rollback disables future selection while recovering originals. Binary update checks `--writer-schema`; incompatible rollback retains the profile, previous binary and update journal. Never restore an older database over newer remote publications.
 
 ## Source policy and names

@@ -1,0 +1,17 @@
+name: Package 8 Pluto recovery qualification
+on:
+  push:
+    branches: ["release-qualification/package8-pluto-reboot-*"]
+permissions:
+  contents: read
+concurrency:
+  group: package8-pluto-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  full-ordinary-ci:
+    uses: ./.github/workflows/verify.yml
+    with:
+      qualification_source_manifest: .release/package8-qualification/source-inputs.json
+      qualification_runner_label: exocortex-p8-ci-20261128-pluto-reboot
+      qualification_bulk_inputs: /fixture/inputs/backend-inputs.json
+      qualification_bulk_private_base: /fixture/native-private

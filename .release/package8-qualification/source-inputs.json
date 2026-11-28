@@ -1,0 +1,3070 @@
+{
+  "schema": "exocortex.package3.frozen-source.v1",
+  "component": "Pluto",
+  "version": "0.1.7",
+  "baseGitCommit": "f8108f38b723abcbec04ced08f688d0222844d8a",
+  "scope": "Package8 reviewed paused source-incarnation recovery after Linux host reboot or remount. Same configured source projection, root/server/device authority, directory inode/mode/plain ancestors and exact old/pending/current observations. No pending originals/retained artifacts. Real WAL-aware backup, explicit pending-mount and incarnation CAS, durable receipt, preserved gap and mandatory subsequent complete guarded source/remote scan. Ordinary startup refusal, immutable operations, baselines, protocol/schema, thresholds and authority unchanged. Actual final candidate CI/signature/native journey/readback/drain gates remain mandatory; historical owner archival NOT_RUN is never PASS.",
+  "sourceSetSHA256": "43ca13d4567e6df9acd1adda445ceee7ecf51cd36b7587be934df27e78814133",
+  "sourceSetHashEncoding": "SHA256 of UTF8 JSON.stringify(files) in sorted path order",
+  "files": [
+    {
+      "path": ".github/workflows/package3-qualification.yml",
+      "bytes": 709,
+      "sha256": "d542f7928448f852b1f0ada1995ca82ce4bc511fb5b5996f079eb008234d4ed2",
+      "canonical_sha256": "aa0b4045b6d49dfae9617266346280340b1965774e3b6d4c13c211db04fcf359",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".github/workflows/package7-qualification.yml",
+      "bytes": 597,
+      "sha256": "52ab80e26f0de7059aea3835790893e68c901b4e08e983eff3b7ffeed106700f",
+      "canonical_sha256": "08e146c92474125837dbf1eb459a861a41804bf8577240f64df118000a62c1b6",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".github/workflows/package8-qualification.yml",
+      "bytes": 603,
+      "sha256": "ef6ee6c14956b97940eba44889be32b5a5f2333fdcf657a330b4f2e077dd94d0",
+      "canonical_sha256": "ef6ee6c14956b97940eba44889be32b5a5f2333fdcf657a330b4f2e077dd94d0",
+      "line_endings": "LF"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "bytes": 11013,
+      "sha256": "f8c6952ea87550c89961c9a05ffa2aa48fb2099cbdc4e68004344d89f3b79e47",
+      "canonical_sha256": "d76475fc175a9cf035d2759ec8de439196affe6354894f0fae1cffec9649d525",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".github/workflows/verify.yml",
+      "bytes": 4010,
+      "sha256": "44e5b3bb1a8ad2e62c4d121b8c96152802ace0308564c30590f44aa324380549",
+      "canonical_sha256": "705eca9c094f029788c28915425c8b64b1fabde665d344c5a887862eef5e6d31",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 164,
+      "sha256": "af5e03e1d90d3fdb4b2cf18285ea42040f33c82f1a9236a448781ab5a2715ba9",
+      "canonical_sha256": "74f130e44f7a1b244891de56245c6efcdbdbf0f22bf40bc9e952157cdb35907b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_00_SYSTEM_UNIFICATION_SPECIFICATION.md",
+      "bytes": 28953,
+      "sha256": "31395250df5376705eee0d843c1123ecab7fd9098dccb7e60795406a8619ed6b",
+      "canonical_sha256": "8732e5aa53b8ecff08aff8fce52b0936d48e18d83d3518fb974b86339378131f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_03_BACKUP_AND_RECOVERY.md",
+      "bytes": 25070,
+      "sha256": "778dc5f0ac1df76d8e05936907fb26223ce7b34d49c1fa6c962dcd18b3508d4d",
+      "canonical_sha256": "d7a091731922b0b3b57869e0474c1a064666ffd2f02c83488fc519192bc07e2d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_04_BOOTSTRAP_AND_DEPLOYMENT.md",
+      "bytes": 18763,
+      "sha256": "87d11c40d2a0f2365ec173264c77e67dcece270d65bd685614b6b09a5058e342",
+      "canonical_sha256": "304495b64c75eec24dc255eb50bd2b952771dd1e2440bbae759231d13289fb4d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_05_CI_RELEASES_AND_LOCAL_UPDATES.md",
+      "bytes": 49438,
+      "sha256": "786f2c5ba06d5d7a0a37c7b782aef9719f395a259c1b944235780e3c4681c74d",
+      "canonical_sha256": "8003893bb4af8c185c63dd3be3fb65c51ce4b81b2ba6f5ad5632232ab82de3f2",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_06_UNIFIED_ACCEPTANCE_CHECKLIST.md",
+      "bytes": 42859,
+      "sha256": "b664a6bcd57f748ee18df88614261c5d71df43b51fc8c8262427a09a97556d71",
+      "canonical_sha256": "bedbd841d926d090bae75bb6e372cd42bbd35bb1d4bdff2990af37eba449d70c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_07_SECURITY_AND_EXPOSURE_CONTROL.md",
+      "bytes": 39584,
+      "sha256": "4aafaf371b56beef61ca1bc1c3652a292ba7ce9eac8de95b85751ff7f3a677d4",
+      "canonical_sha256": "8fa2b2d881caa066a393eef6e85fe2f4a83925c0bdd6862a3f44db16e03a5e9f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_09_SERVICE_AGENTS_DEPLOYMENT_AND_LIFECYCLE.md",
+      "bytes": 38818,
+      "sha256": "a157bcb1d15588e27013f90caacc98f8ba2e579211711fe39237928cd5fb1477",
+      "canonical_sha256": "a9595fb0f227391917fb6396b0bc95b41f8b5bc74202110fcbd920a364f611f9",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_11_INITIAL_MULTI_SERVICE_DEPLOYMENT.md",
+      "bytes": 11304,
+      "sha256": "d740dc72391fab7f331386ca98dfbd18b4853f693f8488e47abd2144e534475c",
+      "canonical_sha256": "c805b8bd7485d8d4d3390284f9b3ad3a5df4b51ea9e5c2bb845a4a2b155880a3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/PART_13_HOST_DEPENDENCIES_AND_EXTENSION_GUIDE.md",
+      "bytes": 12509,
+      "sha256": "f4fc8d79f2318db8ca100532e86008f9995b3a36051dce8fb3581e7e18c8e9b9",
+      "canonical_sha256": "35a5add2d68e39953092e6fcfcfb0f27b2c8b71ddc174e2d5479e445cbdf4d22",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release-evidence/3415ca3eac2191b623928733d3f7ee996f505c84/catalog.md",
+      "bytes": 85678,
+      "sha256": "bcb2972f3eec3b62ce89d5f4b36a350246ec5f6a381bfa86bf1cd9efcf3a2c3c",
+      "canonical_sha256": "413cd04e0a7c082a9d1cd3b33236230f4047338321e5f5f44230e8f356c45d65",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release-evidence/remediation-plan.json",
+      "bytes": 61166,
+      "sha256": "240d0ed9b624bc6b0c908c95316e2528d7cfc910541e0a68798851c767a65397",
+      "canonical_sha256": "c97f0f0486442e3c203d25cdcfc2c8b0ae233b9d211c34d23bc2ed9ee1701403",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/kernel.sha256",
+      "bytes": 66,
+      "sha256": "2b9ab316bc9706a5db99c1cbd3aca1cd49b1c0f52c5338b8dd0b1f8123ce3708",
+      "canonical_sha256": "da54afe79ed9414d3838064956f6d529b6cdcc03a9ebd6e6d054c6746233c7e6",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/kernel.source-sha",
+      "bytes": 42,
+      "sha256": "507ad366f607b14f0c28b98867a93966fabd0aa9f5aa0551e76058aba1a4dd8e",
+      "canonical_sha256": "830674b9a430b759ec4bf4b9933e82c5285af1ab882319630699f0d224dd636d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/kernel.tag",
+      "bytes": 16,
+      "sha256": "f005e0e65e6a24f566045caa7ef4f0ff0961acd6041d2f5af5fb3948624b22b9",
+      "canonical_sha256": "ce1e709b696d631ba3cda7d22083fbffad2073d2f6a74fd69c6579b72c55456f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/kernel.version",
+      "bytes": 8,
+      "sha256": "c46f9979061d4c91da9c8dd8da8d9330621e31487c48adc5df1ed1f7bd005419",
+      "canonical_sha256": "19754aefd27e92de8c47211fbc5bb30d95e85a61128529c448e75c47e7c0db8d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/known-problems-policy.json",
+      "bytes": 1281,
+      "sha256": "f7cb7a062068d03c9734caf4780b8272cee5f8eb2c7d43a2ce6b211d1065cdf8",
+      "canonical_sha256": "fd5fae60078afbb2fcf09bb7b92efe2eabdc1a5d9c00c08a799773b39fbd5a65",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/known-problems-supplement.json",
+      "bytes": 1802,
+      "sha256": "b733f06c8be4f2b046f03b2c783b71923326c3222ececa22fe9516268c7b23e6",
+      "canonical_sha256": "8e749f7b58c8a052de934850f1fb2f2e427dbe996b40d44539e2a265b64fb796",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/package3-qualification/request.json",
+      "bytes": 1752,
+      "sha256": "29191102f94295723ffb817bfcebecdc1f506c6dfb090095b92e207f9ec55d20",
+      "canonical_sha256": "830f83e26332739c69fcc910c14898659aa7e07a854b3ad0fdccf7b9388b28fb",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/package3-qualification/source-inputs.json",
+      "bytes": 139951,
+      "sha256": "7aba98a8a6daaaeb6d3f3c9ecd20c8677c3ace1feb669bfa1003b3e3867c87e9",
+      "canonical_sha256": "6bae4f2ab17f3adc5fc38f081a122558ed74fc333dcc2f0b7559a096c62444ed",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/package7-qualification/source-inputs.json",
+      "bytes": 141426,
+      "sha256": "d062b1b3e173c9d8ca006817b68e8d8d651afa17dc7bc7d1804a9a1c05ae1056",
+      "canonical_sha256": "e1f2985dadf45275b8701a00333789320d5c3b87b8ac543c119a69da00b095e6",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/pluto.version",
+      "bytes": 7,
+      "sha256": "4b220ecf26c91c317acb13a9461a569e5f4e769095a2358c35ff9ab2372b732c",
+      "canonical_sha256": "8a3dad16d348c163566a456fcf650d85d7aeeda5e53d01ee1fa8dc15212915a7",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/saturn.sha256",
+      "bytes": 66,
+      "sha256": "93f20b2c4c9ce2ebd9702d70bd272ebdc613b01a6304847c0c7ec0d69eeb848f",
+      "canonical_sha256": "58b5914371164f4b34015a29ab43a208a766b37adf62d61cabf5b10eec97eef7",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/saturn.source-sha",
+      "bytes": 42,
+      "sha256": "365ee21e712af05646f78cf48f78505502898b799581d76f4ec2391d1e0d14b6",
+      "canonical_sha256": "4707d0d3aac4409e0d7ec7f0823b4167a9b3e55743eee549696405281ec7ffd3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/saturn.tag",
+      "bytes": 16,
+      "sha256": "17681ebb8af4139db4ebe630bafcc45118f50bae6d6c16cb31db9e3eb2626a68",
+      "canonical_sha256": "dea0d395bea319138053d164eda7ac6fbb8f433e03f7ceacbadb91203d620c47",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": ".release/saturn.version",
+      "bytes": 8,
+      "sha256": "aa059eea8b22497780012a5019e59eb36a5ea46e94b8f9011ce3cc9d20c7c716",
+      "canonical_sha256": "011cfdb24c667a75861adfffaabe68e66358d982f437b47270ef09d86c6c6cd7",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "README.md",
+      "bytes": 23521,
+      "sha256": "cf96cbd16460424be7ca604503d779f938540cef2c9ae83b6cec14803c705189",
+      "canonical_sha256": "064ab3e4e36ed47e3c8948f94ec21613721220d0773aa790ab3bbaeee0d7e4a3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "cmd/pluto/main.go",
+      "bytes": 5155,
+      "sha256": "0f7952b94c3cfcdd8252e8b5e8f6e8a956964a78075c1834fd65705e8ae6e28b",
+      "canonical_sha256": "0f7952b94c3cfcdd8252e8b5e8f6e8a956964a78075c1834fd65705e8ae6e28b",
+      "line_endings": "LF"
+    },
+    {
+      "path": "docs/PACKAGE3_QUALIFICATION.md",
+      "bytes": 6786,
+      "sha256": "0c200b9fb9f03c282401078c27b3c25c84c48de5f728922693cb7e6e2249178c",
+      "canonical_sha256": "f71a54ee6b53bd4339766da728ee2794a96f32e62d93780e9d13b0b68754173f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "docs/QUALIFICATION_STATUS_2026-10-16.md",
+      "bytes": 9672,
+      "sha256": "7625ad07a5fa639ac62ae53e248b041596971bcaa472b2bc1701604f5c00bf2a",
+      "canonical_sha256": "4746fa1eb5b56c19022e283c8a1ea2c5cbc128ec6d5bc8f3e803848e287e78e0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "docs/indexed-daemon.md",
+      "bytes": 18001,
+      "sha256": "ef4b75eb27ac2e95b7bc166a88afb7dc12b00144c08ac24aa6e79134a24d98dc",
+      "canonical_sha256": "ef4b75eb27ac2e95b7bc166a88afb7dc12b00144c08ac24aa6e79134a24d98dc",
+      "line_endings": "LF"
+    },
+    {
+      "path": "go.mod",
+      "bytes": 578,
+      "sha256": "507050dac997a92477f17c3e752e2d6ff02b651a7b6521b102748f95620325e4",
+      "canonical_sha256": "030b07fb990b04b93de8e17219ae5571ad67f55a2df217119ac68da38fc8defc",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "go.sum",
+      "bytes": 4342,
+      "sha256": "94def9b0ed6dd7976f8e26e46332794b33e8c50ae4d13613649fdef3d7a0e950",
+      "canonical_sha256": "48803bf5852252943bf87c08474f07d10698bbcb4eaf8a2dcb5dd36bd0891af1",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/network/deadline.go",
+      "bytes": 3995,
+      "sha256": "652603196d3cf5ec0f7d15331b00644e23379ff84b95fe9ce88ce9ab882cf9ce",
+      "canonical_sha256": "448daa59d8c6a9d9ae0e829da7c723c407b0ea018348a612a9ed5c06deef4975",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/network/deadline_test.go",
+      "bytes": 6017,
+      "sha256": "4630a1e316fa1671c44b8690316b427973ffcecd2c80a5ac686c935d24bc5fb0",
+      "canonical_sha256": "c256e8e6a15bb6abe67e724c9b9d16e7632ccc8399560b81c04074c9170b855f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/network/proxy.go",
+      "bytes": 1372,
+      "sha256": "3cf650929eab70467dac387fecbc7dc87d8e6c8b4a61eb875e4e793ae88ef695",
+      "canonical_sha256": "ee4e4069fee6cc23d46a7cca3bd85279e49e1a8ba1f59674a0d05f834e9c6037",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/network/proxy_test.go",
+      "bytes": 2365,
+      "sha256": "c43fb00a2c1cef5fb2215703c5b2f2ed0b3dc109612bea285943d9824ab019e5",
+      "canonical_sha256": "609052c6eb88c608f88577ea3ed4050be3f00ac771c805c297fc3d5ffc3a4ec5",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/admission_restart_backup_test.go",
+      "bytes": 18788,
+      "sha256": "da70cd67a2abd2b746e47ca9c4b8bb71563dbe4612543ce5da2ebd330b113cc6",
+      "canonical_sha256": "97d0b9b192ef992bfcbe3a97f4b082a92ca4035c8a277bf94a4571146b093219",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/artifact_admission.go",
+      "bytes": 8812,
+      "sha256": "d1988822458f831ffbe520265520fae231ca2c1aaadf87742e0403dffc671a1f",
+      "canonical_sha256": "03abcc5d2e4ee49293a5827d422a52c4f48b6ff0ef84b0b6bd4452642269d684",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/artifact_admission_test.go",
+      "bytes": 14125,
+      "sha256": "28787e7883ed616b4f2ed203ee08a0671f8c5f3bde81b24ed7e2e2e74694c845",
+      "canonical_sha256": "71089eb2469a134d8dab919681b7be95f84b000a0204d700a902fccebc60261e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/artifact_interrupted_admission_test.go",
+      "bytes": 3049,
+      "sha256": "7d75c15aac541db74f1e7598323972c5b75bc7b9dbb07291c244b5467f899fa1",
+      "canonical_sha256": "88bc8b375633b771b313c50e84883b213d89d3cdbbb1965cd1521a603e527198",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/artifact_reopen_test.go",
+      "bytes": 3726,
+      "sha256": "dd8fd0d7363f604ced2361af7678093cc645c077b5fe9dae7e55b84118870a27",
+      "canonical_sha256": "a23e5647dd992c91358c9e211f8e0022409023b42ca42514dbe591695de289b1",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/artifact_spool_wait_test.go",
+      "bytes": 3774,
+      "sha256": "804007b617c2e7b12ff15c921f8f6614feeea48c21dcb239bbd620ecca807e3a",
+      "canonical_sha256": "b00d2bca10bc84f0ebfd71a4b7e8a653e5060f1c7efa6b742d004ba5aa27ab48",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/audit.go",
+      "bytes": 2560,
+      "sha256": "ed52cb66cda900bb423804394fe3f4eb547c04e34506a97ab58389a50b506302",
+      "canonical_sha256": "3ca8d9ef04d79471cae167b09ad47596f83f881e9182446d4ff6505a4269a509",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/audit_classification_test.go",
+      "bytes": 1663,
+      "sha256": "565ad4be8f1becb4ed1ff968313c981b8e0d4bf664cecafc1915f6d7c548c1bc",
+      "canonical_sha256": "da4a102c2dc54cd0ef3ab6152293a3902f010a63d7d4a26c68deefdc1fd08598",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/audit_failure_test.go",
+      "bytes": 633,
+      "sha256": "56bc2c9a1e1406d8cf75be16923eaee4d9d5919e2dd6c1e02fb7ad17db1059a1",
+      "canonical_sha256": "05a10d551b67bb402361f781fc814fd4e5cfc26d750cef7b1deefdefd9b48a67",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/c01_daemon_checkpoint_test.go",
+      "bytes": 9990,
+      "sha256": "98ac225bf1538a68b1a1c28104b516df8f9d7da425241b2bf53b581b2d84afda",
+      "canonical_sha256": "0982784452cc5722fdbae995309fad511cd136a91f4d5133181d94dd4a8c423e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/client.go",
+      "bytes": 6990,
+      "sha256": "0aecc9e3dd2eaed32b469d731ae0a01db0e0265a5388b5c53f5f0203e905a227",
+      "canonical_sha256": "841d1231d216228207955154155904105180d4c5549af9babd360efc3a5c3c4e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/client_test.go",
+      "bytes": 1118,
+      "sha256": "6dcc8ee69d567574c099fb5f39b79e8f564111c34001e2982dc1aed2e3b25e0a",
+      "canonical_sha256": "5a76fb3db4591ab428c16d9615931f8061194c4f18619a999118167c735f130e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/completion_adoption_test.go",
+      "bytes": 4984,
+      "sha256": "fc72d004e8e77f21fa6dbc7ccffc79e8d49118a77d078c33308faa49f36d47d2",
+      "canonical_sha256": "bff4364ece2f712ab83f70d01809706ca0256a33bed0c55f48e0e2486b5a9d44",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/completion_backup_test.go",
+      "bytes": 11112,
+      "sha256": "04dfef9e89b873ba583d38c9a94b79d400d068dc94a85a9dc352b55cabdc3b8b",
+      "canonical_sha256": "7926326c0f46a4261a7342d301d0095bd4daa2df0a6a89f90f5ca2197c5112db",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/completion_bulk_checkpoint_test.go",
+      "bytes": 19021,
+      "sha256": "3d8a2f7643f5ce3108c6d7d20ee50b11eb6ea16e04dfc550f9a86dfd0d025c2e",
+      "canonical_sha256": "9d7d92d4abf9f1ddb5c9d6bf76656b7a47e6b3a731e78da71e8093d821a974f8",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/completion_bulk_test.go",
+      "bytes": 18177,
+      "sha256": "f247b4acf388ed820b8fa10d62754bb63a59f3292b6ba06f026d7863667953c9",
+      "canonical_sha256": "c603efcd68e5fe34cd19fbf3e66335628db96b72360b1d28105f26a4e6f7867d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/completion_network_test.go",
+      "bytes": 7787,
+      "sha256": "d4fdf01b9db759f7e19fba5a638f7ae06dc8c0574ad977f2a839ea8e6b8f49b8",
+      "canonical_sha256": "502beb3e845dbc5fe03a3faa9c40f8d3ab8b5d735720ddf5afc2bfd2a204c16c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/completion_reopen_test.go",
+      "bytes": 2708,
+      "sha256": "7a85e52ec7789f6645c242e65e0b84d50f4dc23803100f10c28805490ba153b7",
+      "canonical_sha256": "84c00b13103211f737896ab40bca6138ff67036fb0139cf26e227a70a8fe726c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/completion_scope_test.go",
+      "bytes": 6973,
+      "sha256": "2b2f9bdddaa420fdb44b4fefdb2dd16e98b6b62170734bd0eaa9aeb990049b19",
+      "canonical_sha256": "14f6cd44b0fc76a52235a895793e7fafc4b15576ce71c19ba823c8aae217e555",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/config.go",
+      "bytes": 4815,
+      "sha256": "9ea3f1e7bf7f8d623be6457024b2983ef8e943a995f6c7cffbf3ef5146d091ac",
+      "canonical_sha256": "58d733c38896d86dc1b48564af6d4edc0c25992947f5ee93919bab3fe8269175",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/copy.go",
+      "bytes": 5040,
+      "sha256": "67d7ab2dbea267bd00c1ba4546847ac5d4389eb83694a6c425e6d89da6868c02",
+      "canonical_sha256": "af7363755dcdce846e5e9d2b904d5a4d9612547e8299d90b6b1490bb22926d72",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/copy_enumeration.go",
+      "bytes": 4941,
+      "sha256": "98eed7bb9aa5ae0540703a5192f15f3a17e3d8c633ffda5733b5ef48ac51383b",
+      "canonical_sha256": "20f70f4e9f5d77a6d9648d19a2f1df93e649d44e9f2df31c4cee92b36e8f21ae",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/copy_enumeration_state.go",
+      "bytes": 8725,
+      "sha256": "1109872d79304337bba042cbb0f4268ce95371d87ccdcfa22c71cbafe3a604e6",
+      "canonical_sha256": "2b353c8e1783bd3eab6496e823ce48b3d417e2599e7da87b3885e8a5d44867de",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/copy_enumeration_test.go",
+      "bytes": 23674,
+      "sha256": "e304a9212b68d52b027493d6e1873782b46e282f5ca05e22dcece6e08223a93e",
+      "canonical_sha256": "ca55bbdcc75d228c6ef7dfd2017ab7cc9fc659f2c11a4242b6d7ff9033b64f2d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/copy_indexed.go",
+      "bytes": 4951,
+      "sha256": "d08b5b0d1c97f0946807f89131a6946a75c5f70d93605a3a16edf3c48269b154",
+      "canonical_sha256": "4e8915da42459c120d722bec908d96154ada34955a5d8b882e194d9dc61b9c8d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/copy_indexed_test.go",
+      "bytes": 4028,
+      "sha256": "9ac73140ec368984360890ca4b0361ae972084db2cba88c759d868dee4d96d41",
+      "canonical_sha256": "903570931903ffa2318e5e2a53e1b92c35afdd8b94fe3f573522416cf5dd832f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/copy_links_test.go",
+      "bytes": 5258,
+      "sha256": "d5127926bf34e2980a32a7a176504d19e1dc004d8cc8b4af3e0af87c1143a1ba",
+      "canonical_sha256": "f1d064635a809f519a82b183a5765a89d6a0d93867489f4fad648ebe3c316655",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/copy_pipeline.go",
+      "bytes": 19044,
+      "sha256": "3f275249953c46ef3716e32e8948b8f47aa6c274a7a87042c6c8e4b55057cdeb",
+      "canonical_sha256": "f2aaf7a640025eb9f7cb16d58b80aeef4392b4065c8b03050a6e576c32cd18dc",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/copy_pipeline_test.go",
+      "bytes": 19620,
+      "sha256": "c175ed24b01352adf2b32ba6602ea737fa9acf84301f1570979a4b146205738a",
+      "canonical_sha256": "f09cafd02fbe8b60b14bf9d5ab7443db3fa1c1e06fdf315a13d4303a059adbc3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/daemon_indexed.go",
+      "bytes": 15200,
+      "sha256": "4f181931002fcab139927b91d6e0859998bb442f00aea88502db37779d46dc9f",
+      "canonical_sha256": "d6e75983b6ba3fc8002b1eae2be8ea8693e764bea879b07b8c29ffe171dc3e0c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/empty_reservation_fixture_test.go",
+      "bytes": 21404,
+      "sha256": "b54c80b9c9adcc9be8699105dd90ac73b8ce0765eb4d62fa6502bf029990d163",
+      "canonical_sha256": "a33b125ad08baa965d88615ded243402e5e0360a2bca68283ae10961c572b769",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/endurance_retained_reservation_test.go",
+      "bytes": 3834,
+      "sha256": "fbfac13f13f4f5763c73793c056da73a5d38fc09e47306bd63c5d4d63e6b0f89",
+      "canonical_sha256": "2f6446926ebc06894a1fd36ac530cfc450b0d43a26a5a8f1dbeff6b733c4a949",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/heartbeat.go",
+      "bytes": 3569,
+      "sha256": "71d7aa763ed163f5ac90e013a68fc24c5164ee46cff6ecdc5d3c5e939aba98a9",
+      "canonical_sha256": "0037905dc73fc654d80049639d0b193a5e11e06d4801ff515ab7fd4ecefa3183",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/heartbeat_test.go",
+      "bytes": 3617,
+      "sha256": "429340312c2f0ec9f7eb2242725fc79512aece41221ebf5a06b6eebef7a51616",
+      "canonical_sha256": "6d2ae627ff42dc4939e6d43d2ea17b6a74009cbf058824adfd8c4ffbd521a5ea",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/indexed_command.go",
+      "bytes": 5686,
+      "sha256": "3443dbc4ac3ce5a41aa48aec6d392ad2b3c819689bb7be9b9f33997989eba8dc",
+      "canonical_sha256": "aaf2af2b3c80f45bf7b299a40d7bfe9cd284cad7d9ba1d7ad183b0bec48606c3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/indexed_command_test.go",
+      "bytes": 2449,
+      "sha256": "ad1e9e22452a5702685213dc5335e5364b1d353ff1e9ecd9cce25c988928214d",
+      "canonical_sha256": "d4d5df052344e6f72e2b7ce63412c4a13958d087b92e266f861f5ee9a53f7580",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/indexed_session.go",
+      "bytes": 7948,
+      "sha256": "bda104b80c47515219dca493551c933475bbb7665b725ccc02d3637a267070b4",
+      "canonical_sha256": "ce556a29109f3900ae6d16a6eaeb1b6b7393819d6f1eb094febfc16b62bbef1d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/lifecycle_command.go",
+      "bytes": 9868,
+      "sha256": "4e33900020ecccf5c21ff37cb37ce04c495b5773af2a1c4f4c855a501c558312",
+      "canonical_sha256": "73a9c0f99d66f3457f72db15f8b0d9fe9abaa58354450d8489f9025c6359107c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/metadata_followup_native_test.go",
+      "bytes": 4729,
+      "sha256": "644bbe8842d840e164672a6bc023ac322805685c01bbff9de037c77488e6d52c",
+      "canonical_sha256": "e6e355325083d36fdb6456fc2f8ba3756da10f8c9ffb205b57edc3f6b8c9523a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/native_disposable_fixture_test.go",
+      "bytes": 3073,
+      "sha256": "af6b420e797634229d2910825325f00c4c0014585434de00a187316ae6117596",
+      "canonical_sha256": "b4fe91fc7256714df90c0f9db25d0fc20b91ac6ea2933cb04cfb40fde259d1ca",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/native_process_bridge_linux_test.go",
+      "bytes": 4938,
+      "sha256": "4c7cf01d97f3018262737e0fef3cfc2cae98d8da38322e5cf3eaaf449c717564",
+      "canonical_sha256": "a7583cced64c9457029ee025cd634a1d041bf0a12daaabd54ca071aef41cb4ef",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/native_rollback_backup_test.go",
+      "bytes": 10263,
+      "sha256": "8812405fc5e308c28481c318088333615476486fea9255c28f901e08e26b718c",
+      "canonical_sha256": "1038a8d853bc5a80c466aaecda4316928945a9a715326c653dce84f655beae68",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/network_acceptance_test.go",
+      "bytes": 5447,
+      "sha256": "0f10260faf674903c32dd2287a41c2f268c3bb1deafd3023fa189ee8aabc951d",
+      "canonical_sha256": "b23a15a4b4bc85d8cec979eacd7f03a7a1904d246dfc316b78e53add4c9be60b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/network_daemon_checkpoint_test.go",
+      "bytes": 12352,
+      "sha256": "bc24bac2d1b6ab439f5389efd83c5a1015a27cd03179904876c49f403d44e48b",
+      "canonical_sha256": "4830c2f1080a5e67bdf87003dedfd04140ae681944ef52b611d4700a574d93a6",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/pluto_test.go",
+      "bytes": 17889,
+      "sha256": "97965a1cbbf7e3d307556524584a3eeecbf8793ed8cf53802cf3556cb5139c7b",
+      "canonical_sha256": "3e0e00ef81ccb22c48b6d418af83a3abc10bf141295b1cc6e6d2e8f13ad73ff2",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/policy_command.go",
+      "bytes": 6981,
+      "sha256": "b333643c3741fcd8b32a561dbbe8c282bcf965253fdfef6b9a1f705c4bef193c",
+      "canonical_sha256": "9bec33aa75b75c36536f1a4786e625938d1ae4aa5eb1dae5105506ccca8b3cfc",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/prepared_adoption_test.go",
+      "bytes": 9510,
+      "sha256": "edf412ddfaeb76c30582b3b3f4652a48a1011fa94ab8d07cc35d1311cf58de6d",
+      "canonical_sha256": "c6a8357a6dcf75c8f7ae86d87cc6397da72b65e320204a50980c1fcdb6147410",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/prepared_checkpoint_test.go",
+      "bytes": 8866,
+      "sha256": "4bcfd9f548f83996673ab8dd74913a3c49c9456b523ebd6a2b6057d4e9850343",
+      "canonical_sha256": "28804d03b8ef8a1fbc6859f2466451e9f779128bf735377517cc28304feeb46b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/progress.go",
+      "bytes": 7424,
+      "sha256": "e8017fd5b5c8db44e24ae6bf1197326b009763d5efb6abf83f75cc14728138c8",
+      "canonical_sha256": "4fa374f08485a1473c9506a815113505a010c70589d2394323e90d17d71462b0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/progress_test.go",
+      "bytes": 10809,
+      "sha256": "d0395f5e44e82839f8956cc6b2b04eb097863d48d5cd16d47d978c496298eb68",
+      "canonical_sha256": "14b5dcd85a9813c12762b7d9323533ba98e617a523b3ae1d67a3b0a74abc2890",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/published_legacy_test.go",
+      "bytes": 4278,
+      "sha256": "2ea6fc65e8dbeb2f69110313af5c12de0f9fb119016532e64253a7bacc5d79c1",
+      "canonical_sha256": "8443f2e76004d785ca9dd67414e99fb0c1f31bcf12bfaf89f09e1fcc2e85a8c4",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/restore_command.go",
+      "bytes": 2771,
+      "sha256": "5a74cbbc43b73480373b122a54bb8278f6109aff0128c66a4544693438423e74",
+      "canonical_sha256": "20f9459f8739ca7194c58c0ccd83ba84bd9e318f729959ca56defa47bc47b9c9",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/runtime-notices.tar",
+      "bytes": 86528,
+      "sha256": "7323edf3d80be66f5f6b98a861476736daa2116f7883f74a0b95c0c95cd8cec0",
+      "canonical_sha256": "7323edf3d80be66f5f6b98a861476736daa2116f7883f74a0b95c0c95cd8cec0",
+      "line_endings": "BINARY"
+    },
+    {
+      "path": "internal/pluto/runtime_contract.go",
+      "bytes": 10243,
+      "sha256": "c6541cbec409ace4bb39f1b732ccd36ed62e4b202700b881b62ee66d8a3bb147",
+      "canonical_sha256": "3ff8857655764ddef84b5bb993044e93227cff235d920930c2df6b3c59672c52",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/runtime_contract_test.go",
+      "bytes": 8603,
+      "sha256": "2eaffa51d6a72c07aed2abdbdaaf8822970ced287997d117f33506f65072649e",
+      "canonical_sha256": "9c55a7b1541cfb6d53f7e6154cd48c78a1245320cad7a030ed073f117818a60d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/service.go",
+      "bytes": 18430,
+      "sha256": "038cddcd3fd28a8d1b12b5ddf93b0841fec8370fc6e1d9df8e770d7327408453",
+      "canonical_sha256": "da42b7461182da5d015ed15826ad48abf72f8e1cb5bf5dd02698b504213d6278",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/service_resume_p02_test.go",
+      "bytes": 6117,
+      "sha256": "53d0f1e7756e1c59463587e9a06d488a1835502d6bbc796771f6629fb0de59b4",
+      "canonical_sha256": "a7f09287130744a8f6fa28f309077ec73bb83c88e783fe6f50f7fbe23b8fcd84",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/small_batch_admission.go",
+      "bytes": 3725,
+      "sha256": "b863f7472179f8a3d3a39b2902081458945b3aaba1c1fc5e1d1959b5c372bf47",
+      "canonical_sha256": "e966e4b18ca436dae983ecfefd3490e87065abe3f68c017f14652af78e468d4a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/small_batch_admission_test.go",
+      "bytes": 4496,
+      "sha256": "ea097fb72739a9709714d3c3b95e59d497c71185d0be2681e382acf4416a50b7",
+      "canonical_sha256": "c5284699f5026fa9eb59929c6e339eabf5e9d1892bb35889f6cab79833a34477",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/source_capture.go",
+      "bytes": 4145,
+      "sha256": "ba1c4b8fc11f827ebcc267ba08a02c8b59acaa2275b346a506e153436fa5b976",
+      "canonical_sha256": "881a8cab2a9eaff717a7cb883765c8d983a7f92eda211708f8336d0a2aa90227",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/source_capture_test.go",
+      "bytes": 7097,
+      "sha256": "9797b4effc0fd934752943365ee8e6c335b63535782012866a1de5d7fb7c19a7",
+      "canonical_sha256": "6bd818f4ec4f66ae257009e4d72eff4829cf1f67e60ce898b2bc253d15bc2d78",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/source_orphan_backup_test.go",
+      "bytes": 14852,
+      "sha256": "34ed838f6ed5e21682b091f1cd117098d7b9ab94f2a4bacf4dc17ae7217305f3",
+      "canonical_sha256": "1842c2bc7aaf9fd4c540cbceb7bc25647c79f90653deecc637d18adaf88aea0d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/source_recovery_command.go",
+      "bytes": 9692,
+      "sha256": "f7c905a127b860954fb8d16e2f90dc13bc4bc91cc02b3a6f073d40f08457f8ac",
+      "canonical_sha256": "f7c905a127b860954fb8d16e2f90dc13bc4bc91cc02b3a6f073d40f08457f8ac",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/source_recovery_command_test.go",
+      "bytes": 13040,
+      "sha256": "759eeb70ae767b5a74b9851a7dc0703820e5b5600fd774c75c39198040fa76af",
+      "canonical_sha256": "759eeb70ae767b5a74b9851a7dc0703820e5b5600fd774c75c39198040fa76af",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/sources_test.go",
+      "bytes": 9291,
+      "sha256": "05a0728027a68fdea85f26947539fde69d0ddd7438fea59c72484b7acdd64ca6",
+      "canonical_sha256": "f5f5dbf119d9a79c3370c6569122c45e971a9ffec7e8e221e316291d885cb9bc",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/space_linux.go",
+      "bytes": 387,
+      "sha256": "4cf0fe6b7c8bea3291f640d2039d28e41a7110bd3b61e5c9dac9950d5cb673b7",
+      "canonical_sha256": "a0e960cddf12f5ebed9c4d1ef2995ea0c2a7787290cc31b256924d458edafbf0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/stage3_chat_c_test.go",
+      "bytes": 36723,
+      "sha256": "8ece856e14d6cd5954d3a42e12362fb9ae6d89cce005f5a7384706bc6f31135f",
+      "canonical_sha256": "62d6896a475b2aa44642d4e4c834808740e3dcd8bf9dde90668436aa2fbb62c2",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/README.md",
+      "bytes": 8337,
+      "sha256": "c1e172539d5e84134ed001477a05ce4e3bdddbe03fbaa750c438a23cbd062b10",
+      "canonical_sha256": "aa073f5d7753b260c47440ac4ab077644aeed299a0a5361ad12119196ffe2e91",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/adoption.go",
+      "bytes": 4331,
+      "sha256": "1a164d7db41dbe0f3a1cbaaee7591eeb1b9a8dc7c5fe9036b17bd9234e4ae3b3",
+      "canonical_sha256": "1a9639df02d49465b78fd91c654431c4b351d604261c9ccd889c6e76d29c2619",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_abandoned_capture.go",
+      "bytes": 2511,
+      "sha256": "e6413bec3c2bf3e41e1ae3a761fd42581d41bf78b38f7e1eaede6d6b2689253a",
+      "canonical_sha256": "8e836ad4959d8378c4b0d308bed5ab8cdaf5ac3d8e1abbf6956a848a9d0c88fd",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_abandoned_capture_test.go",
+      "bytes": 1697,
+      "sha256": "31ada14507b4580034166267d7ac0f0020ac4c770372b86378e95317bcceea6e",
+      "canonical_sha256": "5c162e4301862f5b2d2e1ef4acff8dfde276e98942f179ed2ecdb8238d919090",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_cancel_create_test.go",
+      "bytes": 2986,
+      "sha256": "9a10723f8a90eadab8f52ff1b5292d8863d598b908910355aaadba22a842353b",
+      "canonical_sha256": "d9e49295d3b29f9bb9efc29066036d5ed8b7e0b75ff0c23b42234d9b3cc99874",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_compacted_original.go",
+      "bytes": 2323,
+      "sha256": "29119edf972ab1d6df8d1893bfb4312126841804e73aa1f6d2e41667c87f205e",
+      "canonical_sha256": "f3817f989bb9eb18a8e43976daa73cce684ee3f78fc08727bcba4e522c06b52d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_compacted_original_test.go",
+      "bytes": 3762,
+      "sha256": "4bae23ebfe525405715582fb64eaeac599759a8acc4d261a539d7e138f706361",
+      "canonical_sha256": "a23fe558cca45288b68ec44672c93806d76e1f2621cf34dc3c714911a83cb293",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_crash_test.go",
+      "bytes": 4607,
+      "sha256": "a655d45cccd5832caf5c8098091071888e5d1af392b32eea913a200a0efb212c",
+      "canonical_sha256": "50029d03b8c56c28f2b070b2fc8a303309c5e4509a08a7ff1fa88090c7c57647",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_empty_reservation.go",
+      "bytes": 7682,
+      "sha256": "81cd4a6368a620d4ffc6583c82423f811fccbccda4834da096aa1403308fafe6",
+      "canonical_sha256": "59c1dd2de36ddad8cfa8820f8ff8dfbc8c638b33fbdcad7b1a105ea72104f15d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_empty_reservation_test.go",
+      "bytes": 7692,
+      "sha256": "bdb38d4b97caed827f6738cf522a158821027495505e71e0422ee02e59f135da",
+      "canonical_sha256": "e308b67e136ae27580faded7782825778333c856fe59857db56f6cb4bb5379cb",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_model.go",
+      "bytes": 1514,
+      "sha256": "7412261a977a9c70de9f5226330e77d3777f544dacec10b50b6ca91e724a7f24",
+      "canonical_sha256": "b8ed9491fc87e61bcb35b3c9d629477b27eb63e8dabc34c4c41bc20f29681c5b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_module_test.go",
+      "bytes": 6447,
+      "sha256": "a4eb8c16f476b6b50e6a4c12eed40f05be767a98907b039235e2f4ad6509e95f",
+      "canonical_sha256": "8adcd51191e5f5c0c2f59bf46e093a9ac7cbd331654b54fe0a4a844ee564660b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_operation_test.go",
+      "bytes": 8422,
+      "sha256": "28a6948e93600fd96b92ce9ba219976fb59bcf3dd950139b7e308a5a94c04c1f",
+      "canonical_sha256": "60d5012638d99473416d44095fbff426803d797f6c4185f6f10f4a0fc814f782",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_prune.go",
+      "bytes": 2061,
+      "sha256": "d2aa09b8bf3c2144cb57a72a08865811d7bfb5cccf9fc198e9921992fcd4d784",
+      "canonical_sha256": "d23bbde1677919e932a0e7b5f7fea410523a102b7c908a5049cdf3adfcf2ae77",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_races_test.go",
+      "bytes": 3722,
+      "sha256": "8de30aece6f47b1667496f61823aa8f94d2722402929ba500850eb0896114f80",
+      "canonical_sha256": "1b885473e65d89a03986e860f38d11f0530853f91790880d3addc8436a59465e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_reconcile.go",
+      "bytes": 25830,
+      "sha256": "71dba657677bb63d3e66e1aaa5e1c4626c8c422361334f7be083753dececc67d",
+      "canonical_sha256": "c878ef182fe76f91ef1c6ae735a4883cba13792523c5a449c7839e37930fc1eb",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_resource_test.go",
+      "bytes": 4281,
+      "sha256": "ad08e8b98f40acd85322c2e26f5428eb53fa2f66b133b61463676ab0761d364d",
+      "canonical_sha256": "8bc1f7939b1c806348d9fe5067905c25c316c8a55517c14415ea7937f12b42c8",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_restore.go",
+      "bytes": 7159,
+      "sha256": "9d7621b51b95b1f0a92c4fe815fd0f481ba1bbf162b12a04cf377c48cc9815b9",
+      "canonical_sha256": "b0326e23b3a1813aaaa4a92ed024d4cc27c57898aaeec773e2cbf3e13fe466b0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_store.go",
+      "bytes": 17588,
+      "sha256": "6ef53a66893f680d5cac621e9d5dd18d3d0d98ced45201fea8b58bfcf09c71e3",
+      "canonical_sha256": "6e7c7809429f2790d27b221be1646785186eaee71a2f45978052bc663ca4cea6",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/artifact_store_test.go",
+      "bytes": 10881,
+      "sha256": "33c60b03e13671ed3aac855e9a428a8525b7e249c55f6309c8b8ada3d4049b08",
+      "canonical_sha256": "155e0cc50c1b3f33c017dfd8fbecceddbb1a1b89f5cbf50f2cc641c9ba22ea45",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/binding_transition.go",
+      "bytes": 6225,
+      "sha256": "ba8e1c012abbf3b2b4dffba08bfbcea5f5fae836723554ca98aa607516702ba6",
+      "canonical_sha256": "ee760be4ef04a7986ff0d358895d81f392226c02c1b859c711d8ff313bed9789",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/capture_metrics.go",
+      "bytes": 1694,
+      "sha256": "83fb068fc6b59b248af0277893897d2ed9ebd52a46d5a4a1a324e28842200c56",
+      "canonical_sha256": "05d06f5e605e413227eab5a6b45d61635e5d3dba54b3bbd23371f17561f302e8",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/capture_scope_pipeline_test.go",
+      "bytes": 7026,
+      "sha256": "40b2d93100292ca9a3bbd667346634f359bc557050dd17dbe0d1abcbcc6e25d7",
+      "canonical_sha256": "98a1538593415d6d3d2554e9bb1c451fcd35b77c67d0e48c878127006da57133",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/capture_validation.go",
+      "bytes": 3199,
+      "sha256": "dcf914384a1d364572aa0e3a58efe7f061fd9ff832d3f23a1b31765948efdc27",
+      "canonical_sha256": "ba54608b771ea67024bf81b764eda1d81cc4f9205963826c60bef3b0bbb601bf",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/capture_validation_test.go",
+      "bytes": 3581,
+      "sha256": "2c0712b580b2823cd0e544ae9edf7300d9758cafd8e7a6bdd075449e05381c52",
+      "canonical_sha256": "dc789b83a242b3cfd8cc7ae303f868034e79273479f02edcdaf562b88e42f1d3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_decision.go",
+      "bytes": 24137,
+      "sha256": "551fac9ae46e45634ad5f6673bf015b0190a9d117e45f6ed6df0418869f5c228",
+      "canonical_sha256": "bdfdef4522199f134662ac8ea40630e71084a7238cfdbd21cef8cb218fd7f326",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_executor.go",
+      "bytes": 6472,
+      "sha256": "84a1842d77c19cf0ff20dc5d0a42d1b3fe3da08d11ac2aa99d1610b8cbc67476",
+      "canonical_sha256": "0e676e0e6d13316249a6c319b0419441ced31808e658fe586336113125ca3ca5",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_generation_pending_test.go",
+      "bytes": 2867,
+      "sha256": "f001a52657791476ba9dd99cb141a627d48819d022273601b9d67d057304556a",
+      "canonical_sha256": "52a5f15c138dc8f7605c3b19aae782ce3dbb04fffb7f345c856ee5560d753abd",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_generation_test.go",
+      "bytes": 3632,
+      "sha256": "667ffa076cb020f29c93b7f42db85956024b4dda30532854269e4ce811536997",
+      "canonical_sha256": "645a4fbd1980623831cbd9f6f6d568e5623ef82d3b8dea3a6acffb5a69a34c30",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_operation.go",
+      "bytes": 20856,
+      "sha256": "390c5de89042899b206c7285e83abd6f4728d1b075938f19328d7388b000b8f4",
+      "canonical_sha256": "a7ded5594a9a20cbc2a7faab1c54030925ccc48b575ce1066d8973edf95ed359",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_operation_test.go",
+      "bytes": 7033,
+      "sha256": "cc55c8b401b19e57ec6495796a5989654e919ff2eb6c098d414a74cfabf519b2",
+      "canonical_sha256": "9e3618a60b50c13604a25ccdcaa918403c7b6a7cd14cc69b731c8666788e993b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_projection.go",
+      "bytes": 4141,
+      "sha256": "1d937931d842c9c2ef0e6cd920ece1e7b4f952fc043ebaf1a74197dd0b95f39b",
+      "canonical_sha256": "d567bea96944f9532c5cd38fe5899c3c21b9e583f3de703d8253529cae3ecb33",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_publication_cut_test.go",
+      "bytes": 3348,
+      "sha256": "166721d33839c333151febe40cb7f83664dc742f03d0a7a7b8ae1301b2f7f820",
+      "canonical_sha256": "7221080fef06b07f71017e61361e4db712b06deeb5925f22181cc1c626f96014",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_registry_test.go",
+      "bytes": 4140,
+      "sha256": "a6d061a9f4ccec5d59a06ba28fbdc365457438390140b0906489fabeba74ba62",
+      "canonical_sha256": "4c88ac72bc0a7b73a8042885a7ddbd7c0ee4cec7d42ecbe270400ea592b44201",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_resource_test.go",
+      "bytes": 5674,
+      "sha256": "86f33b0a83ade44bf8ac33e56fc0610b4a0116ac2c4cf54abbf4afea19ba8b69",
+      "canonical_sha256": "75eaee21495e5369a89e174b151e9aa62a6e8275141e6e5b6e3ae44c27fcdc74",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_scan.go",
+      "bytes": 19997,
+      "sha256": "64a3abe580030b82143812aaf338f8acc8f4abdf1bd08097914669e0fd75c5d7",
+      "canonical_sha256": "4bd4fad29e285e911e044db0674c20a705339c572b5acbfc63f0b9c4c129211e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_scan_test.go",
+      "bytes": 13240,
+      "sha256": "fff0ea00c5401c5009409671dbd35b825f2727e044242efd934c9afe81c49ff1",
+      "canonical_sha256": "5fae25ec53629800526b23bcd2da6022f5faa744f7dfddbbfc7b4cca285437c0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_server_fixture_test.go",
+      "bytes": 4491,
+      "sha256": "fe71a6c76c9c74e3fb221cb02e57a19c51cbd015a7814667edfb5a8bc6238117",
+      "canonical_sha256": "1185176fe705a084d7587661d6c0a2724aaf0d9d2c758008b4ebeaf7e2ea6db3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_stream.go",
+      "bytes": 2006,
+      "sha256": "30a0e2783355fd828af4b016c8c83e7da2f09110e81dd45ce609f13170b43624",
+      "canonical_sha256": "8e6a6644873cc4dfa968ce70b1ea5678c71e40e7f79850da06c5a8112eb08380",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_topology_test.go",
+      "bytes": 7741,
+      "sha256": "f28bd9f1a24466382adbb13358693c252226871bbe17875b1f308b93709ac12c",
+      "canonical_sha256": "ec835e21178fca571092cb6aad89d048e4ca7d7851a1e44a8c230a6feb52c42e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/captured_transport_test.go",
+      "bytes": 4629,
+      "sha256": "27902ff9f934ef1559368a08f544204e87afd28c6bfe7f211e923cbe5154e3e7",
+      "canonical_sha256": "c0a6d04a61ec394190c752b51a2b5aa937a57a1d92b3a86a0b89ecdacc0aa066",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/changes_retry.go",
+      "bytes": 1881,
+      "sha256": "827c2cae3caf594b22ad51677394135bd7888b37575037257abdf3d80e75da33",
+      "canonical_sha256": "262f1ddd00e9080c3422574f592d005d26776b09db9ecff575e6e7fbf0a02369",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/changes_retry_test.go",
+      "bytes": 4174,
+      "sha256": "efc96820663823827a06d4efaf30981d0f0940300e3e98f42da2778d1f64cf38",
+      "canonical_sha256": "b203bcce42a84d2765de3f6549b467398ec7eedcb41e31b3e5a33fca693648bd",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/closed_fixture_backup_test.go",
+      "bytes": 9153,
+      "sha256": "db06fc6c48a423919e081d29375e71ed5f8a19e19407dbd3d5146e15e4803cb5",
+      "canonical_sha256": "335ee0a63fe5f0f755cbceb7d9eb7550c14c7521f16f67f20a26c04351b2f2be",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/completion_api_test.go",
+      "bytes": 11829,
+      "sha256": "729d03a4ddc71360fd6c08ca3949dbb6d14246fa477393126031ece7df5302f3",
+      "canonical_sha256": "5266c394d00b922907702cacbc91ce5706340e07540e8d0cfea2abb1964f1bb4",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/completion_dns_test.go",
+      "bytes": 4272,
+      "sha256": "b06f012d65efa7af741a863df4a7e7417ed30ed21edea37360f1a707af396787",
+      "canonical_sha256": "60883dc0dfd976df96448e98e9b276869e71b7397fef79132692122b6847c4aa",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/completion_mixed_batch_test.go",
+      "bytes": 6875,
+      "sha256": "d3e7453b9ebbfd7bf25ce302c1ea83272032f3bc12bcc1d4b93cd59bc39c014c",
+      "canonical_sha256": "8bdf94b2bbfad64fa189993d211f627483b3b2f08e719d040b42877eabb42eb1",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/completion_network_test.go",
+      "bytes": 5190,
+      "sha256": "d672fedcc8bd3dba71a9ba92e238c909e83b8fb5cf9b7f3de4fc3004c8cd114a",
+      "canonical_sha256": "c86b817be1db1dbf70c1d0aadd8145d898520d63dbdc7e4cfe8d9ee52e98dd5e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/daemon_capabilities_p02_test.go",
+      "bytes": 3368,
+      "sha256": "5db02e947f0109f3c929a84ef50e95484da156fb0256b7e4128966d1888d4310",
+      "canonical_sha256": "d970a2f335aa2c29a22a4ac38901c272f15777fea869aa34a96d189b0fd8d8ed",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/daemon_http.go",
+      "bytes": 5754,
+      "sha256": "ee72c9137569aebe7c3c9b8c91c7d88cde0519cf8aa4c506bb21df04332b7c49",
+      "canonical_sha256": "4b70e087e99551d1d2d80b298dfc65f72c10d43f5cc7d50e7dd4e5fb11daef23",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/daemon_recovery.go",
+      "bytes": 3806,
+      "sha256": "6bb8d13aaa768541009d7b27674aa9dd42db657828dd3476d810a13d3376e145",
+      "canonical_sha256": "874d706106b12693f1b508c7f435bd25b0ef3f7f6614340c70c0589d1b4d0ae0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/daemon_state.go",
+      "bytes": 13238,
+      "sha256": "2489b35388ade79cdb15f9206ebfeec58c265bb6abc2b10370b87c05e9bf8327",
+      "canonical_sha256": "6f57e1dcb521858eb49da573fec5d1035310e2b29ccfec8fe3775f3240ee4820",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/endurance_expired_import_test.go",
+      "bytes": 7163,
+      "sha256": "84399b9ba5e67ca7d057d16801ea8aa165c54879ab4f9bec8a719057f0ef9533",
+      "canonical_sha256": "bb5be0a13163daf0c06f721e211b109ffbb9099df4c698626209a6a3c58cc430",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/endurance_initial_import_test.go",
+      "bytes": 4626,
+      "sha256": "ce62809cc36a5f0c81808112a275480587d6f0df92ed10fa9ad6eec4b15e72d7",
+      "canonical_sha256": "9ee82c68830d689cd00500f9c18fc796b2411b391f9aeffce6f22e9280873c3b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/endurance_initial_snapshot_test.go",
+      "bytes": 2844,
+      "sha256": "7e4b67a1d87e9996b9a9e59324312129adc7034eba485a12009801abc9c01a07",
+      "canonical_sha256": "215e62e73b3fa2b3c37cc174c6881ec3320615a3667b56355cf2c41db538782c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/endurance_rebootstrap_expiry_test.go",
+      "bytes": 4540,
+      "sha256": "2cc92413d32e8a738eb0fc95a6cd9e521b0571ea4791cb54a3078f237ea2894a",
+      "canonical_sha256": "cd9f0740ecf9a722dd5e261a21f205070477cc0302835319f1ded973ac47842f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/engine_cli_backup_test.go",
+      "bytes": 18623,
+      "sha256": "2a6b3ac48713138c3745a34338724b54966408982a927487d50dddca9a3c6b0e",
+      "canonical_sha256": "1c9f99b3af6b14b9e316428bc4a566a319db5ba326f10240db306ece9396eb19",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_dial.go",
+      "bytes": 4976,
+      "sha256": "a9f65b983f57ddfff147b46d739e56de964038546bc299b97a5896d707c6ac2b",
+      "canonical_sha256": "166ea0195c8901a26c79a83143c8e19f211901b616013555f944c540d10be1b3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http.go",
+      "bytes": 21379,
+      "sha256": "d3b756432b006c5fc4c7563080af233bf6b77a3b6f728a9741ac9018499d597b",
+      "canonical_sha256": "5c75533f4bf67a22261f8b865dff65e4fe3f66aca49a4051230fde4cdb84f65c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_boundaries_test.go",
+      "bytes": 4895,
+      "sha256": "4b5354ae54ced8df1a33b5bb9deeee96dd3e557bb5e8a4618fdaaa7aadf286a9",
+      "canonical_sha256": "3b455253b88942a7d36a6d5f7acbd462a11817f31b71d68ed774ab206cf79f0c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_expired_import.go",
+      "bytes": 5466,
+      "sha256": "c3bcf647ac7cfa102d6b895fa777932f1514c496670f1483abfd2d3adfc015de",
+      "canonical_sha256": "00d856700975ca1cc790ac0a9899df6a2f2b25d8241b0b429886c72360a9d7c1",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_folders.go",
+      "bytes": 14356,
+      "sha256": "4f1f3ef81bbb454271e66e3847fe761f41c05dfa358551d4ec29238c19ceab8b",
+      "canonical_sha256": "d45b7a33a0600455fb1806e1d168fca2c9212c1679e01a13f005e5276cda55d3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_initial_import.go",
+      "bytes": 6476,
+      "sha256": "c9913aebf709f3d24c93eee61049b148532c5a9944490028f54f9f7ccb68b275",
+      "canonical_sha256": "3abc3f8165b7324ef964085092d4875690df9cba5702127adb5ccc62e2183e7c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_rebootstrap.go",
+      "bytes": 19743,
+      "sha256": "e7d37d552aa1ed90c72aab03f4200080b64f81295bb40a1d4fe66aaa9f993e3c",
+      "canonical_sha256": "f17c7e8eb917aac98134dfccab35d9ad981436ccb1724869b424b2d5e0e942b5",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_rebootstrap_rollback_test.go",
+      "bytes": 7234,
+      "sha256": "579e9199d817b1254bd5d5d3797eb2e269e20e99c7894962d009e31406adf3a0",
+      "canonical_sha256": "4fd8a2e313c99ffc189e3a03a2035c56b3f9c6d14c1c287fed5c13bb99c06d4a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_rebootstrap_test.go",
+      "bytes": 20989,
+      "sha256": "43bc41ab9f6a70764c51907f9f4920b302d36104589c8415298eb719824ffa0f",
+      "canonical_sha256": "3f11d71cfcde004b6aac834bf97667859e33bdbfa8853987263de27ee447a0f7",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_recovery.go",
+      "bytes": 1326,
+      "sha256": "67b2305e516f63fbe5a772d01bdaa069738048b1f623347d6b7ed28d6f23cd7f",
+      "canonical_sha256": "648639a9d8ab906b7373359ebb2539e854c90623270f61c7181cbb3d3a69ebbe",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_snapshot.go",
+      "bytes": 6273,
+      "sha256": "93811ccefb366ee6ba729a21f1643c1706f4ea3a065360f7269a8b3ab5828e1e",
+      "canonical_sha256": "86a56e35187357a62e87c184d5b8229b49c4ec0e3ca60913b8ffab9d8ed4bccb",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_test.go",
+      "bytes": 19368,
+      "sha256": "33467b451b17bf124407e9df46827e3934cc110d7434932d0aa2929af2ab90da",
+      "canonical_sha256": "31684699989edaa21882b45733af6eba8fd15f2565f8c084557703f4089be3d2",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_http_wire.go",
+      "bytes": 12969,
+      "sha256": "13199644d0132bd60f791a4bd71ce0113eb9678b4d3024e3d645750d198e5870",
+      "canonical_sha256": "1bd2e047a7bad1b7b627a0eca02860e577afc57b50a146fe994c168a668bd9db",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/guarded_network_test.go",
+      "bytes": 5694,
+      "sha256": "05d805de353191ac3ddcadc79a236598a9e3cb1acd48adc6bf7e9280f8e95773",
+      "canonical_sha256": "509fc4d3479d573c1084edbff2985af873af66b23d41d7b3c980dfc439655430",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_binding.go",
+      "bytes": 5725,
+      "sha256": "f3735f3aff206a822d737d726b720f236a280828f9970e67870c0f894ccd6072",
+      "canonical_sha256": "1b850a0312c4f5c2f6c93c56e4c95cd9619f4a31d9c297cb574dde3fc1e934b0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_binding_module.go",
+      "bytes": 2428,
+      "sha256": "e0b6fb27bafee821b34505942843a93ebde759e047212637aa7a8c5962fcd371",
+      "canonical_sha256": "9d50baf8c3231884cdc998563c5e57ab164051196262cf427e3017e648c40eb7",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_binding_resource_test.go",
+      "bytes": 5653,
+      "sha256": "9e6cb54baf4b07089da77acea010a1a7267f6f2764dec8259fc04f735da5db58",
+      "canonical_sha256": "d742fa41c2aaaadf2b70182764b8371c027698982ef03f4d5565f7bce57d5009",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_binding_scan.go",
+      "bytes": 1049,
+      "sha256": "71a73cf0ed3098366bc33fb15ffb20ddf1504e3b9aa5a1863250a1c2e5367f93",
+      "canonical_sha256": "24552ef9edb8d54c377dfcb4bbd94ff7361723a49548c98c0a5dbfd4282b8fd4",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_binding_test.go",
+      "bytes": 17662,
+      "sha256": "c547e1234eea956dbb64bfd3b95e5ba0f8107914efae9c50e9f57140a05d36a1",
+      "canonical_sha256": "380af3dc7720d23420196e7f0a50abf4a6a1b778dab2b22038b62f444f8eb024",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_error_body.go",
+      "bytes": 851,
+      "sha256": "b90a531643459369c22d262c56f24980d81fe1fd0002c306638e8da79caec2f2",
+      "canonical_sha256": "f8c59b17430f01e90e5cbdcd2df4b75a3d7d499f81df042210e3a798f74ed640",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_metrics.go",
+      "bytes": 190,
+      "sha256": "1137f4796e3172cf0e9d34894c8c24e08ab054a543c99007bafe78c9878cab1e",
+      "canonical_sha256": "24b4c7b7f0f1084d02867454557f2aaa8dcec3c82a0f5c8c205416945778b1c3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/http_rebootstrap_capacity_boundary_test.go",
+      "bytes": 2950,
+      "sha256": "e1eb441eff7b876dd01f5c8c86e8c6cdd93d40ef67cf6c48919017e79dd4abb5",
+      "canonical_sha256": "75a4041a228f813089efded12b755e968a25045c986097d7072a1d9c3bdc327a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/maintenance.go",
+      "bytes": 4865,
+      "sha256": "e6180e22185a79eb1844b50abedeb5a819218fbd900c4ef9666d84e175211956",
+      "canonical_sha256": "4998c995eb2d2f1e6ab3176f20f9b9d3c4623e863b98a1b3b829c3d6b9fceb89",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/metadata_encoding.go",
+      "bytes": 819,
+      "sha256": "7a120aaa3da122ab33c07bc375afa20266a2a7113fd6cf56a3328d2ed93c41a8",
+      "canonical_sha256": "ad77c72fefeda259d27ce0ebc9ac8eeaf6209052017dbee652e974f1a27458ef",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/metadata_followup.go",
+      "bytes": 3433,
+      "sha256": "4f0fbd3c33b3fadcb0967c642ea16bc895d5d3e0396af8fdb78d47b96980de74",
+      "canonical_sha256": "457de1b949c290988154c0b6f7fe2ce029f41d06130c9c5aea14288bcf948794",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/metadata_followup_test.go",
+      "bytes": 12875,
+      "sha256": "56bfb9366a7fdc2c5fdef3bcae06dc6d8554cd6acd7e2d2a4959c3e70d7978d2",
+      "canonical_sha256": "cf29460d436fbe628b8ac17f4ba4b8586939b2e20a80a654c45bec70915b04d7",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/metadata_mutation.go",
+      "bytes": 8686,
+      "sha256": "a6158177db92b34f732bdaa4cdf15954bc48ddd1e415256bb7ba2d3fc33e0ab9",
+      "canonical_sha256": "ccc7db59285a6100d4e7f9b0c8c00a006db16c774636cf39a273723c41ceff75",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/migration.go",
+      "bytes": 6439,
+      "sha256": "df81f6104c2ba9b62086fdafe84aec44db34b0e771d74ace1a29e984f5be09d7",
+      "canonical_sha256": "b32003d5381a5b2996a919e95474c0bf9afa340dfd8c6cec6fdb589aa44d456a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/migration_test.go",
+      "bytes": 7536,
+      "sha256": "e380751e15d4bd69bcd0dd1a6e5491093a0cbbe139c5eb5839e3eac0694dac5b",
+      "canonical_sha256": "c731e862ae291e4a694426da82f34ded7af490d9a893bd5fc6b7995423df1ee5",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/model.go",
+      "bytes": 8671,
+      "sha256": "662eddf00df30c880fa5643493b2d6355204b1939331e64abed7abe3df6e64f5",
+      "canonical_sha256": "0b4f379291ef450676cc7cc3c06a55fa23e4d9abe33279f109a5087c57142e69",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/mutation_transport.go",
+      "bytes": 5151,
+      "sha256": "43c0efcea543918f1e4e427524621b88443ec345c1eaac2cd5073f5da8a83ce0",
+      "canonical_sha256": "2233c4fd614f7dd24ebd1a844f901a86832b397ca5510a06b632c38b98ea105f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/network_acceptance_test.go",
+      "bytes": 9214,
+      "sha256": "a9ffd9669f2e0b306ab6e4771cf2f42802fc2071220caf5932bdcadf6549d067",
+      "canonical_sha256": "a7b8856691763461a6332940d3827bfa04d70c396f1cb99ee5c62d371f19e630",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/observations.go",
+      "bytes": 11069,
+      "sha256": "ca7ba12da1d43b1a6309132fae1623e848a76dd29274f9aaec355d1b135c1e23",
+      "canonical_sha256": "9f508f449c7fadab3a0c49ca4d36b9fdd5afe879529ed8cdea3e02fa4a25e537",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/observer_linux.go",
+      "bytes": 7311,
+      "sha256": "c6947d614d98de09d54e18fe23f07b4f109e9992eca2674eabf0d9a70c7c0f16",
+      "canonical_sha256": "7936e770ec55d516f70003d70547f1f104cd65fa7ea48bd0abe01c3bb0e23076",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/operation_retry.go",
+      "bytes": 4352,
+      "sha256": "3f392a7789a6ad5bb155cc14e26c58acf0a82f7886c4a2b6312c0b88efec192e",
+      "canonical_sha256": "10fbb504d2e24271578212bf892355809b5ad16c3b479c67c1cea5856901f7d0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/operations.go",
+      "bytes": 17767,
+      "sha256": "e8996632fadbfa3546ae3de67aeeac9b119909e6c54ffe5451c99131684f0273",
+      "canonical_sha256": "ca5858a95657bdbaa16c4cefaa53ac2f2261b72e1261f39b317eea006b55ad36",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/parent_transport.go",
+      "bytes": 9374,
+      "sha256": "194c1d05f9aa19dd37d5f477c082f56ea7a1f533063460245557a30d52060474",
+      "canonical_sha256": "ea0baac31ae86749880bd259a7945c54d554908701da1ff1fa237a71ac1561df",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/planner.go",
+      "bytes": 33830,
+      "sha256": "de8ffb29ee29271887f2f0c7c1e8f3cfd7393644b62867edb1cc190a0c5ca0ca",
+      "canonical_sha256": "83477ead0e309ade16a94e1818d30bb8f41f7b0012fdbbc71d29d4711b9313d5",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/planner_guards_test.go",
+      "bytes": 13529,
+      "sha256": "9483794118d5c80bd7683f1e53b7ec6183c51df7cb4298f132d321a5aedd9b23",
+      "canonical_sha256": "6f554e58a56e6884ac26e58051831fb65bf76ec72f52939d04ae88f4ddcfe2da",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/planner_resource_test.go",
+      "bytes": 8362,
+      "sha256": "c4cf6bbc6593d0b59562bb8ec4e7a8a7e79dd7390e652c9a5d5895a278d7e3b7",
+      "canonical_sha256": "42550f6a3278bcaa9fbf81640d8f9b2ff1662df1391131d87ab4f340e6a9af2b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/planner_test.go",
+      "bytes": 26200,
+      "sha256": "891746a5d1b519383a06c6a62779bf87fa351ffc2f4475c6f2b75e36455ae168",
+      "canonical_sha256": "57dd77c6fec84d3ce70010ba2a478974795a88085b1a4f24ed5af29b23b8b022",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/prepared_adoption.go",
+      "bytes": 2466,
+      "sha256": "e00fe2540465fc6e9a45cba9827335dae15ace972c0593b7653adea8112ff70e",
+      "canonical_sha256": "28e0031638c1d29553ad851cb85e2454976ebe191fbe84dad3b73d8899e889f2",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/prepared_adoption_test.go",
+      "bytes": 3442,
+      "sha256": "9b8a391156d25e9bebfed2b916ec34e8c4001ca8b3563473a91ffa70ca87a33b",
+      "canonical_sha256": "87e4f954d4e0484d43782e3b5d651f61740c55e259320be30342da9eeb8d957e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/profile_policy.go",
+      "bytes": 9035,
+      "sha256": "7c2c59c4107205d129b6f62c5dfbfe24a2881bf98d28e5d6bc0fab2499139cb2",
+      "canonical_sha256": "7fc4d89cf2583be9ae6e45a965029dd92a4d39b181bd17955db24c15df17c870",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_feed.go",
+      "bytes": 8630,
+      "sha256": "7d52ceca67515dbf32964c8d6120e49693f9d9c2ada650ab0b4c7fda97cecd07",
+      "canonical_sha256": "b6653d103fe8a1201f368f77da9b77fcfb643efa6c05ce10d14f900457bae5ed",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_import_test.go",
+      "bytes": 20963,
+      "sha256": "49e38473b83c8dcca5351450dd054cf43556c4dcea051581a1c1508a26bda633",
+      "canonical_sha256": "7ea1421387242aaf591aca5f9a377fb2782ee5767293dfecc93d32be28a56d02",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_legacy_operations_test.go",
+      "bytes": 2645,
+      "sha256": "d34ff7672c94e70d43b6a394fcb655baf1e65ffbecbf8fc7908ac1762ed6a3d8",
+      "canonical_sha256": "5bbc1acca1646cde4d3c6f6f89479dc79d31f12bdb2adcf8570fa1dac7ad4475",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_migration_compat_test.go",
+      "bytes": 2535,
+      "sha256": "40255c36d3b57f264b661c652ea686bb1b7bd8a3940a4050ad92be9b545a00d3",
+      "canonical_sha256": "32c53dbfea93eecced0f1e9e83e47a3bf6e1e63f712a589567ab39714c3e6092",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_model.go",
+      "bytes": 2421,
+      "sha256": "0931a3add8ef4c44c2caea713f81091c9046968855d87fa0f2b2a44502874c5a",
+      "canonical_sha256": "50aa8087cee76a84d0c32325952ce7c73196761c8d58ad0d1b2aed74d0b3eb29",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_module.go",
+      "bytes": 6837,
+      "sha256": "aa268ee71838587c06e7afd5911975abd1916e4208b758cffd5eb152509d945b",
+      "canonical_sha256": "32b9a237c56d82f1dd633094aae09ee9e26ca9e7d75a2c6c92d3b5e8ca2abe0d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_race_migration_test.go",
+      "bytes": 12113,
+      "sha256": "96d49e640437cd7af46cd41faa13b6fd024258efeda8b72d438cd6b6e97944c4",
+      "canonical_sha256": "a6b2e724f19e2ca940ef6fe419f286f0f0304c896477fb109b409a5f160a7099",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/remote_resource_test.go",
+      "bytes": 6076,
+      "sha256": "97e9ed5c6ff3e08103977bdea1f6b664f86d751d53b530cc42ad640656f944a9",
+      "canonical_sha256": "a3e83496c182a118082f0c56fa4f28c669d7ee863e80deafb7a4435097f20cef",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/scan_work.go",
+      "bytes": 14293,
+      "sha256": "7373059768daf568f1126e70fc1cbcb54eac09cf11aba39f4310c0577ab4caee",
+      "canonical_sha256": "529bcf61a49988216302b5de155766a5c9a14e881df885d66bfb14aad0717b50",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/scan_work_empty_test.go",
+      "bytes": 3698,
+      "sha256": "a75c961bb4df2f2830423dad0cbaa273d10051f9365af66923ad2356010e4f16",
+      "canonical_sha256": "b75bc2987298bd3470c626f6e98e8f7ed52d55f0ae84bf6995ad2bcc9789890d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_artifacts.go",
+      "bytes": 22226,
+      "sha256": "136085331ea1ac780322b6d9e40cb7cf9635d98f103f44356d6e7879aaba359b",
+      "canonical_sha256": "30986c5e36f259e7f7b834b1d7201939c7d1e02d0bfcacce709c96bf513a2872",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_artifacts_test.go",
+      "bytes": 18107,
+      "sha256": "adff80e4708ccaffb575484e9cffc03f575a1801ca40e8ae69843edb197a89ea",
+      "canonical_sha256": "ece80f328e89c81da365154b1d98a4ca67a35b387b463e5420096bad73e3748b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_budget.go",
+      "bytes": 4609,
+      "sha256": "ec54f76feeaddc5872dfd3bbb7e4028a262e60b7cb89c87448e9b67ef3a7b9e2",
+      "canonical_sha256": "36b673342a0fd41ba27bd0ea48652431e11e45e7aabbf0886c7dc85eefa364f0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_budget_test.go",
+      "bytes": 6422,
+      "sha256": "e8f581ea8b031837c880547c5b2e066e8dcd3d60015aaa79400bdfb6bb3ff218",
+      "canonical_sha256": "7563df8e765229e42088f909469c83beb4c480d3de3c3e23dda51e482c5c67fb",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_compacted_original_test.go",
+      "bytes": 1905,
+      "sha256": "94c44da9da77e30505cbcc4130175e788f69b3db9375aebb246083eb45855dd3",
+      "canonical_sha256": "a8cf6749e9ee3c447adea6a79a308ab480c0df3a5ea6769c18e6558181d24abd",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_dispatch.go",
+      "bytes": 11815,
+      "sha256": "55776d315ae30cb13ffd1676f5735f0e696d68c39e2a7fc8e2043d5c0a8d4429",
+      "canonical_sha256": "003fce29dd23469ee84c5f1b168f5ba240985414f81473d32d7c050331e81bc7",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_dispatch_test.go",
+      "bytes": 24445,
+      "sha256": "bddac53a3ccf96681b7b6f616efb85c82fb50ab615bd31699c4347fb4181db11",
+      "canonical_sha256": "1f7c3cddb4736d20c4597037aaf6469b0ce87246fcd654c90b928a9efc396a9c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_engine.go",
+      "bytes": 9219,
+      "sha256": "02557d24f750defedbca9832720820fc9fb0880b1e1b356351fc977f00346a06",
+      "canonical_sha256": "eeae4e3683f5eb69b1566b3fcc9efb82149e10f7cd0a5149b06961b3939239ec",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_engine_cli_test.go",
+      "bytes": 6954,
+      "sha256": "17be2b875c4e71fa57192085e61a64954e6d40c4a0854c430001ac09c551416b",
+      "canonical_sha256": "996969b6023e74ef4696cffad140b049a079e4663de088669ceb2ad0575ea1e1",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_engine_test.go",
+      "bytes": 11871,
+      "sha256": "8293743e1793c941614476433bbfcd4b999d834a4e184f930098d20a5cbffd16",
+      "canonical_sha256": "040bb9ceee48e7b6b02058ca91abc59f613225dacb3526822d4d3fa4464daf9b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_http.go",
+      "bytes": 8850,
+      "sha256": "c3c10bc713a293c9c0f0236b9eef351d5d124683fabfeee66e8b674ed0e46c84",
+      "canonical_sha256": "b2bda9d70ef4ed94bd22ad8f9d415af80ba069be23501699af2e34647b4a2730",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_lifecycle_test.go",
+      "bytes": 3742,
+      "sha256": "135ba253dd2c4e588cce1c659d44386779c7e1303f0dd661a0149b4d6ecb4d6e",
+      "canonical_sha256": "752984b7aaac29f793b43491e977b83be07972a013c48371ff05872a70bceae8",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_migration.go",
+      "bytes": 5311,
+      "sha256": "d96d4d28f8c67ae7defd0f88399d036b5c3d56932974d0f05c7b68c79f8f88ef",
+      "canonical_sha256": "c0cd3a57af6a91752ce84e3a16e4fea8a39b1db147c962fbce93569ef7e2fa38",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_missing_original_test.go",
+      "bytes": 4171,
+      "sha256": "f0fc063decc8a35dac5b4f862fd652f4c4a617195af6ea1d1483c1dd58c98229",
+      "canonical_sha256": "3b483fdd55ecbe1fa389c6d55112896d4356f5ba1e94f77d655afcfe7fb87bb5",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_queue.go",
+      "bytes": 8070,
+      "sha256": "d0f8e103ce9ce23e76520fa084675dd7911c6eccbcf1bebca34942cfe3c6211e",
+      "canonical_sha256": "8336f03559e4c587b6acde59c37097074b150e2361a0d17a4f95c1b4c585d123",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_queue_test.go",
+      "bytes": 10868,
+      "sha256": "5a381c21f11abef2770017fac6105b41754466c84ec4d5261d2183cdab1ff5d7",
+      "canonical_sha256": "37a9ca1f95548aa38a6947ab9f47af1c327c7db60b5f0a9c14a90c4b471d9e7c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_state.go",
+      "bytes": 12517,
+      "sha256": "a504c2b24c466a85ade09e72428c02cf69b489ad625b7c27d678b633f6005990",
+      "canonical_sha256": "7459d83bf431d670f94ac1f7c13641b90ef86c55763a22e8e1bd9df4958e4160",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_state_test.go",
+      "bytes": 14597,
+      "sha256": "e2009427a61212dd34a0d14a6914cf6ada83f31af938b23ee6f66b883a35edf5",
+      "canonical_sha256": "22dbcdd04dd8a78ec3fcf19cc7d9f0ecc2bf7589a83014b1c3bee19d658d0b28",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_stream.go",
+      "bytes": 5319,
+      "sha256": "83f7b3871e5eb952d2e9847d72ea7f902dfa2f6bddafcfbc417cc78a283869b7",
+      "canonical_sha256": "11dded845a48cd46ec0a5706006585614b5377ce9da4bde08ba34329d9b238d6",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_transport_test.go",
+      "bytes": 14037,
+      "sha256": "ad29efc8ac11b8d4a0ae5e2de20d41bddbad6ee017a5f4be5b570dee405fa515",
+      "canonical_sha256": "8ae0b8acd3c04185334570583b0be82a63d861d4ada1619c0c7eebff265dfe41",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_wire.go",
+      "bytes": 14637,
+      "sha256": "a911b42e436a72be1dc18fd9644208c1bcd8acb2e2d2039eddc5e40d3bef4822",
+      "canonical_sha256": "5016923c6c16332f34d4323024c91790b7b52bcb945347ea424b912795b2c7a0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_batch_wire_test.go",
+      "bytes": 12159,
+      "sha256": "75f447e81cee7225bc1ae2ae731d4fd3b9e1bcc9da8c2b7ae19beadfc115a09d",
+      "canonical_sha256": "9fb3ce774d3b638107abf85ba30abf402a5e7e8e2e1ca2d68a3ece0f86129fc5",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_job_p02_test.go",
+      "bytes": 14854,
+      "sha256": "4c58d798685735e3d1ada6d002574b199e0b14563975e5c48e8b18bf7d9113d0",
+      "canonical_sha256": "7b0828d90de60792081c797cef185e5ebaed464be632df15f8f5d92f119fc3fc",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_job_proof.go",
+      "bytes": 3081,
+      "sha256": "0c238f5938de58683c1d364d866e99646d4d7124bfe09c6b2d965824196e721c",
+      "canonical_sha256": "0d22264929e404a2be1446c167b73d3cad4d0eb92fafb08c1f61156597a31af2",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_job_receipts.go",
+      "bytes": 2215,
+      "sha256": "9ba57957148bdfcb0665a2908f67a05b272ce0ed11ea241fbf280bd6f14673a0",
+      "canonical_sha256": "5059d857e0f4e0b1a4ca83a3ff3a95aecb9e7fa2d0d7b1ea09956474d1110925",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_job_receipts_p02_test.go",
+      "bytes": 1712,
+      "sha256": "c9a9aad8e787134a62e730c4ce9f8a5361e8bc9f6bee58a319cda8406e042423",
+      "canonical_sha256": "fce15dfb45395f314e67fc16f27c705749b6d2dae2254ff39668e0002f6e6d81",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/small_job_wire.go",
+      "bytes": 2959,
+      "sha256": "ecf836d16746d3255e90a1a64b1594420df910456b7d9830bfd15e8cb4b5e9a0",
+      "canonical_sha256": "96a39e7be3768a90481938858f35cb2f796df3b34a7603e431348091e057fbb5",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/snapshots.go",
+      "bytes": 14077,
+      "sha256": "5ca02fc41aa62ec321cb2f367af71538329c591d0065b4e0be4a0eb078d5d262",
+      "canonical_sha256": "0be623068c12850968222539e199dda3c32524344a0435f5ca7f05ab80d8a72f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_capture_test.go",
+      "bytes": 11640,
+      "sha256": "97e1547b5855414eaa6083b5278b1c19ab8273a0a1225b61c72de774ef38bd93",
+      "canonical_sha256": "d024c3fb78957143dc5d32b4afb57fbd90d204ddf594b44b43855cb1cb2c4e8c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_incarnation.go",
+      "bytes": 5657,
+      "sha256": "f2a00cb79b7f2607220d6a1d4bf06ccfe35a154d9afc2a2e71842cba191404ee",
+      "canonical_sha256": "4f44a4ab390b4423181e16a2fc2fb29fbfcb324d48aaa76be3ce192edffcd2df",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_incarnation_test.go",
+      "bytes": 2113,
+      "sha256": "c5f82671c0ba8be6a71d97c8edfd3341f06959902e00a73e467e585e833d6a61",
+      "canonical_sha256": "3566a5f7deddca23ab58588ae54fa14252cb29fd477f44d89884c83103df245d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_model.go",
+      "bytes": 4261,
+      "sha256": "3bfee36d47baeaaf5217bbb27078b66761866201f60256709ccd3e0a737597d4",
+      "canonical_sha256": "99058f3ec138d32ebdb54cad2ecd12e3d717fe01356ae409e096913f35805be3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_module.go",
+      "bytes": 9985,
+      "sha256": "79bfae6a1832b478a39a6768ab9e49986844a3ac0f0dc9f042a9d47e4e4b0502",
+      "canonical_sha256": "41eea97002276ee2c548cf2af80abe61f2d5f6226762911f32e7a6e2f1a9e2ae",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_module_test.go",
+      "bytes": 7868,
+      "sha256": "090b95139c6a3af4da2017b90f53d905ef6bff4102a6c92fc72ddda62fce8306",
+      "canonical_sha256": "81d26b1454cdab6a368d42ebd98ad66f6e1bc730bcb571b2ed2055ef39f92f24",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_remount.go",
+      "bytes": 8735,
+      "sha256": "7bb061fc4fdc65451c7c531a3e63e74bae6dee62681765b2798a35ec095dfd0f",
+      "canonical_sha256": "b408f3e9f777f50f6533a8259a12264ec8c13ee871889453fa6f0f0f398e3b9b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_remount_cli_test.go",
+      "bytes": 5922,
+      "sha256": "5dd215a6099b46225cd5c07432b3ab9104143fc0f859a359be27a9dd4faa6e17",
+      "canonical_sha256": "5087234c54f6f54b6fcda5a1a7c681bbd993cd0af7f14dfb61349b97f47141e5",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_remount_test.go",
+      "bytes": 17589,
+      "sha256": "2ec3f3c830ea49e2a58a50c33fcd4724dab6b7b00b6dd7b18149da9dd51cd10d",
+      "canonical_sha256": "273503f3f78c6fe10f5d8489f9c3254a9801184d254bcc1f4f1f8e831a343b78",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_resource_test.go",
+      "bytes": 7684,
+      "sha256": "fd6e3e593b042a9e0b6c62a701074ccf9b0b662f6f67b154b4082e19499044ef",
+      "canonical_sha256": "b6900714a877fe120d848495ee7a88b5f58755e2d87d12e82cce83a8d8c4e33e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_restart_test.go",
+      "bytes": 3292,
+      "sha256": "eb2a1230215e51e72470a0a557061fb68d29b29f7075a974fbab0c17f22c0ceb",
+      "canonical_sha256": "24d049474d9ab36da2a3467ff5232af9062a37744208a9f88b0b845c33cd99d1",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_reviewed_reobservation.go",
+      "bytes": 2856,
+      "sha256": "ac33d9cbaca3862f0258deb1651c088b8cad5c523b146eebdbed68f6a8e7adcb",
+      "canonical_sha256": "ac33d9cbaca3862f0258deb1651c088b8cad5c523b146eebdbed68f6a8e7adcb",
+      "line_endings": "LF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_store.go",
+      "bytes": 11844,
+      "sha256": "ceb38171aff905c2f10677bda6f7e1a962fe91657c3dca500854ea3785304df4",
+      "canonical_sha256": "f7c602874fe6fd29194213ca1ddf0a7b35047514d49d00d05ee1d403493256ca",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_store_test.go",
+      "bytes": 10553,
+      "sha256": "cdfdfd2d4a9131373557e4124cdbf12c9d0eeeba0a2348c9f72111f8cbbe67d6",
+      "canonical_sha256": "256682a50bdbe6909b5e2b93dc44bb6667a61099ed0e284646813de0daa55a95",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/source_wal_backup_test.go",
+      "bytes": 17816,
+      "sha256": "851353028e9725abe6ac14da99330255528508e2aed50ce69fe9fd68f8b844a1",
+      "canonical_sha256": "3afb3b349b782bf8334ff935bf6c8dffef87def2d1a11266a45907519af91678",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/sqlite_statements.go",
+      "bytes": 5613,
+      "sha256": "619c011f003d922b4d431960e6b83ec91dffe0e5d1865688427d25380de888f7",
+      "canonical_sha256": "f96377fd1e64d100ac445f91b57148fe946d46911adfc24e9ae312978e9b9491",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/sqlite_statements_p02_test.go",
+      "bytes": 5952,
+      "sha256": "c1b9eba591c8f018e9c2381f9f98909794db85125ae6b6b7af922e45e5c82627",
+      "canonical_sha256": "1eccdcdf6d2838d697aa40d6434bcffaaa0cedee3c4d90439e99da2d1e0520fd",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stage3_archival_reader_test.go",
+      "bytes": 1513,
+      "sha256": "67716c8a9abf45e56798359ce77ea90eca2828359caa56687a927175ed2e4c5f",
+      "canonical_sha256": "398d79f2df346de92eb3d5405e84c68f46fb7be9dfd4a7ed19c7177a5e351c97",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stage3_batch_restart_backup_test.go",
+      "bytes": 24372,
+      "sha256": "1a4afeb20f21a2d1f9d4d2be18417186d375877193d691962031d15a7d2a61ad",
+      "canonical_sha256": "115f1dd594fa8a567baa48bcc7308b80b93b5e17df1af5bb38c47bec1f75743a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stage3_chat_c_test.go",
+      "bytes": 82925,
+      "sha256": "9a8508e4b86d9ae5742fbf1d9a6f5f17fe05e11e98e49b0ba732a7437f78b72e",
+      "canonical_sha256": "54e9f6a0a9406f1d3fff9d8abc764d6a343e8ecc56f249b61bc8d69c86340c91",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stage3_drained_backup_test.go",
+      "bytes": 7920,
+      "sha256": "6746832c9f364f413e3cd9694c56a750f548a5ee688e9ee088790fe8cd9e0898",
+      "canonical_sha256": "ee4d044285b7e6be876bf8b8b15a7c47ca5eb5860110211678308fb43125044f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stage3_native_mount_fixture_test.go",
+      "bytes": 15498,
+      "sha256": "161ef0b2bb5740d6cbb2bfb5f8a5a5d5fae2b19c85f513572df21d6bab6a785b",
+      "canonical_sha256": "d86e1c2f7c28085cb9408ca427956769013a3a83cdedfe3de45ac18193567ee0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stage3_pending_backup_test.go",
+      "bytes": 17102,
+      "sha256": "171f92dfeb962d8aae547ffbeaf12843936343e6a29996276ec4abc535d85558",
+      "canonical_sha256": "f78270f50eb513cf523224fdc958b695be2a76de34becac01649907da98cac6f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/store.go",
+      "bytes": 16471,
+      "sha256": "33bf34195b590d59cb3993753157a81c4497d659ee0919d53794ddbaff2c7ee6",
+      "canonical_sha256": "bdf6d06d3bfe4c9172199c641c09e5441646f2b6e9099728acaa688fa88375fc",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/store_test.go",
+      "bytes": 31247,
+      "sha256": "d824e6bc917ade2c77f9253732da51637bd46c957ea21db781f6ef150cd7f0b4",
+      "canonical_sha256": "69cdcb81865d67c4fbbd5f72f6b3c002558b7f153a0a465ef788dc090e0af7b7",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_metadata_followup_test.go",
+      "bytes": 8388,
+      "sha256": "dce2b36db7d0bea3dd2a7afb38f01bd56511a5bc127609ddcc45711c6468ae67",
+      "canonical_sha256": "df130bcddf146d7e4c5f2c4c5863d532f2407a125aeb0f9a59c1d9409e19995e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_plan.go",
+      "bytes": 11690,
+      "sha256": "074d2e19c7b62368d5b21d0c5c717b0c56c3a66ca527c9ec33227b5e967f7590",
+      "canonical_sha256": "36549e033861c97a93f5c6fdadd7ec6a9e894befe34e12b1220fded9fc672ca7",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_receipt.go",
+      "bytes": 8462,
+      "sha256": "dae9738625d95478023e7a9502fb1d0dfc4888711305aff330db63bd75ee50de",
+      "canonical_sha256": "f2481719f332932d7f194a95651c8ed06467ef4aeccf699c32abd1c8196c92f4",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_remount_original_test.go",
+      "bytes": 8127,
+      "sha256": "8246875f3ef931d34c3682ae8bf6cac0f2ddf61a71f803e395bbc3effa998108",
+      "canonical_sha256": "a288b789a4bd3ee6ea32d73c093724f46872cd31e778e2c970d08d3890549d16",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_source_proof.go",
+      "bytes": 3360,
+      "sha256": "8a26dda0fc2a84bb86329944a0149a400937bc893ef81849ffce027a76e861b9",
+      "canonical_sha256": "420f9e7a7758039bf6895dbcaaa1fd7a5efffbb1870f7daecf1ca61daa66a4d1",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_source_proof_p02_test.go",
+      "bytes": 7530,
+      "sha256": "654c653daa18d48fb309bde5c57f089a1b9f2eae8c60a970577fc47b63809821",
+      "canonical_sha256": "abcb2c28fc7bd4cc3932ec6c088b6d0d82ca090cc3c572726953900f415e969f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_source_remount.go",
+      "bytes": 3414,
+      "sha256": "24426cd184d071682010ae209bde524ed0838d2ead66efcd6aaaf69f329043c0",
+      "canonical_sha256": "927c622f8ccaab9ce03d53b73aac54a8d5e8ac2f9cfbdaea9301282c8d2ed234",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_upload.go",
+      "bytes": 10512,
+      "sha256": "c78f945b3471d6c531f730934cd33b4880039c055f78c8c96cd7096a0a63786a",
+      "canonical_sha256": "09d0bcd90faf965acc41b536b8e8cce1f5b9f9ce10abefaccfc14c3da3fec1ff",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_v2_p02_test.go",
+      "bytes": 5876,
+      "sha256": "3a5fe9a650454867b6d2e17903956db024f5ed2a50a9d4ae0904124e6ce974f6",
+      "canonical_sha256": "7c029c2c72a54d1ea553f69ed13cb8e06d4374b0dc3e0b8b40c9f7f37880ca98",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_v2_state.go",
+      "bytes": 7224,
+      "sha256": "aef57e2525b58e6076884ad13e3c62cfc6b09ce4f314ee3038607b5b217e70d5",
+      "canonical_sha256": "edccb9607aea78d78538f630fe34d16f78b1b8d68ea3bac53c0c4092d729370d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_v2_transport.go",
+      "bytes": 11228,
+      "sha256": "54a5d13053152e4f8820403c17ff93ce6e7dc7f96346766be45f80b2e7552dc8",
+      "canonical_sha256": "38976cfc8f52a351a73e04449fd9e146c9a21252a9009bb4698e0618db0eb165",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_v2_transport_p02_test.go",
+      "bytes": 10938,
+      "sha256": "be1c6fc04482f30cd2b2a63a369caddee1de199611e4c973378ec2804f48ea13",
+      "canonical_sha256": "a615954006bbc3a90deef6d8c8f48d8cb611f5ac03e2788f7fb4d543feab8d1e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/stream_v2_wire.go",
+      "bytes": 4095,
+      "sha256": "65232b3048cc73f05e376aba90f9a1f2fd52ddd233866f65f46a938f4705ecf7",
+      "canonical_sha256": "06a7bc20880c70c350c31c584b0f2b0403ea9ef01caccaf97df1770b46152921",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/syncstate_native_bridge_linux_test.go",
+      "bytes": 2202,
+      "sha256": "603fbf9352bd936adbdf005c430481627a775c850ff76cdd553d35ed47c12e92",
+      "canonical_sha256": "c76da60d299805ad4846147bbde5ea8c5087d97249d8704282a2e61302668da8",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/syncstate_native_bridge_other_test.go",
+      "bytes": 565,
+      "sha256": "b949e46b478a655f5d314792a8d3c113ddc144dbb1cd050dee10e3aa5d2ed899",
+      "canonical_sha256": "e93b487eb0cd6796456d12e9e6bb7ae3ea760099e0f41ff987762ca3d9345536",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/transport_budget.go",
+      "bytes": 6589,
+      "sha256": "bd76e706fb18a575cc293ad05fa3e0a35335d3e33eb846dbe8b58ca72758d377",
+      "canonical_sha256": "05d3cef9e99a481fbea8c3aaa5126e69d2ed579f5041033ad2dea754311dab95",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/transport_budget_p02_test.go",
+      "bytes": 1095,
+      "sha256": "148b7d5e195a576e47eacd53bb15b610c9c74e07a98c57ef523022c53b8d3896",
+      "canonical_sha256": "69367e6496c2cd6bde03b808e6125dd44b03a83cbb6aae23663d97d53e78a950",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/syncstate/verified_snapshot.go",
+      "bytes": 20961,
+      "sha256": "c8c97b4070428a16adc6aac104c4fd9c09a43d0235612f498be112efd44a520e",
+      "canonical_sha256": "f61dc39766bdbae4906a865bfca07ca4fff07809054e35ab92fef1d51bd5809c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/terminal_linux.go",
+      "bytes": 1816,
+      "sha256": "e566592d907835193884a60d0facfb05bf183e262aa2c5f798cc79f0bcdd6bd6",
+      "canonical_sha256": "218b66bcf2a50a69185477bf857b284063ea34f50ba82540dbfef255fa8ef5d3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/tui.go",
+      "bytes": 11651,
+      "sha256": "655eaccd301223418ccca41ef16eee16560ed7d9df1b0b51c5d14a495957bc18",
+      "canonical_sha256": "5cc89671fc8155c97107510bad1c552a3ac6a606c4f5d7a6260daf0c17a554cf",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/tui_live_status_test.go",
+      "bytes": 4646,
+      "sha256": "433c94c5be23f850e145386e15735fa0097dd612adbdbb9f5672632fc28a41a6",
+      "canonical_sha256": "dcabfa3db8e93b400146a279406cfcbdb13bdb4e39a90959d8f0bc47e8b7f5c8",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/tui_test.go",
+      "bytes": 4846,
+      "sha256": "d0d0641a8bab698a001faec5d3aebfc0003ea481d856f484264d13c7a1b85c31",
+      "canonical_sha256": "f0b7c14705d52ebd03bcb36decadb4eba6485d01a9232566d5673585ae8f1924",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/update.go",
+      "bytes": 16872,
+      "sha256": "cef2b65ab0b7376b29f875eafceae051b392e8a12554aa381034e7f504cc6e38",
+      "canonical_sha256": "fd8562581d7bfe22a5e198929609b71a08bd4b70f49c93186009f4c832bff2df",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/update_indexed.go",
+      "bytes": 2674,
+      "sha256": "e76ba624eb2b8e92e8598acf817ced3481ad414f42a2900ab9510b028a6306f9",
+      "canonical_sha256": "0009947c96bb9b63466b24d33ee8ae9e45175e609886f5d986055cee63b8677c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/update_notices.go",
+      "bytes": 11491,
+      "sha256": "074bfbd20dc1fd486b0f52b66be2f30cf0771d6d99b22f90ef2ed29b2d22c512",
+      "canonical_sha256": "5469dc0d0a17dcc0ab99dc657bc3177f04765848b3372fb1e747fe42a985d442",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/pluto/update_notices_test.go",
+      "bytes": 14185,
+      "sha256": "eaa607743c559091589c0ae571ac29e0e33ff1d1c695e01716e3a55a5d6b31bf",
+      "canonical_sha256": "055d58f9a75adc9e418aa5459320302732316538c5114eb326418349a5bf137d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/syncproto/README.md",
+      "bytes": 729,
+      "sha256": "a51bc46fcc87612d559d5e6d104200634067a6ac30b38778c622a85de7631c5f",
+      "canonical_sha256": "455684df1bfd2b9c60d8277a61acfce0b6b1b309e860e4c88b2cc1c19951a98e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/syncproto/generated_test.go",
+      "bytes": 2773,
+      "sha256": "ad67b4f8e1ba41441c2b7a9617f5895555ca5222551e3b1be12838651997a0be",
+      "canonical_sha256": "a7638c22fb258112d3de066ffa4124e1473dfbdd7c18e2ebef0bac1f210336d0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/syncproto/name_codec.go",
+      "bytes": 1545,
+      "sha256": "1857603f53620c0bc3edbfe7764569500e18233b811453fe689569f14a8f285b",
+      "canonical_sha256": "35c7cd30ca9e002c8cf3444991e413028200abfa067bc75634510beff3fbe95a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/syncproto/protocol.go",
+      "bytes": 11940,
+      "sha256": "fe3f436aac84aabb714e4d45ef8f78d2ba47522f0390a2737a034776a7e34095",
+      "canonical_sha256": "e89a59768ba074edb92e4b7c741fbee70a91d594d33627f161db2ce392a3d71b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/syncproto/protocol_test.go",
+      "bytes": 1510,
+      "sha256": "39b2bf723cb83daff5abd30c0b582c8dba6544b2532fc29209ab8446e6044d42",
+      "canonical_sha256": "21cd56d5f30eb8c79d2f58ff68ebe0fb76614a5d94a364968483df0ba2f11db7",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/syncproto/snapshot_page.go",
+      "bytes": 3023,
+      "sha256": "3ff0f9a2554c0d14d28c9d1e7480001b4c81dd885a8249d63a741b883074740b",
+      "canonical_sha256": "72b9428a2cf263f9a4fdc311b81f9331cdbd7bb59f8ab03a411f70b28033b7a9",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/syncproto/snapshot_page_test.go",
+      "bytes": 3130,
+      "sha256": "4e24547bae6bd3143808d098cf8e2fe09c527a0de16a79b21f78c36e8a779ca2",
+      "canonical_sha256": "1e74abe1ea29b9cd97904bf4603d31a9faa0370ab9017a3350a7ba9768cabb5e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/syncproto/stage3_chat_c_test.go",
+      "bytes": 2292,
+      "sha256": "46fb1c8cc33c5173eb141db55f8268e99017a17447868b31d84f535c37746e2a",
+      "canonical_sha256": "5f73dfa86df088259a3fe02d414f3c4ef8184e8547b939da7507dd7a76846d4a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/syncproto/testdata/boundaries.v1.json",
+      "bytes": 475745,
+      "sha256": "10d9c5853744faafa635ed1dce22afea09c8af76e951ee5eda182e4179893375",
+      "canonical_sha256": "1106ebca2c9dc2feccb814562b81a2054ee5485e85f50c25d1ee79fa4609868c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/syncproto/testdata/golden.v1.json",
+      "bytes": 3368,
+      "sha256": "2fcfff0a0c32e19377374a5148b033411c16737492e78ee3dbea722e928bf3c4",
+      "canonical_sha256": "8719e08521eaad410e0bb6b1b180c559f14ad205c52b06fcbd9b33df92a2f4e0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/syncproto/testdata/name-codec-v1.json",
+      "bytes": 3066,
+      "sha256": "7017892fee3d10415e59af634fb7de5601d9e62a6d566526b0a3726441c554cd",
+      "canonical_sha256": "b76f70d28afb77b82cd8813fad4aeda4b94df0d4deea3b2b371756dedea07d16",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/syncproto/testdata/snapshot-pages.v1.json",
+      "bytes": 697373,
+      "sha256": "27bd3d53c7f540b5161aeee132ae5b0c96fad3bbda73ce6814e4fe96a6bbbd7b",
+      "canonical_sha256": "4447c73837d7c429e00e92bafcc0e486b3b6af4e4269a75bcd307c3be7d006f8",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/cmd/pluto-native-owner/main_linux.go",
+      "bytes": 611,
+      "sha256": "998a5efd07d0888a19798072cd65058024d6c46d4e773e0406040890b4c7a5d7",
+      "canonical_sha256": "f2339ea3ab1ce88035574f760ce2cbc63117b90886c41f88b7682142a9a987cf",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/actor_linux.go",
+      "bytes": 15961,
+      "sha256": "752c0684774a680b3b03ab79731980120a1548e34d6481b4b719ed74c60698f7",
+      "canonical_sha256": "45fc7b479cf3052be060dfb7125e048d814d2aed9c49491d64155b2c1bd6bc49",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/atomic_start.go",
+      "bytes": 574,
+      "sha256": "27ae7ef1b10e51f0aae2c785dc39111170f4a330ac9305b459c461611d5f46d8",
+      "canonical_sha256": "59e1b063596e01e7cb6e6fb40cc86fc3d05f30eec3a2a777409e349a9c533fef",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/atomic_start_test.go",
+      "bytes": 2696,
+      "sha256": "5e39a71856f02b2cf7eb25f513a0b4e2a27d8c6f02455d5e14535cd46fed2a3e",
+      "canonical_sha256": "5d928a5b90ed66b5c90c33d8294d66c00a1ab6cf7e7350aae9658eb78071e17c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/client_linux.go",
+      "bytes": 13141,
+      "sha256": "9636bb29c3350070b4873265129571909335b17a655cf03d961b96a3c2136f47",
+      "canonical_sha256": "d4accb1515ba0f193320f12d50b4afa0ba02c8b2d61dd9460a626635369f34f1",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/client_sequence_linux_test.go",
+      "bytes": 874,
+      "sha256": "827c561bc25ed9d542ad3483e760934e92cacc06d6ff4ab9dd844b64c33d5487",
+      "canonical_sha256": "17d17500b6558bb5fcdd4168ac3be3c0078feacd0f6b98f7b3a2a56c00d82d40",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/copy_linux.go",
+      "bytes": 2072,
+      "sha256": "14ff16ff2e33856d8e9fd653bdf014a762398b21999942f7bbb306d75bc10c15",
+      "canonical_sha256": "d9dee5aadba34c3b802fbde27ece1db0739af0ed53de2d559ff82ff604a8afa0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/credential_plan.go",
+      "bytes": 1064,
+      "sha256": "9e35dfc379e76d3c9b329b8c653c71a8ab89daed00ba2505a7ba85148c78ef54",
+      "canonical_sha256": "d5a0ecea756c1802d4b521eea0e72714f7107d5cdd3a9c213c9b378f3f87b34f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/custody/custody.go",
+      "bytes": 14594,
+      "sha256": "90f9edf3525cdf74ab0410fd76fb93ebf369ea7d032ea482e679ce0ad71c7303",
+      "canonical_sha256": "61fa48917e61850507a57ad1f3f91e3a7796a6a605891d82168b8ded6e17023a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/custody/custody_test.go",
+      "bytes": 10007,
+      "sha256": "97e5f4d45a2e05928280e118325b114f2636182bba08df6bbe139ec2db408e21",
+      "canonical_sha256": "71932bb6eccef9932bc8a4f0c42f1f3b44a93ec5040ff7ae4d7bf7252e0a9a80",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/owner_linux.go",
+      "bytes": 19866,
+      "sha256": "722fab330f82a92d156494020603eefe94592bc1b6c9c5b26aee9d5915493786",
+      "canonical_sha256": "063094c725593dc615b1f503352ffe10d941f7e87a4c796dc6ff72176f0cb57a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/proc_linux.go",
+      "bytes": 9199,
+      "sha256": "c90b45cf0f6b12ad2e7e68956254edb4a72437424730ad70ec07b4ac72bb1bce",
+      "canonical_sha256": "7680c1772f74763cfb28e036d10926ad99d4f81f597ab68f2fad40a5101eb7bf",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/proc_parser_linux_test.go",
+      "bytes": 724,
+      "sha256": "2d24e8d7c688e563c160c128fc46d492cd8eb3b7d4088d942b57c3553d704642",
+      "canonical_sha256": "2c934b1bcbf4a8e03ea260bb7aff310563e325cb607bde4f8da4a1e95765fd3b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/protocol.go",
+      "bytes": 11836,
+      "sha256": "3d388529a08af5bb177b99caa61e91d5760e8f2f0a247ac836213a34156ca53e",
+      "canonical_sha256": "f014c46970f138c00463778c8aa1b8a04c7949b85edfa17e5185cf291fba06e1",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "internal/testsupport/nativeprocess/protocol_test.go",
+      "bytes": 2956,
+      "sha256": "173e8532df6a92d5501fb4beeb8376125d1b67de1a04b6765787353effc46049",
+      "canonical_sha256": "61046ad1dcee639f322193113b883fb887b4d79f6403fefa0ca9204b11a0cbc7",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "packaging/bootstrap.sh",
+      "bytes": 9346,
+      "sha256": "e8197431aa0890de0091761d9320cc2150e9cee89b27cfcc37b839f58597b5a9",
+      "canonical_sha256": "e44200aac849d27fe3ad2beca2b7e13ee79bc30a7f27be6259fdbf15e6e3921a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "packaging/pluto.service",
+      "bytes": 652,
+      "sha256": "875361c447be88b0466c72cfb813b319e10c9a1a73a76d3befff7de76b6cc948",
+      "canonical_sha256": "40c264025720654853173d2278466b39cc12ddf80d8750db12110898a66b392f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "packaging/sqlite-v1.60.1/LICENSE",
+      "bytes": 1515,
+      "sha256": "90002c76a23f61ae9eff4b1bfc4b9544cbeff05da87621abca9da0df5ad8071f",
+      "canonical_sha256": "c6fe05491a60ae13bcd223088d2705e36dede24e5587226231d2459ada5c4822",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "packaging/sqlite-v1.60.1/LICENSE-3RD-PARTY.md",
+      "bytes": 75937,
+      "sha256": "e59d1914ecb99687241c982d427254f60b6aafa6672a769c5d96cbce3fa6534c",
+      "canonical_sha256": "b4366b9c27a9364633e015011a231913ed19bf1228f335bf617e50a6f7b168a6",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "packaging/sqlite-v1.60.1/LICENSE-SQLITE",
+      "bytes": 1531,
+      "sha256": "8c109e1d8394fd4557d916d75ef61fb406319106cbeab77736d7c666befd1ab6",
+      "canonical_sha256": "8438c9c89b849131ead81d5435cb97fcf052df5b0b286dda8a2d4c29e6cb3fd0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "packaging/sqlite-v1.60.1/LICENSE-SQLITE_VEC",
+      "bytes": 1089,
+      "sha256": "2c626e810303e9c15a722b6cfbcc119fcd0d007c17b946812a458a68034cbdbc",
+      "canonical_sha256": "6ce72bbe12d975bd5286e5ab0a064c069693300c47bccbc57bec18485f1621ea",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "packaging/sqlite-v1.60.1/README.md",
+      "bytes": 4130,
+      "sha256": "8f64a548f72e80d24034dda24f5beabd417d56146afab524cb17089e1f5180ad",
+      "canonical_sha256": "cef75b955d04b312dbd36762329052dd55ca8e422ba58deb819b015aecb1f209",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "packaging/verify-runtime-contract.py",
+      "bytes": 3737,
+      "sha256": "c9f6bba722ebe8db6a63f16bbbf9c9f92c55d7b0a342b7868576e236a502bdd3",
+      "canonical_sha256": "20f5dcef0a4bc64ab0d7d59fb937c019c61aff9ae04d44511b98926d97a62d3d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "packaging/verify-runtime-notices.py",
+      "bytes": 2288,
+      "sha256": "95f9b765d13d21e1accdf5af28c0cb24fac1757c5149ee4a90451f00569c3a36",
+      "canonical_sha256": "c2ac08668ce65c2abf655f203325372cb2ca6374fe2f8949e96416440cdd0536",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/__pycache__/known-problems-gate.cpython-313.pyc",
+      "bytes": 17284,
+      "sha256": "d248f90cc16654e0789f84a89b41856173a4e79d6c53b85a0a67567fd0b2186e",
+      "canonical_sha256": "d248f90cc16654e0789f84a89b41856173a4e79d6c53b85a0a67567fd0b2186e",
+      "line_endings": "BINARY"
+    },
+    {
+      "path": "scripts/bootstrap-contract.test.mjs",
+      "bytes": 5219,
+      "sha256": "d7a405b8fb3b6acd7f20d3694858329fa314c77580460e0dbe91006daf31a648",
+      "canonical_sha256": "d777f1eb756b82fd0bb89f7b1af80177f97ae910cac1e80139bf8ce485579a3a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/bootstrap-distribution.test.mjs",
+      "bytes": 4847,
+      "sha256": "f4323f9b1fd1d4d1a1a87942ee35379ab8118ca9c15ef3315f4995d4f391597d",
+      "canonical_sha256": "4714dd5358571b358ea1024345610fb569a17a55b8571eb6f5032d2a463bd42f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/bootstrap.test.mjs",
+      "bytes": 6225,
+      "sha256": "59fead30b56dce6cd383ea76f72e2d734d27ed6f88b05e1ccbe0585a27e05bbf",
+      "canonical_sha256": "7790bfc486969788283564455efc482a6bad0488059295461379ac3c6b3cccf4",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/build-release.mjs",
+      "bytes": 5504,
+      "sha256": "466a4814125885dfba484f716873c49c9057cf3bc54208471019af41397ee639",
+      "canonical_sha256": "84aa4b55dd1af91ce96406956cd05361689cd80c03eb33339cfbb2bd00ebf570",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/check-go-ci.py",
+      "bytes": 56920,
+      "sha256": "6ffbf74f174a95c1fb2f3e05cfdf9a61ef886ded46f5273a09b9916d97dc6da5",
+      "canonical_sha256": "ad776dd716d7a6790d58f6682830d8225f65187a8bde0554ba83f14c66570f1e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/container-ci-accounting.py",
+      "bytes": 4122,
+      "sha256": "e68d15522cfd1cc3222f71527ffe5fdd0b55af117a7fcb509b2551e0781ccc38",
+      "canonical_sha256": "94ffa786fa027354f441cf03803b55fe713ba0a1ce3d369cc60d7e7e1af4b68d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/default-ci-conditional-policy.json",
+      "bytes": 9585,
+      "sha256": "37682835692c95755617b085d21fc69fd5d9998b31c18da8c01afb3ae0da9bd8",
+      "canonical_sha256": "d89e8e7c1184f5b898a97b7b518e55fd806c68d99397376568971e6b0a62ed32",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/go-ci.py",
+      "bytes": 12880,
+      "sha256": "e7c14f8d560c2bfc3c781b580d7cadf67661fdd54a068412e421bec958545fba",
+      "canonical_sha256": "f30d397bd092c9db83a0323e44dede83b95c6d21046b4dc1cd1069f71b23ba11",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/known-problems-gate.py",
+      "bytes": 11990,
+      "sha256": "e79ef8010ee8364744cc663eb88a218f84974c75d0e6eca2d692ed131b09a4c4",
+      "canonical_sha256": "5fa3a3cd79da086bc7389ca1e2e7eb259bb16b6f7ce25134a65ccd8dce7438fb",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/Dockerfile.ci",
+      "bytes": 278,
+      "sha256": "b3c1c6ac471cb7c1849ab162643ebde2f8b287cdcf26b4ec3d20d0b504b88380",
+      "canonical_sha256": "69b40bf7e78eecbf164ab3b38e9da786b8cd9230afdb9cb39335dca15ed4f65b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/api/case-policy.json",
+      "bytes": 1333,
+      "sha256": "e693a73eee1d9e9faef65c398766c4a150b3e7fe45473539897b67b392d22b81",
+      "canonical_sha256": "072ac174e99d9f13e8174f76815c96ef23dc078a914984ebc934edbb4b698691",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/api/finish.mjs",
+      "bytes": 5044,
+      "sha256": "9ea61d0354742a8f43d9ac508e2364e0220f320fdadbf645a0de441fa11f9bba",
+      "canonical_sha256": "cc2ce3a1014d4a9849c1a044f181ade382fdb7a94aa1e66a268d1c240826bafe",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/api/producer.mjs",
+      "bytes": 24908,
+      "sha256": "84eced8b7da36539eea1e020955637a638dde7c47089ba3f694be656fe5e3658",
+      "canonical_sha256": "4ba66785542acba0e110e9151dc91aca4842172308e72bde0950c9310822393b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/api/run-native.sh",
+      "bytes": 2671,
+      "sha256": "ef2b78088f9ce87503ab38abf7d344e287a2e94c9e0099b7ad4c3e5879353f40",
+      "canonical_sha256": "0ffaa9511b5743860b530ab06e2227aacc3223fb225376c085e5043fe7f6d02f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/api/write-native-manifest.py",
+      "bytes": 3067,
+      "sha256": "74dd4cb025a933a5cbe8caa1fa7492d807f6251bb47f94bd1c7d412dbfbd5e38",
+      "canonical_sha256": "a422996d6704d0625b84ac45a56903a5c91e49f4e087732dcac3de0168000a4b",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/adoption.fixture.ts",
+      "bytes": 7522,
+      "sha256": "682cc7441d57002d5782f4fa20ef97cdf04407eb0a6ac5fd54fd0ead681155cf",
+      "canonical_sha256": "bda1edc30d33309bae331b3cef0a90ecd1df9284cc78d1826a597af225127922",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/api.integration.test.ts",
+      "bytes": 25906,
+      "sha256": "a6919c2d34b121ab46dbdc0947a910e5d2d88d8bceace3bac115eb1916ea5ee5",
+      "canonical_sha256": "56302e49b924e4e745c010531ac6e4566071ff10f8753b8d84e3605313726a2c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/backend-policy.json",
+      "bytes": 35375,
+      "sha256": "4ff3d303f22743bfd9c9253ff8eb5aa371b7565eaa8bd4d39bb85f5df563e338",
+      "canonical_sha256": "98cdd0a29009cf1bf400561038dd918e89e7de4491c7714d429007712c626c21",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/capture.sql",
+      "bytes": 2069,
+      "sha256": "2830140d991b916726935241ade62009f4dc6b3314fd347acef0784df62d60a5",
+      "canonical_sha256": "752206da476499aa82f7dfeb539e9173b610b6337c0d09acb2bfde26ee6801f8",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/checkpoint-bridge.mjs",
+      "bytes": 19372,
+      "sha256": "5461ed9259a58d1bb6b62d1f9f0d77323cbff91ffed9c439801455ee96c9e290",
+      "canonical_sha256": "a0dd3836024cee4861a9d394fb7f85ecf12cef663ca0a592e6f82740d93265ca",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/checkpoint.fixture.ts",
+      "bytes": 9108,
+      "sha256": "6af6279c873ca6fc7ad3b9a7b2ec44d1fb5c9742f5c0f343daadaf1b1b92e3c5",
+      "canonical_sha256": "54d80b200dae941496182645202c27215de48e2538454c1d0ae8fb7a48cb9f53",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/closed-tree.py",
+      "bytes": 9803,
+      "sha256": "350b224fb0aa05eade1365fc037ab2a2d975e4deb4757586d9087581468759d8",
+      "canonical_sha256": "5f519c5b329c5d98f07442378635383bb23342fa874fa1bc65c83a2281d4cc21",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/collect-output.py",
+      "bytes": 612,
+      "sha256": "71f95878d56283f42f4e92b438c27132857183721b75a9df71be728137a6a9ca",
+      "canonical_sha256": "31736b9ea92e9ca4d5c38a0267855605048533a9f16f9becf481258485d546a5",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/container.mjs",
+      "bytes": 5993,
+      "sha256": "3b4a452aed96d9a8b033c4556bef71c0637507738d7c8958f3636e7d997b9be2",
+      "canonical_sha256": "aad4135392a073df398cb1c2d3e509ae305f6d49ae6da69f7fd78bfcd4678f50",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/docker",
+      "bytes": 68,
+      "sha256": "5e3a75546c69234d90a43374e8f68c48cf82fb18a42dbf966585dbb0406b3b84",
+      "canonical_sha256": "3fd57a658f7d10e40d64331285ba194ce76ff508108e5223d9c76431991e3b38",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/docker-container.fixture.ts",
+      "bytes": 710,
+      "sha256": "1394e058e1d60f68bf4d2d70a12b0ca4163efaf5ce60e13fb5bbe9910fe7849c",
+      "canonical_sha256": "716ab2d0137362f5c6dee13d4adf558d27b1c9a1dd19c8529ff2508ffa236795",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/final-cold.mjs",
+      "bytes": 14770,
+      "sha256": "7c62d007ecebda12b5a76837e2b7da4975fda0230dd39de193f88de300c84b95",
+      "canonical_sha256": "ac543ad21e3dc343e960ae2d2736bbcb686871d9952ab9c2e0b8df3f38033a56",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/final-native.py",
+      "bytes": 7005,
+      "sha256": "94cf3dabb09b7c91a65be158725dd34a68a7d9b7fb852b7134872cc19e5759c7",
+      "canonical_sha256": "744d658bca16096e3b1a7f5fe38baa5668dc8bb4fe314227249c9e6937e65a39",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/final-reader.integration.test.ts",
+      "bytes": 12178,
+      "sha256": "1b47138f722dd67c1001c8c304e05f770a42655673a9b8296249e077b18ab673",
+      "canonical_sha256": "336f284bfccb00e94547660fc10eba13d8929577be1ca38c935410e5f09a0516",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/finish.mjs",
+      "bytes": 9386,
+      "sha256": "e10571c5c3fcbca342de18ed222c93f9b45d02c401b68c3ce076916a2928e994",
+      "canonical_sha256": "0c807927a402061a4b67909c0b7e5a20c4688864c8b8fcfda67764af5053a53d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/inspect-client.mjs",
+      "bytes": 1612,
+      "sha256": "b35d22be0e5a77e6cef23a0f7fa8a4775213c10438a673f12900b1dfc71173a7",
+      "canonical_sha256": "2e51051e62b7bc96ba4282c70b87b3f108e0ae38ea49c7dff9f24417dc4577ff",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/inspect-shim.sh",
+      "bytes": 68,
+      "sha256": "5e3a75546c69234d90a43374e8f68c48cf82fb18a42dbf966585dbb0406b3b84",
+      "canonical_sha256": "3fd57a658f7d10e40d64331285ba194ce76ff508108e5223d9c76431991e3b38",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/operator-lifecycle.mts",
+      "bytes": 42825,
+      "sha256": "529a2807742e9341db0bc651ea93640bdfb3188b8a97e7e8ac99ec1e6f52aa9d",
+      "canonical_sha256": "3c8be53adcaddac68db9993b8c88b0afcc223fd95a3d992b42f84529bf3b783d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/outputs.mjs",
+      "bytes": 1667,
+      "sha256": "68c616f2a17f1247f3863921555ac738dfa165b24a5755dcf361f9d74a77595d",
+      "canonical_sha256": "4cc3478e922a46684e3d0c484ea7f340ae2ffedd9d816eb8d53d7ae48c7d4379",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/prepare-reader-credentials.py",
+      "bytes": 1860,
+      "sha256": "3c1834e82d57a4e51529950439c58457c4f4eb65429d095baccd73157cefd755",
+      "canonical_sha256": "a3ff25fbddaf3395ac895c23805b9ab3d753278bfb3429c840d719184eaf6dd6",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/producer-running.test.mjs",
+      "bytes": 1089,
+      "sha256": "dbca34d5659ded497080b79f144499576e22ba41821f43cb6d31952e96ebbe94",
+      "canonical_sha256": "6c17b35d5608126503da488a0c7f656dd1962d2793fb4c8064eafd06646a89c0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/producer.mjs",
+      "bytes": 26475,
+      "sha256": "1cb1dfaaffb68c358b345e184664f0d9d397a487fe7cbff9b00bf6dd96ffd73f",
+      "canonical_sha256": "719e105c6dfdbb6d5e3c93200ace2d3aee8e3f149c3baf75ea6032cefb622d63",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/restored-reader.integration.test.ts",
+      "bytes": 9163,
+      "sha256": "8f17c6821ced644949622663db38c9a69922d2a11aa7c036c4ff042d3699b7a2",
+      "canonical_sha256": "4e9453818f77450512a4beaa41855182c1e98d8ac8041f1ea4d40da8fcbb55e0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/resume.fixture.ts",
+      "bytes": 12901,
+      "sha256": "7c9d81e87f3e7b3a6695dac0e2bba8072359380c7d82078280658ba9439810bc",
+      "canonical_sha256": "e900a4ed671ac8fdfb7d47ac1adb6dd41abd9ddd894b9337f53474894c34ed47",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/root-control.py",
+      "bytes": 4630,
+      "sha256": "264fd6c439d4c98c244f9b83ab35984b739f79b00511c26e333bf175b408fc90",
+      "canonical_sha256": "390c855c1148d575b2a8fd8474edc9a17b9e1d50ec1997b0b50dd0915f204b1a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/run-native.sh",
+      "bytes": 2483,
+      "sha256": "e44527a3b6921f7826a2facb671ed0dfe6797f29c4cf284f3416128df7628e40",
+      "canonical_sha256": "7cbbf24baf27d0e41fff74c1a3d62714bc52093d0d7d6b5184f5308b6f754bb6",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/sftp-entrypoint.sh",
+      "bytes": 212,
+      "sha256": "63b91662b16d7ee2239839e18dc29fe4fa431478307258f4a65d4ee7253b2530",
+      "canonical_sha256": "c3d6e1e278aa06d839e0f4b56165e0b9ae2644103837fc55e328cb67fad6c624",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/shared-backend.fixture.ts",
+      "bytes": 2762,
+      "sha256": "d8d6c80ddaa77544190f5f2f3833a4253c8a4f3ddc4d5abc81d736d9236f1048",
+      "canonical_sha256": "12c8f42faa3195482b574312f214cf38ae078ec8745625cbdcbf9db71441747d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/stage13-command.mjs",
+      "bytes": 3823,
+      "sha256": "16c5780eca03fcd42e6dbfee867eca13ac9b8a5887460d36218529b036cec02a",
+      "canonical_sha256": "3ddce926d6a1693837ccf3d56a0e329ff7521065b1a45e52ec24f061418ba944",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/stage13-runtime.mjs",
+      "bytes": 24835,
+      "sha256": "070ccaf58753d015c0af1236fd8578d57d31201fa9d39038c46ae35c86a1c5e3",
+      "canonical_sha256": "31408162416d465b7a75f6d9b2c00775387e6ee318a98bfb4f4e18f90ed06567",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/stage3.fixture.ts",
+      "bytes": 18390,
+      "sha256": "3891cd62994ba96b1de49ae2c076a0612a435ef059428a60e8f68e17bbddde18",
+      "canonical_sha256": "38d1b3ea0edf2dadbd42fe83bf3c57b594af3f95e2d9dcbc8768ec16a66bb0a3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/verify-backend.mjs",
+      "bytes": 2342,
+      "sha256": "d6e58d953b5324df7b795d58dbc535f52fd1d619050147360c40544e6207647c",
+      "canonical_sha256": "a1bdc3b3a5be3eeb73b19113a5db8f71a798578484bf66b86b2648cc8e3558d6",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/verify-originals.py",
+      "bytes": 2132,
+      "sha256": "97d14e3576504c58e53fa46dc64c9ff09a01d219699d5f2937ca3abe23684c8e",
+      "canonical_sha256": "66ea8303211eafe9687ee1aaccce4a1b5896924c3c86f85b02c8d58dc7664d2e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/bulk/write-native-manifest.py",
+      "bytes": 3400,
+      "sha256": "f8269348b497d54ce1a5489b75053703ee68ab694fe2f21dbc739e79bfc851c6",
+      "canonical_sha256": "87e5dfc6af82471c0e60cee27286ad636da1c30682cc2efe289bd6081e9ed536",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/c01_checkpoint_control.py",
+      "bytes": 4775,
+      "sha256": "17bbc8f47d358280888b4c6d83a8b7fd4ac3823d23b101dc3e138355f52ff189",
+      "canonical_sha256": "00e65fb23cb2484569efd7aaf461cac40ed4a0afe13a822c2737e69247b21580",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/c01_checkpoint_worker.py",
+      "bytes": 13735,
+      "sha256": "de0d62f13139d5ba08c6c9a04a1eae1b56af47bf5bed7d2db7ddfcb22b8a16a2",
+      "canonical_sha256": "2463a054f0929c94b5c729ae7b5ef9cc19a6f911e6d567ac8f157c1d474b828c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/export_c01_ci.py",
+      "bytes": 5879,
+      "sha256": "bbc0625de6ae2e10ceb6bf042a4a59adc4d16bd997d61a59af140d9ac88e501f",
+      "canonical_sha256": "04d0aedc083390ff9ad469ffe25be1a7a3679027a5fd66d8f206f52ba1e6a128",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/mount/actors.py",
+      "bytes": 21624,
+      "sha256": "cc6a74b41c9e1a172691a25beeb3db56870e93a6631faac15a0b708d6fd9c2c5",
+      "canonical_sha256": "a2542f41f40f13ab35bd5f46d16a3d9cf2ad651c7b447af969b0f1864f851d75",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/mount/base.py",
+      "bytes": 30573,
+      "sha256": "0e6c5e05ef30b0e97587154761482b9010f6c3485778f4b6eecbc03df7c8fab6",
+      "canonical_sha256": "1a16a684f4e341f11c3def115e7be56d927e03eb915d6905d8bbe7abd259d3fe",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/network_checkpoint_control.py",
+      "bytes": 5063,
+      "sha256": "b9b8da236cc20897cfe88e4bbd6739335b586998c74b42d96a04de2cbd0b6da4",
+      "canonical_sha256": "2fd90ebaee3fb9a5ab2e9e16bbf57d68006560103c555912513fe544483bb184",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/network_checkpoint_worker.py",
+      "bytes": 15694,
+      "sha256": "ebb04376aa4eaf56998953613b250ba3e98833673877d04d39ddf2b510017ffd",
+      "canonical_sha256": "f6335b465311aee16505ba82bb5f3dd6adc16ef6643ee90c203ef587755c18c7",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/ordinary/bootstrap.py",
+      "bytes": 1837,
+      "sha256": "faa2012dd31decc41e0cad8b5b9ae19848861a92332ac96bd32d430a4165d021",
+      "canonical_sha256": "0191226900d8fdd3e22c46bee64cb53e379be7e7dd1618e5ea3f8f5b53069ce9",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/ordinary/worker.py",
+      "bytes": 11224,
+      "sha256": "da31d7c3af734822b11a56034a31a4cc7797147e9414d7e277ac91f44da361a0",
+      "canonical_sha256": "e47293c5e98186e28297545ae6e1d313c71be86e757f2edebd7743bcb907835d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/owner-case-policy.json",
+      "bytes": 6335,
+      "sha256": "61e09b01ca3b659b2a3b313d61a763d6fc5ccfe64f2abf1c073fa483a974175e",
+      "canonical_sha256": "c803164c3f7054c110f9e59824ef2a48a8f0d281cfadd340dbcb35b4fe6ed5a4",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/prepared_control.py",
+      "bytes": 4813,
+      "sha256": "e7aafa73ea78b3bc4f541aa8eff34c90c3aaea7530a63b84bca5037e695425b4",
+      "canonical_sha256": "45d157236c047b243568c74cb28d91a949d7e798f90fd3af203ee5285022ce45",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/prepared_worker.py",
+      "bytes": 10766,
+      "sha256": "3ddcf9be4a0dbd189e9e6edd829203ffd449700e3522183f97828d8d15b4ffaf",
+      "canonical_sha256": "3d39866949406a44329a19bb380152e21c6d36908b29ad60db96736e677e1778",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/run_c01_checkpoint.sh",
+      "bytes": 2939,
+      "sha256": "c4dc1319596ff57991b3f4243783540a3a859b4cb6ea70ec48d57cee66fcb61b",
+      "canonical_sha256": "62d5f97007c75495b8b9bd84a84f7258f14d3651fe719646b9aaf8a1829e2564",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/run_network_checkpoint.sh",
+      "bytes": 3036,
+      "sha256": "1caa1cad88e2c0f9fe8b5c360e9a9c198df954c16ec939db4bfaaa7ac6247e01",
+      "canonical_sha256": "9dca61cfd34061bb01072154612537ce4a48831dc889e6edcdd1a4fb4d134502",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/run_owner.sh",
+      "bytes": 1757,
+      "sha256": "de3a7890b6dae2e208782ad282f63bcba6c95ca9217c102ac5c8c7bce0471278",
+      "canonical_sha256": "b2b980ea2d5bf89712572a166b4939dfa4adb2c68fe2de29b7855a81bc6c7458",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/run_prepared.sh",
+      "bytes": 3331,
+      "sha256": "137a75a81e3c907f95e9135f6b3566a2236baa0bcb18019dbfe2d39f0f28816c",
+      "canonical_sha256": "aaec094ea12c7c2e5242ff7b8fbdd5793b69bde7017739dfa1b24f49fb065fcc",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/write_c01_checkpoint_manifest.py",
+      "bytes": 5049,
+      "sha256": "cc88db85b5d325f281960251f6a136deefb410948d8c887e638530809162df27",
+      "canonical_sha256": "e51a0acf051c180e957d9e7a289dbfc06ab1b0b92722664ce33ac8237378b358",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/write_network_checkpoint_manifest.py",
+      "bytes": 5153,
+      "sha256": "55a291beaf04ce20797be66d3aa8cf8dae61319272065a60c187787705d15513",
+      "canonical_sha256": "0aeed47b5346707b54ad1e7a290ddff3c727b7648ba71e011791822e5152145f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/write_owner_manifest.py",
+      "bytes": 2800,
+      "sha256": "d88d026701f72a0d641490f9e17a85a363df090c458a4bc81480b2e875c7b478",
+      "canonical_sha256": "1e01e41f145a5904f8fcf8fbbbc006c7eabd7805ab7007b2375bad91fd75721a",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/native-fixture/write_prepared_manifest.py",
+      "bytes": 4935,
+      "sha256": "5d0b7e5a2617262c9fa1428842c3fb6744d9d0950107ebfd489734b549943a54",
+      "canonical_sha256": "d14e989e8f82742674e1cc7cb76caf9d752ba9ae20a2409fefd9a7a898de6960",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/prepare-bulk-backend-inputs.mjs",
+      "bytes": 2190,
+      "sha256": "1e8256b782efcfeb13754c57a305df0fc611131586b98ec32f670969ca2f001a",
+      "canonical_sha256": "43ad650c6dd04c4003e0f79041f607bf6f37632d3903648a734ada5847b7c0d2",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/prepare-c01-ci.sh",
+      "bytes": 4478,
+      "sha256": "a35c4909b5bb09bc4888b1a2c48a25968696fe9037245392460d729e7b1adbd2",
+      "canonical_sha256": "b715aa16d776e4f7338923de7928dc160c9ae1a49f2b7a688423f3a71dd6da94",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/qualify-kernel.mjs",
+      "bytes": 5251,
+      "sha256": "cb0e068be701bec03e5eeef184e5b516d42787a00b04e948cadb40ca32becd8f",
+      "canonical_sha256": "6fed0c5c986cd3291e36052bdb6cd3834d188af1fb61622c24a189d51ce8422f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/qualify-native-lifecycle.sh",
+      "bytes": 2464,
+      "sha256": "29ec12748cb90fb0ff55f8b130a3c126d38f1ef2bf8d467ef6fede6e0eb37918",
+      "canonical_sha256": "4330f1dbd972998b71c0f9c9d516fb29c43de1ca675488e7b6c38b28b3648712",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/qualify-saturn.sh",
+      "bytes": 985,
+      "sha256": "a844878f4623d9c88df2923df198b983c5311c0288509d48a03b3101dc5d7482",
+      "canonical_sha256": "977f6d81c9d31a467d5605d43214282bcc6b99333ab1cb4caa020af2b3de80ad",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/regenerate-runtime-notices.mjs",
+      "bytes": 1961,
+      "sha256": "59e67becd81a5b09d249554f1fa63f30a272e92d0bf8963c5cb8684599200839",
+      "canonical_sha256": "0f658ec94d81c0ca2254a321905df40b575dcde6b8cf693b98976cb42d44d1cc",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/run-api-ci.mjs",
+      "bytes": 14173,
+      "sha256": "19ef3c0286984a7f88f4843d4b07c36d719b18c913a415c6cd564e023c31020a",
+      "canonical_sha256": "97aa0ff9b9f73f50b528bce296e4db2240303ba4bb28c1564998a21faa2f99af",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/run-bulk-ci.mjs",
+      "bytes": 13843,
+      "sha256": "413cf3ce218f6c1baa9b4fe5993d81f507bbe977f9d4be96b91f3c07cfa239c4",
+      "canonical_sha256": "dd9726ababe3385884252e226ab4ab32d14d9debe39034579711ab9b47e95c6d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/run-c01-ci.py",
+      "bytes": 15499,
+      "sha256": "e3e51a441a8106043d85b846f71380381c7f5275604a6977458ba62050f0a14f",
+      "canonical_sha256": "e1597de65c34094b077d68a97791e6dc0fdd9c5762831e50ac5cb88f02c2d935",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/run-container-go-ci.py",
+      "bytes": 15576,
+      "sha256": "4f2ec7759916132c0001623518b8180e319de3e4eb48689853c4fa14d0c80c0b",
+      "canonical_sha256": "8d4c560a402f5b508db7430688a053efae92ce105505142c7085faab8c6c118c",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/run-disposable-ci.py",
+      "bytes": 10298,
+      "sha256": "77269d03521b9b8e58fe89c5a6d7d1755e8810b9307edb75cda45f2c7a8c9e1d",
+      "canonical_sha256": "1c96eba7622abd81d14e9ba66db95f62926fbbb480213a58685f66476303a930",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/run-go-ci.sh",
+      "bytes": 175,
+      "sha256": "34b7f9bd7996d1f49346cceec1cdcf80d562ba3c530103e7e0dba3996bf800d2",
+      "canonical_sha256": "f260f3bc24b2acd97ae682cb4f00a6f1d545b6a8dc988ec75cea4f094dfe3ce3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/run-mount-ci.py",
+      "bytes": 12418,
+      "sha256": "3bdddacbdd7bd3261e90c8087a5586af3adc7c30b56e0c9e8494133721f41123",
+      "canonical_sha256": "abf544ddeb35d22fdd72881ca227e73ca363830ce40033fd1e00de80ce0a6a8e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/run-unprivileged-go-ci.py",
+      "bytes": 20625,
+      "sha256": "ea2ece1c109ebd71920ec977a2dcb95323bbec6c02855c33a0275044cb23fd8d",
+      "canonical_sha256": "42a793556d47aadcd010dd4757110fa780d3e67cd3222d7af2465063ff168ac6",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/runtime-contract.mjs",
+      "bytes": 4625,
+      "sha256": "5f8e0fa01e6302f4024641c9ad8a094d0d8a1aa5039c93b5d9e04d834f9273a8",
+      "canonical_sha256": "fa799b559f8ff67121c991a5a7d727019700d17f430dfdb204918776ff48993f",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/runtime-contract.test.mjs",
+      "bytes": 7748,
+      "sha256": "6c751edc1063abb75b664baffde74d237d6249db44792ab24a71e575aa0a1317",
+      "canonical_sha256": "00ee2d080677166b0c3272ea58525d102ba1c7fb6d870693866d8304238d3b85",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/runtime-notices.mjs",
+      "bytes": 4517,
+      "sha256": "ef3536f7f1b1d3401589062398e2f781b3d9f8b6b39f2b7831047c69be7e0755",
+      "canonical_sha256": "0f73daa4383c86119464a315cd5e471e01739b097e4780ed35a1f632dbd4d94e",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/runtime-notices.test.mjs",
+      "bytes": 6035,
+      "sha256": "5103e23a14860dc7f20c18853d3482de3ed9c344e800521d1c7f910fd8bdded9",
+      "canonical_sha256": "8a1d6a82410b773d64c5e5ba82098fe47c4fc4c5749564239a9a32d084ed4d51",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/test-container-ci-accounting.py",
+      "bytes": 4974,
+      "sha256": "2ad443be9426ed9b0297a87641c35e1b577678c7bdf4407ccb5702c0f0eaf1ba",
+      "canonical_sha256": "b5a41ccb6d6adca778865e9b4a16b790b73ba41d239ca7eb792e51c900c9a2c5",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/test-go-ci-dispatch.py",
+      "bytes": 15530,
+      "sha256": "c99124776d5dc9b912ba834bb9d106a60d7e5bf30db1f1af531f61aa6f8b876e",
+      "canonical_sha256": "bdaaa4723d25b19a22996cbfff1cfc80181f6fd11ea6b30c473176eba7a1ead4",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/test-go-ci-report.py",
+      "bytes": 46621,
+      "sha256": "0965120b4c44acc9fa14671e636b6cfb20b80500e3872d89bc9b8857cf1d377d",
+      "canonical_sha256": "2a38162ff840c4409d7459fb73f64583c1ff2bc97c9ef99f28db878288a685b0",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/test-known-problems-gate.py",
+      "bytes": 6014,
+      "sha256": "d05ff78f025de684a7dfbf91e5cf78b332d61b359ffc86ffa1647a2b0ea807cc",
+      "canonical_sha256": "4d84923deb0aa04c6537674b54317316b3c915ff669de373bcceeff66c30be3d",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/test-ordinary-process-ci.py",
+      "bytes": 9076,
+      "sha256": "1dc500b8eefdcb1213904f7a29692700a4be434b76f6a7f89faf08988bc5cb60",
+      "canonical_sha256": "740784316d9a647eb2e68ac90f356320687ec0b2e55d5cf45633b4be7e4291d7",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/test-worktree-source.py",
+      "bytes": 7117,
+      "sha256": "fc7b3c5da03523a45a6688081db3ae21f5dac8ac719398a1f8ba75eda13a3558",
+      "canonical_sha256": "05cdd156d1778ebddcb6ef6abdd1460871b914f634bbe6767e5e4e5445eb1c42",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/verify-package3-source.py",
+      "bytes": 4252,
+      "sha256": "10f9ebebb3578a3963c4e4ed90604884d9d9e61a11202f9d63033b41a6efa0c7",
+      "canonical_sha256": "9f7cbebfc7a04b6dd2ecdfbe7dba8e27c2929a6723811d455740fe9b9e92bae6",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/verify-release.mjs",
+      "bytes": 10117,
+      "sha256": "2d742b445e90c70a8bf099efe4da94abcd7f96d11cdf726758f1c7248778c4eb",
+      "canonical_sha256": "c585a1757a54f87fa6985c348e88d516cf97feb3bd5f5ff0c03aaf8dd002e1a4",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "scripts/verify-release.test.mjs",
+      "bytes": 10399,
+      "sha256": "78ddee4b78b44844cf6868005aa0bae40b642276ead522c9c35de133c5e3b61a",
+      "canonical_sha256": "e0d676c30b76bb87becfc8c2178b1ce1b1e880245b8ac68895f2ceb0a530b8fb",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "testdata/releases/.gitattributes",
+      "bytes": 99,
+      "sha256": "af12f48004613f93e81a5a37c72921392d0801d48d2edbb8a3b943b516c48151",
+      "canonical_sha256": "0c40375f3b3c1cb7830c63c43d84a40d790268e72e88d784b698945641ce44c3",
+      "line_endings": "CRLF"
+    },
+    {
+      "path": "testdata/releases/pluto-v0.1.4/pluto-release.json",
+      "bytes": 640,
+      "sha256": "18e45f92b3c2c4570ef9841cdbdd23714aa548a19a75ae0e7b0c0b50f7fe5d40",
+      "canonical_sha256": "18e45f92b3c2c4570ef9841cdbdd23714aa548a19a75ae0e7b0c0b50f7fe5d40",
+      "line_endings": "LF"
+    },
+    {
+      "path": "testdata/releases/pluto-v0.1.4/pluto-release.json.sig.json",
+      "bytes": 676,
+      "sha256": "19f564088650795972505e001e0256b5ef20805f7a696ac0e59e45ec21c00e70",
+      "canonical_sha256": "19f564088650795972505e001e0256b5ef20805f7a696ac0e59e45ec21c00e70",
+      "line_endings": "LF"
+    },
+    {
+      "path": "testdata/releases/pluto-v0.1.4/provenance.json",
+      "bytes": 1005,
+      "sha256": "88edc12cafa1fbaf9447b574d304578aaf4cf22610b5f1c37a64ed86cf148fd6",
+      "canonical_sha256": "88edc12cafa1fbaf9447b574d304578aaf4cf22610b5f1c37a64ed86cf148fd6",
+      "line_endings": "LF"
+    },
+    {
+      "path": "testdata/releases/pluto-v0.1.4/release-public.pem",
+      "bytes": 625,
+      "sha256": "2e7e2b857ceb0bf0d2488c5f1ca9c1248b38d759728e549b17545be764508b29",
+      "canonical_sha256": "2e7e2b857ceb0bf0d2488c5f1ca9c1248b38d759728e549b17545be764508b29",
+      "line_endings": "LF"
+    }
+  ]
+}

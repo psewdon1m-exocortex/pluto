@@ -41,7 +41,7 @@ func main() {
 		return
 	}
 	if len(os.Args) < 2 {
-		fmt.Fprintln(os.Stderr, "Usage: pluto daemon|tui|status|update|licenses|copy-indexed|inspect|diagnostics|pause|resume|checkpoint|backup|restore-artifact-directory|migrate-plan|adopt|policy-plan|policy-apply|namespace-plan|namespace-apply")
+		fmt.Fprintln(os.Stderr, "Usage: pluto daemon|tui|status|update|licenses|copy-indexed|inspect|diagnostics|pause|resume|checkpoint|backup|restore-artifact-directory|source-recover-plan|source-recover-apply|migrate-plan|adopt|policy-plan|policy-apply|namespace-plan|namespace-apply")
 		os.Exit(2)
 	}
 	flags := flag.NewFlagSet("pluto", flag.ExitOnError)
@@ -49,9 +49,18 @@ func main() {
 	state := flags.String("state", "/var/lib/pluto", "Protected state")
 	socket := flags.String("socket", "/run/pluto/control.sock", "Local admin socket")
 	profile := flags.String("profile", "", "Protected indexed profile candidate for migration")
-	planDigest := flags.String("plan-digest", "", "Exact digest printed by migrate-plan")
+	planDigest := flags.String("plan-digest", "", "Exact digest printed by the reviewed plan command")
 	backupSHA := flags.String("backup-sha256", "", "Exact SHA-256 of the restored standalone SQLite backup")
+	sourceID := flags.String("source-id", "", "Exact configured source ID for reviewed incarnation recovery")
 	flags.Parse(os.Args[2:])
+	if os.Args[1] == "source-recover-plan" || os.Args[1] == "source-recover-apply" {
+		provided := map[string]bool{}
+		flags.Visit(func(f *flag.Flag) { provided[f.Name] = true })
+		if !provided["config"] || !provided["state"] || !provided["source-id"] || *sourceID == "" || flags.NArg() != 0 || os.Args[1] == "source-recover-apply" && (!provided["plan-digest"] || *planDigest == "") {
+			fmt.Fprintln(os.Stderr, "source recovery requires explicit --config, --state, --source-id and an exact --plan-digest for apply")
+			os.Exit(2)
+		}
+	}
 	if os.Args[1] == "copy-indexed" || os.Args[1] == "restore-artifact-directory" {
 		provided := map[string]bool{}
 		flags.Visit(func(f *flag.Flag) { provided[f.Name] = true })
@@ -73,6 +82,8 @@ func main() {
 	}
 	update := func(repository string) error { return pluto.Update(ctx, repository, ReleasePublicKey, *socket) }
 	switch os.Args[1] {
+	case "source-recover-plan", "source-recover-apply":
+		err = pluto.RunSourceRecoveryCommand(ctx, os.Args[1], *config, *state, *sourceID, *planDigest, os.Stdout)
 	case "restore-artifact-directory":
 		err = pluto.RunArtifactRestoreCommand(ctx, *config, *state, *backupSHA, os.Stdout)
 	case "policy-plan", "policy-apply", "namespace-plan", "namespace-apply":
